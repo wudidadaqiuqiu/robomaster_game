@@ -5,11 +5,11 @@ namespace ROS.ROSConnect {
     {
         public static ROSConnection connection = ROSConnection.GetOrCreateInstance();
 
-        public void register_publisher<T>(string topic) where T : Message {
+        public static void register_publisher<T>(string topic) where T : Message {
             connection.RegisterPublisher<T>(topic);
         }
 
-        public void publish(string rosTopicName, Message message) {
+        public static void publish(string rosTopicName, Message message) {
             connection.Publish(rosTopicName, message);
         }
 

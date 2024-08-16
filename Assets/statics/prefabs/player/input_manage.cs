@@ -4,7 +4,8 @@ using UnityEngine;
 using Unity.Netcode;
 using System;
 using Unity.VisualScripting;
-
+using ROS.ROSConnect;
+using RosMessageTypes.Unity;
 
 public class input_manage : NetworkBehaviour
 {
@@ -21,6 +22,12 @@ public class input_manage : NetworkBehaviour
         input = new NetworkVariable<InputNetworkStruct>(writePerm: permission);
         nowinput = new InputNetworkStruct();
         lastinput = new InputNetworkStruct();
+    }
+
+    public override void OnNetworkSpawn() {
+        if (IsServer && ProjectSettings.GameConfig.ros_debug) {
+            ROSConnector.register_publisher<InputKeyboardBitsMsg>(ProjectSettings.RosConfig.input_keyboard_bits_topic);
+        }
     }
 
     private void Update()
@@ -70,8 +77,10 @@ public class input_manage : NetworkBehaviour
     private void TransmitStateServerRpc(InputNetworkStruct state) {
         input.Value = state;
         Debug.Log(state.keyboard_bits);
-
-
+        if (ProjectSettings.GameConfig.ros_debug)
+        ROSConnector.publish(
+            ProjectSettings.RosConfig.input_keyboard_bits_topic, 
+            new InputKeyboardBitsMsg(state.keyboard_bits));
     }
 
 
