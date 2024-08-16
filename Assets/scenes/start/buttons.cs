@@ -21,6 +21,6 @@ public class buttons : MonoBehaviour
 
     public void OnStartButtonClick()
     {
-        SceneManager.LoadScene("game/game");
+        SceneManager.LoadScene(ProjectSettings.GameConfig.main_scene_path);
     }
 }

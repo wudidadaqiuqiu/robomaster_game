@@ -5,6 +5,7 @@ using Unity.Netcode;
 using System;
 using Unity.VisualScripting;
 
+
 public class input_manage : NetworkBehaviour
 {
     [SerializeField] private bool _serverAuth;
@@ -69,6 +70,8 @@ public class input_manage : NetworkBehaviour
     private void TransmitStateServerRpc(InputNetworkStruct state) {
         input.Value = state;
         Debug.Log(state.keyboard_bits);
+
+
     }
 
 
