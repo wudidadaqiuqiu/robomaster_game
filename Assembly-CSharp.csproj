@@ -77,7 +77,10 @@
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/msg/UnityColorMsg.cs" />
     <Compile Include="Assets/statics/prefabs/player/net_transform.cs" />
     <Compile Include="Assets/statics/prefabs/player/camera_manage.cs" />
+    <Compile Include="Assets/statics/prefabs/robots/lignt_control.cs" />
     <Compile Include="Assets/statics/prefabs/player/head/eye/eye.cs" />
+    <Compile Include="Assets/statics/struct_def/game/light_state.cs" />
+    <Compile Include="Assets/statics/interface_def/robot.cs" />
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/srv/PositionServiceRequest.cs" />
     <Compile Include="Assets/scripts/sub_behaviour.cs" />
     <Compile Include="Assets/statics/ros/ros_connection.cs" />
