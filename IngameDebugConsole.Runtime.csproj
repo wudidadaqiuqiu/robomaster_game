@@ -431,24 +431,8 @@
       <HintPath>Library/PackageCache/com.unity.visualscripting@1.9.4/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.ComponentModel.Annotations">
-      <HintPath>Assets/Packages/System.ComponentModel.Annotations.5.0.0/lib/netstandard2.1/System.ComponentModel.Annotations.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Threading.Channels">
-      <HintPath>Assets/Packages/System.Threading.Channels.8.0.0/lib/netstandard2.1/System.Threading.Channels.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Assets/Packages/System.Runtime.CompilerServices.Unsafe.6.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
       <HintPath>Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces">
-      <HintPath>Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="unityplastic">
@@ -475,10 +459,6 @@
       <HintPath>Library/PackageCache/com.unity.visualscripting@1.9.4/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Bcl.TimeProvider">
-      <HintPath>Assets/Packages/Microsoft.Bcl.TimeProvider.8.0.0/lib/netstandard2.0/Microsoft.Bcl.TimeProvider.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="NuGetForUnity.PluginAPI">
       <HintPath>Library/PackageCache/com.github-glitchenzo.nugetforunity@90fa6db024/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll</HintPath>
       <Private>False</Private>
@@ -497,10 +477,6 @@
     </Reference>
     <Reference Include="AssimpNet">
       <HintPath>Library/PackageCache/com.unity.robotics.urdf-importer@90f353e435/Runtime/UnityMeshImporter/Plugins/AssimpNet/AssimpNet.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="R3">
-      <HintPath>Assets/Packages/R3.1.2.6/lib/netstandard2.1/R3.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">

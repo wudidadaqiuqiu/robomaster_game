@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
+namespace PlayerNameSpace {
 public class net_transform : NetworkBehaviour
 {
     [SerializeField] private bool _serverAuth;
@@ -81,4 +82,5 @@ struct PlayerNetworkState : INetworkSerializable {
 
         serializer.SerializeValue(ref _rotY);
     }
+}
 }

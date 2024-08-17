@@ -6,7 +6,7 @@ using System;
 using Unity.VisualScripting;
 using ROS.ROSConnect;
 using RosMessageTypes.Unity;
-
+namespace PlayerNameSpace {
 public class input_manage : NetworkBehaviour
 {
     [SerializeField] private bool _serverAuth;
@@ -160,4 +160,6 @@ public class input_manage : NetworkBehaviour
             serializer.SerializeValue(ref _keyboard_bits);
         }
     }
+}
+
 }

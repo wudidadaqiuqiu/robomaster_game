@@ -1,12 +1,11 @@
 using UniRx;
 using UnityEngine;
 
-public interface IPlayerComponent
+namespace PlayerNameSpace
 {
-    void SetSubject(Subject<object> subject);
-}
+    
 
-
+using StructDef.TeamInfo;
 public class Player : MonoBehaviour
 {
     public Subject<object> PlayerSubject { get; private set; }
@@ -17,10 +16,15 @@ public class Player : MonoBehaviour
         PlayerSubject = new Subject<object>();
 
         // 将 Subject 传递给子对象或子组件
-        foreach (var component in GetComponentsInChildren<IPlayerComponent>())
+        foreach (var component in GetComponentsInChildren<InterfaceDef.IPlayerComponent>())
         {
             component.SetSubject(PlayerSubject);
         }
+    }
+
+    private void Start()
+    {
+        PlayerSubject.OnNext(new team_info());
     }
 
     private void OnDestroy()
@@ -29,4 +33,6 @@ public class Player : MonoBehaviour
         PlayerSubject.OnCompleted();
         PlayerSubject.Dispose();
     }
+}
+
 }
