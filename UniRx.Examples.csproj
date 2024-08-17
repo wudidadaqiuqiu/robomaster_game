@@ -19,7 +19,7 @@
     <RootNamespace></RootNamespace>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>IngameDebugConsole.Runtime</AssemblyName>
+    <AssemblyName>UniRx.Examples</AssemblyName>
     <TargetFramework>netstandard2.1</TargetFramework>
     <BaseDirectory>.</BaseDirectory>
   </PropertyGroup>
@@ -64,27 +64,22 @@
     <Analyzer Include="/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugLogRecycledListView.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Android/DebugLogLogcatListener.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugLogItem.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugLogItemCopyWebGL.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/CircularBuffer.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugLogResizeListener.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugsOnScrollListener.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/Commands/PlayerPrefsCommands.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugLogPopup.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugLogManager.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/Commands/SceneCommands.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/InputFieldWarningsFixer.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/EventSystemHandler.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugLogConsole.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/Commands/TimeCommands.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/ConsoleMethodAttribute.cs" />
-    <Compile Include="Assets/Plugins/IngameDebugConsole/Scripts/DebugLogEntry.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample12_ReactiveProperty.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample01_ObservableWWW.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample03_GameObjectAsObservable.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample09_EventHandling.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample02_ObservableTriggers.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample07_OrchestratIEnumerator.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample08_DetectDoubleClick.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample10_MainThreadDispatcher.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample13_ToDoApp.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample11_Logger.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample04_ConvertFromUnityCallback.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample06_ConvertToCoroutine.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Examples/Sample05_ConvertFromCoroutine.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets/Plugins/IngameDebugConsole/IngameDebugConsole.Runtime.asmdef" />
-    <None Include="Assets/Plugins/IngameDebugConsole/README.txt" />
+    <None Include="Assets/Plugins/UniRx/Examples/UniRx.Examples.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -415,92 +410,8 @@
       <HintPath>/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEditor.Graphs">
-      <HintPath>/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEditor.WebGL.Extensions">
-      <HintPath>/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEditor.LinuxStandalone.Extensions">
-      <HintPath>/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/PlaybackEngines/LinuxStandaloneSupport/UnityEditor.LinuxStandalone.Extensions.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.YamlDotNet">
-      <HintPath>Library/PackageCache/com.unity.visualscripting@1.9.4/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.ComponentModel.Annotations">
-      <HintPath>Assets/Packages/System.ComponentModel.Annotations.5.0.0/lib/netstandard2.1/System.ComponentModel.Annotations.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Threading.Channels">
-      <HintPath>Assets/Packages/System.Threading.Channels.8.0.0/lib/netstandard2.1/System.Threading.Channels.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>Assets/Packages/System.Runtime.CompilerServices.Unsafe.6.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Collections.LowLevel.ILSupport">
-      <HintPath>Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces">
-      <HintPath>Assets/Packages/Microsoft.Bcl.AsyncInterfaces.6.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="unityplastic">
-      <HintPath>Library/PackageCache/com.unity.collab-proxy@2.4.4/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Plastic.Antlr3.Runtime">
-      <HintPath>Library/PackageCache/com.unity.collab-proxy@2.4.4/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Plastic.Newtonsoft.Json">
-      <HintPath>Library/PackageCache/com.unity.collab-proxy@2.4.4/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="log4netPlastic">
-      <HintPath>Library/PackageCache/com.unity.collab-proxy@2.4.4/Lib/Editor/PlasticSCM/log4netPlastic.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.IonicZip">
-      <HintPath>Library/PackageCache/com.unity.visualscripting@1.9.4/Editor/VisualScripting.Core/Dependencies/DotNetZip/Unity.VisualScripting.IonicZip.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library/PackageCache/com.unity.visualscripting@1.9.4/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.TimeProvider">
-      <HintPath>Assets/Packages/Microsoft.Bcl.TimeProvider.8.0.0/lib/netstandard2.0/Microsoft.Bcl.TimeProvider.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NuGetForUnity.PluginAPI">
-      <HintPath>Library/PackageCache/com.github-glitchenzo.nugetforunity@90fa6db024/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>Library/PackageCache/com.unity.nuget.newtonsoft-json@3.2.1/Runtime/Newtonsoft.Json.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.VisualScripting.TextureAssets">
-      <HintPath>Library/PackageCache/com.unity.visualscripting@1.9.4/Editor/VisualScripting.Core/EditorAssetResources/Unity.VisualScripting.TextureAssets.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Mono.Cecil">
-      <HintPath>Library/PackageCache/com.unity.nuget.mono-cecil@1.11.4/Mono.Cecil.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AssimpNet">
-      <HintPath>Library/PackageCache/com.unity.robotics.urdf-importer@90f353e435/Runtime/UnityMeshImporter/Plugins/AssimpNet/AssimpNet.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="R3">
-      <HintPath>Assets/Packages/R3.1.2.6/lib/netstandard2.1/R3.dll</HintPath>
+    <Reference Include="nunit.framework">
+      <HintPath>Library/PackageCache/com.unity.ext.nunit@1.0.6/net35/unity-custom/nunit.framework.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="netstandard">
@@ -991,6 +902,14 @@
       <HintPath>/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/NetStandard/compat/2.1.0/shims/netfx/mscorlib.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.TestRunner">
+      <HintPath>Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEditor.TestRunner">
+      <HintPath>Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
       <Private>False</Private>
@@ -1001,6 +920,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="UniRx.csproj" />
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <ItemGroup>
