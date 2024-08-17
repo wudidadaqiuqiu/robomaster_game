@@ -6,3 +6,4 @@ Build
 Library/*
 *.log
 Temp
+Assets/Packages
