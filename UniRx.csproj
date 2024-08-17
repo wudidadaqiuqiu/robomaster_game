@@ -81,8 +81,8 @@
     <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/ObserveExtensions.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/Never.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/FromEvent.cs" />
-    <Compile Include="Assets/Plugins/UniRx/Scripts/Subjects/ConnectableObservable.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/Last.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Scripts/Subjects/ConnectableObservable.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableInitializePotentialDragTrigger.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableCancelTrigger.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableDeselectTrigger.cs" />
@@ -108,8 +108,8 @@
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/Merge.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/TakeUntil.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/Sample.cs" />
-    <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableUpdateSelectedTrigger.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/Scan.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/Triggers/ObservableUpdateSelectedTrigger.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Notifiers/BooleanNotifier.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/Timer.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Pair.cs" />
@@ -235,8 +235,8 @@
     <Compile Include="Assets/Plugins/UniRx/Scripts/Notifiers/ScheduledNotifier.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Schedulers/IScheduler.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Operators/Select.cs" />
-    <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/AsyncOperationExtensions.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/InternalUtil/CancellableTaskCompletionSource.cs" />
+    <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/AsyncOperationExtensions.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/System/IObserver.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/Schedulers/CurrentThreadScheduler.cs" />
     <Compile Include="Assets/Plugins/UniRx/Scripts/UnityEngineBridge/FrameInterval.cs" />
