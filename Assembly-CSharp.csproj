@@ -59,17 +59,19 @@
     <UnityVersion>2022.3.41f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="/home/xy/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.0.2/Analyzers/Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="/home/xy/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.0.3/Analyzers/Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/statics/prefabs/robots/input_manage.cs" />
     <Compile Include="Assets/statics/prefabs/player/player.cs" />
     <Compile Include="Assets/statics/prefabs/items/armor.cs" />
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/srv/ObjectPoseServiceResponse.cs" />
     <Compile Include="Assets/scripts/pub_behaviour.cs" />
     <Compile Include="Assets/statics/prefabs/player/head/set_color.cs" />
     <Compile Include="Assets/statics/interface_def/player.cs" />
+    <Compile Include="Assets/statics/prefabs/robots/robot_transform.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
     <Compile Include="Assets/statics/struct_def/team_info.cs" />
     <Compile Include="Assets/statics/project_settings/game_config.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="Assets/statics/prefabs/player/head/eye/eye.cs" />
     <Compile Include="Assets/statics/struct_def/game/light_state.cs" />
     <Compile Include="Assets/statics/interface_def/robot.cs" />
+    <Compile Include="Assets/statics/struct_def/game/robot_input.cs" />
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/srv/PositionServiceRequest.cs" />
     <Compile Include="Assets/scripts/sub_behaviour.cs" />
     <Compile Include="Assets/statics/ros/ros_connection.cs" />
@@ -89,6 +92,7 @@
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/srv/PositionServiceResponse.cs" />
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/srv/ObjectPoseServiceRequest.cs" />
     <Compile Include="Assets/statics/prefabs/player/input_manage.cs" />
+    <Compile Include="Assets/statics/prefabs/robots/robot.cs" />
     <Compile Include="Assets/scenes/game/pre_game_config.cs" />
   </ItemGroup>
   <ItemGroup>

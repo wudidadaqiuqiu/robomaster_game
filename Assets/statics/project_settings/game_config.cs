@@ -3,6 +3,8 @@ namespace ProjectSettings {
         public readonly static string main_scene_path = "scenes/game/game";
 
         public readonly static bool ros_debug = true;
+
+        public readonly static bool unity_debug = true;
     }
 
     public struct RosConfig {
