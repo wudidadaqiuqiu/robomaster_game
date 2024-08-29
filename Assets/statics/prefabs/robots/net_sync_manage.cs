@@ -53,13 +53,14 @@ public class net_transform : NetworkBehaviour
 
 
 struct PlayerNetworkState : INetworkSerializable {
-    private float _posX, _posZ;
+    private float _posX, _posY,_posZ;
     private short _rotY;
 
     internal Vector3 Position {
-        get => new(_posX, 0, _posZ);
+        get => new(_posX, _posY, _posZ);
         set {
             _posX = value.x;
+            _posY = value.y;
             _posZ = value.z;
         }
     }
@@ -71,6 +72,7 @@ struct PlayerNetworkState : INetworkSerializable {
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
         serializer.SerializeValue(ref _posX);
+        serializer.SerializeValue(ref _posY);
         serializer.SerializeValue(ref _posZ);
 
         serializer.SerializeValue(ref _rotY);
