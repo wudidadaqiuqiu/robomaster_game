@@ -76,8 +76,8 @@ public class input_manage : NetworkBehaviour, IRobotComponent
     private void TransmitStateServerRpc(InputNetworkStruct state) {
         input.Value = state;
         if (ProjectSettings.GameConfig.unity_debug) {
-            Debug.Log(state.keyboard_bits);
-            Debug.Log("server receive input");
+            // Debug.Log(state.keyboard_bits);
+            // Debug.Log("server receive input");
         }
         if (ProjectSettings.GameConfig.ros_debug)
         ROSConnector.publish(
@@ -88,7 +88,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
     }
 
     private void input_pub() {
-        Debug.Log("server input pub");
+        // Debug.Log("server input pub");
         RobotSubject.OnNext(input.Value);
     }
 

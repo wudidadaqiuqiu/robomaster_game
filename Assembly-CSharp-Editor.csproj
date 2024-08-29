@@ -979,8 +979,16 @@
       <HintPath>Library/ScriptAssemblies/UnityEngine.TestRunner.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Multiplayer.Tools.MetricEvents">
+      <HintPath>Library/ScriptAssemblies/Unity.Multiplayer.Tools.MetricEvents.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Burst.Editor">
@@ -1231,16 +1239,16 @@
       <HintPath>Library/ScriptAssemblies/Unity.VisualScripting.State.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Multiplayer.Tools.NetStatsReporting">
       <HintPath>Library/ScriptAssemblies/Unity.Multiplayer.Tools.NetStatsReporting.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Robotics.ROSTCPConnector.Messages">
       <HintPath>Library/ScriptAssemblies/Unity.Robotics.ROSTCPConnector.Messages.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.Multiplayer.Tools.MetricEvents">
-      <HintPath>Library/ScriptAssemblies/Unity.Multiplayer.Tools.MetricEvents.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Multiplayer.Tools.NetStatsMonitor.Component">

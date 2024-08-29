@@ -8,6 +8,7 @@ namespace Robots {
 
     public class robot_transform : MonoBehaviour, IRobotComponent {
         private Subject<object> RobotSubject;
+        private CharacterController characterController;
         public transform_property robot_x;
         public transform_property robot_y;
 
@@ -21,6 +22,7 @@ namespace Robots {
         }
 
         void Awake() {
+            characterController = GetComponent<CharacterController>();
         }
         void Start() {
             robot_x.Init();
@@ -36,14 +38,17 @@ namespace Robots {
         void Update() {
             if (input == null) return;
             if (input.keyboard_bits_get(keyboard_bits_order.W)) {
-                robot_x.Value += Time.deltaTime * 5;
+                characterController.Move(robot_x.dirction() * Time.deltaTime * 5);
             }
-            if (input.keyboard_bits_get(keyboard_bits_order.S))
-                robot_x.Value -= Time.deltaTime * 5;
-            if (input.keyboard_bits_get(keyboard_bits_order.A))
-                robot_y.Value += Time.deltaTime * 5;
-            if (input.keyboard_bits_get(keyboard_bits_order.D))
-                robot_y.Value -= Time.deltaTime * 5;
+            if (input.keyboard_bits_get(keyboard_bits_order.S)) {
+                characterController.Move(-robot_x.dirction() * Time.deltaTime * 5);
+            }
+            if (input.keyboard_bits_get(keyboard_bits_order.A)) {
+                characterController.Move(robot_y.dirction() * Time.deltaTime * 5);
+            }
+            if (input.keyboard_bits_get(keyboard_bits_order.D)) {
+                characterController.Move(-robot_y.dirction() * Time.deltaTime * 5);
+            }
         }
         void input_process(Robots.InputNetworkStruct _input) {
             // if (ProjectSettings.GameConfig.unity_debug)
@@ -61,9 +66,10 @@ namespace Robots {
         private object posrot;
         private System.Reflection.PropertyInfo property;
         private System.Reflection.FieldInfo field_info;
-        
+        private Vector3 direction_;
         
         public void Init() {
+            direction_ = Vector3.zero;
             property = _transform.GetType()
                         .GetProperty(property_name.Split('.')[0]);
             posrot = property
@@ -71,6 +77,16 @@ namespace Robots {
             field_info = posrot.GetType()
                         .GetField(property_name.Split('.')[1]);
             Debug.Assert(field_info != null, "field is null, " + property_name);
+            if (property_name.Split('.')[0] == "position") {
+                if (property_name.Split('.')[1] == "x") {
+                    direction_.x = is_reverse ? -1 : 1;
+                } else if (property_name.Split('.')[1] == "y") {
+                    direction_.y = is_reverse ? -1 : 1;
+                } else if (property_name.Split('.')[1] == "z") {
+                    direction_.z = is_reverse ? -1 : 1;
+                }
+                // Debug.Log(direction_);
+            }
         }
         public float Value {
             get {
@@ -88,6 +104,10 @@ namespace Robots {
                 // Debug.Log((Vector3)posrot);
                 property.SetValue(_transform, posrot, null);
             }
+        }
+
+        public ref Vector3 dirction() {
+            return ref direction_;
         }
 
     }
