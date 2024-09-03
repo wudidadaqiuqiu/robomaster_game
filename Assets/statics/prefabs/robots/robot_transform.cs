@@ -9,6 +9,8 @@ namespace Robots {
     public class robot_transform : MonoBehaviour, IRobotComponent {
         private Subject<object> RobotSubject;
         private CharacterController characterController;
+        private ground_check groundCheck;
+        private Vector3 velo;  
         public transform_property robot_x;
         public transform_property robot_y;
 
@@ -23,6 +25,8 @@ namespace Robots {
 
         void Awake() {
             characterController = GetComponent<CharacterController>();
+            groundCheck = GetComponentInChildren<ground_check>();
+            velo = Vector3.zero;
         }
         void Start() {
             robot_x.Init();
@@ -30,13 +34,18 @@ namespace Robots {
             yaw.Init();
             pitch.Init();
             chassis_yaw.Init();
-            
+
+            // server inner subscribe
             RobotSubject.Where(x => x is Robots.InputNetworkStruct)
                         .Subscribe(x => input_process((Robots.InputNetworkStruct)x)).AddTo(this);
         }
 
         void Update() {
             if (input == null) return;
+            if (groundCheck == null) {
+                Debug.Log("ground check is null");
+                return;
+            }
             if (input.keyboard_bits_get(keyboard_bits_order.W)) {
                 characterController.Move(robot_x.dirction() * Time.deltaTime * 5);
             }
@@ -49,6 +58,12 @@ namespace Robots {
             if (input.keyboard_bits_get(keyboard_bits_order.D)) {
                 characterController.Move(-robot_y.dirction() * Time.deltaTime * 5);
             }
+            velo.y -= Time.deltaTime * 9.8f;
+            if (groundCheck.IsGrounded() && velo.y < 0) {
+                velo.y = 0;
+            }
+            characterController.Move(velo * Time.deltaTime);
+            
         }
         void input_process(Robots.InputNetworkStruct _input) {
             // if (ProjectSettings.GameConfig.unity_debug)
