@@ -9,6 +9,8 @@ namespace Robots {
     public class robot_transform : MonoBehaviour, IRobotComponent {
         private Subject<object> RobotSubject;
         private CharacterController characterController;
+        private GameObject main_camera;
+        private float smooth_velocity;
         private ground_check groundCheck;
         private Vector3 velo;  
         public transform_property robot_x;
@@ -27,6 +29,7 @@ namespace Robots {
             characterController = GetComponent<CharacterController>();
             groundCheck = GetComponentInChildren<ground_check>();
             velo = Vector3.zero;
+            main_camera = GameObject.FindWithTag("MainCamera");
         }
         void Start() {
             robot_x.Init();
@@ -46,18 +49,36 @@ namespace Robots {
                 Debug.Log("ground check is null");
                 return;
             }
+            Vector3 direction = Vector3.zero;
             if (input.keyboard_bits_get(keyboard_bits_order.W)) {
-                characterController.Move(robot_x.dirction() * Time.deltaTime * 5);
+                // characterController.Move(robot_x.dirction() * Time.deltaTime * 5);
+                direction += robot_x.dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.S)) {
-                characterController.Move(-robot_x.dirction() * Time.deltaTime * 5);
+                // characterController.Move(-robot_x.dirction() * Time.deltaTime * 5);
+                direction -= robot_x.dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.A)) {
-                characterController.Move(robot_y.dirction() * Time.deltaTime * 5);
+                // characterController.Move(robot_y.dirction() * Time.deltaTime * 5);
+                direction += robot_y.dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.D)) {
-                characterController.Move(-robot_y.dirction() * Time.deltaTime * 5);
+                // characterController.Move(-robot_y.dirction() * Time.deltaTime * 5);
+                direction -= robot_y.dirction();
             }
+            direction.Normalize();
+            if (direction.magnitude > 0.1f) {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + main_camera.transform.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smooth_velocity, 0.1f);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+                Vector3 move_dir = Quaternion.Euler(0f, angle, 0f) * robot_x.dirction();
+                characterController.Move(move_dir * Time.deltaTime * 5);
+            }
+            // Debug.Log(input.mouse_x);
+            // yaw.Value -= input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor;
+
+
             velo.y -= Time.deltaTime * 9.8f;
             if (groundCheck.IsGrounded() && velo.y < 0) {
                 velo.y = 0;

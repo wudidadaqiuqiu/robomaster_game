@@ -27,7 +27,7 @@ public class camera_manage : NetworkBehaviour
             if (IsOwner) 
             {
                 camera_.SetActive(true);
-                third_person.GetComponent<CinemachineVirtualCamera>().enabled = true;
+                third_person.GetComponent<CinemachineFreeLook>().enabled = true;
                 first_person.GetComponent<CinemachineVirtualCamera>().enabled = false;
 
             }
@@ -41,8 +41,8 @@ public class camera_manage : NetworkBehaviour
     void Update() {
         if (!IsOwner) return;
         if (Input.GetKeyDown(KeyCode.F3)) {
-            third_person.GetComponent<CinemachineVirtualCamera>().enabled = 
-                !third_person.GetComponent<CinemachineVirtualCamera>().enabled;
+            third_person.GetComponent<CinemachineFreeLook>().enabled = 
+                !third_person.GetComponent<CinemachineFreeLook>().enabled;
             first_person.GetComponent<CinemachineVirtualCamera>().enabled = 
                 !first_person.GetComponent<CinemachineVirtualCamera>().enabled;
         }

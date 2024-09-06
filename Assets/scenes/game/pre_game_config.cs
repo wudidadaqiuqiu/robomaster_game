@@ -13,6 +13,7 @@ public class pre_game_config : MonoBehaviour
     [SerializeField] private Button hostbutton;
     [SerializeField] private Button clientbutton;
     public Camera pregamecamera;
+    public Camera ingamecamera;
     public Canvas pregamecanvas;
 
     void Start()
@@ -20,6 +21,10 @@ public class pre_game_config : MonoBehaviour
         // Debug.Log("buttons start");
         pregamecamera.enabled = true;
         pregamecanvas.enabled = true;
+
+        ingamecamera.enabled = false;
+        ingamecamera.GetComponent<AudioListener>().enabled = false;
+
         // ingamecamera.enabled = false;
 
         // 检查是否已分配按钮
@@ -46,7 +51,9 @@ public class pre_game_config : MonoBehaviour
         pregamecanvas.enabled = false;
         pregamecamera.enabled = false;
         pregamecamera.GetComponent<AudioListener>().enabled = false;
-        // ingamecamera.enabled = true;
+        
+        ingamecamera.enabled = true;
+        ingamecamera.GetComponent<AudioListener>().enabled = true;
     }
 
     public void OnClientButtonClick()
@@ -57,6 +64,9 @@ public class pre_game_config : MonoBehaviour
         pregamecanvas.enabled = false;
         pregamecamera.enabled = false;
         pregamecamera.GetComponent<AudioListener>().enabled = false;
+
+        ingamecamera.enabled = true;
+        ingamecamera.GetComponent<AudioListener>().enabled = true;
         // ingamecamera.enabled = true;
     }
 }

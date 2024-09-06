@@ -25,6 +25,18 @@ namespace Robots {
     {
         
         private ushort _keyboard_bits;
+        private float _mouse_x;
+        private float _mouse_y;
+
+        internal float mouse_x {
+            get => _mouse_x;
+            set => _mouse_x = value;
+        }
+
+        internal float mouse_y {
+            get => _mouse_y;
+            set => _mouse_y = value;
+        }
 
         internal ushort keyboard_bits {
             get => _keyboard_bits;
@@ -50,6 +62,8 @@ namespace Robots {
 
         public void assign(InputNetworkStruct o) {
             _keyboard_bits = o.keyboard_bits;
+            _mouse_x = o.mouse_x;
+            _mouse_y = o.mouse_y;
         }
 
         // 重写 Equals 方法
@@ -58,7 +72,7 @@ namespace Robots {
             if (obj is InputNetworkStruct)
             {
                 InputNetworkStruct p = (InputNetworkStruct)obj;
-                return _keyboard_bits == p._keyboard_bits;
+                return _keyboard_bits == p._keyboard_bits && _mouse_x == p.mouse_x && _mouse_y == p.mouse_y;
             }
             return false;
         }
@@ -87,6 +101,8 @@ namespace Robots {
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
             serializer.SerializeValue(ref _keyboard_bits);
+            serializer.SerializeValue(ref _mouse_x);
+            serializer.SerializeValue(ref _mouse_y);
         }
     }
 }

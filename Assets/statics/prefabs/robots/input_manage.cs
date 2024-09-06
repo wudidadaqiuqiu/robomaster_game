@@ -5,6 +5,7 @@ using RosMessageTypes.Unity;
 using InterfaceDef;
 
 using UniRx;
+using UnityEditor;
 
 namespace Robots {
 public class input_manage : NetworkBehaviour, IRobotComponent
@@ -60,6 +61,9 @@ public class input_manage : NetworkBehaviour, IRobotComponent
             nowinput.keyboard_bits_set(keyboard_bits_order.C, Input.GetKey(KeyCode.C));
             nowinput.keyboard_bits_set(keyboard_bits_order.V, Input.GetKey(KeyCode.V));
             nowinput.keyboard_bits_set(keyboard_bits_order.B, Input.GetKey(KeyCode.B));
+            nowinput.mouse_x = Input.GetAxis("Mouse X");
+            nowinput.mouse_y = Input.GetAxis("Mouse Y");
+
             // Debug.LogFormat("{0}, {1}", nowinput.keyboard_bits, lastinput.keyboard_bits);
             if (nowinput.keyboard_bits != lastinput.keyboard_bits) {
                 if (IsServer) {
