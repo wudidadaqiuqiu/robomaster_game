@@ -20,13 +20,14 @@ namespace Robots {
         V = 14,
         B = 15
     }
-
+    // class 不是struct
     public class InputNetworkStruct : INetworkSerializable, IEquatable<InputNetworkStruct>
     {
         
         private ushort _keyboard_bits;
         private float _mouse_x;
         private float _mouse_y;
+        private float _camera_rotate_y;
 
         internal float mouse_x {
             get => _mouse_x;
@@ -36,6 +37,10 @@ namespace Robots {
         internal float mouse_y {
             get => _mouse_y;
             set => _mouse_y = value;
+        }
+        internal float camera_rotate_y {
+            get => _camera_rotate_y;
+            set => _camera_rotate_y = value;
         }
 
         internal ushort keyboard_bits {
@@ -57,13 +62,15 @@ namespace Robots {
         }
 
         public bool Equals(InputNetworkStruct o) {
-            return _keyboard_bits == o.keyboard_bits;
+            return _keyboard_bits == o._keyboard_bits && _mouse_x == o.mouse_x && 
+                        _mouse_y == o.mouse_y && _camera_rotate_y == o.camera_rotate_y;
         }
 
         public void assign(InputNetworkStruct o) {
             _keyboard_bits = o.keyboard_bits;
             _mouse_x = o.mouse_x;
             _mouse_y = o.mouse_y;
+            _camera_rotate_y = o.camera_rotate_y;
         }
 
         // 重写 Equals 方法
@@ -71,8 +78,10 @@ namespace Robots {
         {
             if (obj is InputNetworkStruct)
             {
-                InputNetworkStruct p = (InputNetworkStruct)obj;
-                return _keyboard_bits == p._keyboard_bits && _mouse_x == p.mouse_x && _mouse_y == p.mouse_y;
+                // InputNetworkStruct p = (InputNetworkStruct)obj;
+                // return _keyboard_bits == p._keyboard_bits && _mouse_x == p.mouse_x && 
+                //         _mouse_y == p.mouse_y && _camera_rotate_y == p.camera_rotate_y;
+                return Equals((InputNetworkStruct)obj);
             }
             return false;
         }
@@ -80,7 +89,8 @@ namespace Robots {
         // 重写 GetHashCode 方法
         public override int GetHashCode()
         {
-            return _keyboard_bits.GetHashCode();
+            return (_keyboard_bits.ToString() + _mouse_x.ToString() + 
+                    _mouse_y.ToString() + _camera_rotate_y.ToString()).GetHashCode();
         }
 
 
@@ -103,6 +113,7 @@ namespace Robots {
             serializer.SerializeValue(ref _keyboard_bits);
             serializer.SerializeValue(ref _mouse_x);
             serializer.SerializeValue(ref _mouse_y);
+            serializer.SerializeValue(ref _camera_rotate_y);
         }
     }
 }

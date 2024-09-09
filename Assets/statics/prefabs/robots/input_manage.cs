@@ -18,6 +18,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
     private NetworkVariable<InputNetworkStruct> input;
     private InputNetworkStruct nowinput;
     private InputNetworkStruct lastinput; 
+    private GameObject main_camera;
     
     public void SetSubject(Subject<object> subject) {
         RobotSubject = subject;
@@ -28,6 +29,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
         input = new NetworkVariable<InputNetworkStruct>(writePerm: permission);
         nowinput = new InputNetworkStruct();
         lastinput = new InputNetworkStruct();
+        main_camera = GameObject.FindWithTag("MainCamera");
     }
 
     public override void OnNetworkSpawn() {
@@ -64,8 +66,12 @@ public class input_manage : NetworkBehaviour, IRobotComponent
             nowinput.mouse_x = Input.GetAxis("Mouse X");
             nowinput.mouse_y = Input.GetAxis("Mouse Y");
 
+
+            // Debug.LogFormat("{0}, {1}", nowinput.mouse_x, nowinput.mouse_y);
+            nowinput.camera_rotate_y = main_camera.transform.eulerAngles.y;
+
             // Debug.LogFormat("{0}, {1}", nowinput.keyboard_bits, lastinput.keyboard_bits);
-            if (nowinput.keyboard_bits != lastinput.keyboard_bits) {
+            if (nowinput != lastinput) {
                 if (IsServer) {
                     input.Value = nowinput;
                     input_pub();
@@ -80,7 +86,8 @@ public class input_manage : NetworkBehaviour, IRobotComponent
     private void TransmitStateServerRpc(InputNetworkStruct state) {
         input.Value = state;
         if (ProjectSettings.GameConfig.unity_debug) {
-            // Debug.Log(state.keyboard_bits);
+            // Debug.LogFormat("{0}, {1}, {2}", state.mouse_x, input.Value.camera_rotate_y, state.mouse_y);
+
             // Debug.Log("server receive input");
         }
         if (ProjectSettings.GameConfig.ros_debug)

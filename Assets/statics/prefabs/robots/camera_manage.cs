@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using Cinemachine;
+using StructDef.Game;
 
 namespace Robots {
 public class camera_manage : NetworkBehaviour
 {
     [SerializeField] private GameObject camera_;
-
+    private StateStore state_store;
     private Transform third_person;
+    private CinemachineVirtualCamera f_camera;
+    private CinemachineFreeLook t_camera;
     private Transform first_person;
 
     public void Awake() {
@@ -17,7 +20,12 @@ public class camera_manage : NetworkBehaviour
         first_person = camera_.transform.Find("firstperson");
         if (third_person == null || first_person == null) {
             Debug.LogError("Virtual Camera not found");
+        } else {
+            t_camera = third_person.GetComponent<CinemachineFreeLook>();
+            f_camera = first_person.GetComponent<CinemachineVirtualCamera>();
         }
+
+        state_store = GetComponent<StateStore>();
     }
     public override void OnNetworkSpawn()
     {
@@ -27,9 +35,10 @@ public class camera_manage : NetworkBehaviour
             if (IsOwner) 
             {
                 camera_.SetActive(true);
-                third_person.GetComponent<CinemachineFreeLook>().enabled = true;
-                first_person.GetComponent<CinemachineVirtualCamera>().enabled = false;
-
+                t_camera.enabled = true;
+                f_camera.enabled = false;
+                state_store.state.vision_mode = t_camera.enabled ?
+                    RobotVisionMode.third_person : RobotVisionMode.first_person;
             }
             else
             {
@@ -41,10 +50,11 @@ public class camera_manage : NetworkBehaviour
     void Update() {
         if (!IsOwner) return;
         if (Input.GetKeyDown(KeyCode.F3)) {
-            third_person.GetComponent<CinemachineFreeLook>().enabled = 
-                !third_person.GetComponent<CinemachineFreeLook>().enabled;
-            first_person.GetComponent<CinemachineVirtualCamera>().enabled = 
-                !first_person.GetComponent<CinemachineVirtualCamera>().enabled;
+            // Cursor.lockState = CursorLockMode.Locked;
+            t_camera.enabled = !t_camera.enabled;
+            f_camera.enabled = !f_camera.enabled;
+            state_store.state.vision_mode = t_camera.enabled ?
+                RobotVisionMode.third_person : RobotVisionMode.first_person;
         }
     }
 }

@@ -3,13 +3,14 @@ using InterfaceDef;
 using UnityEngine;
 using UniRx;
 using System;
+using Unity.Netcode;
 
 namespace Robots {
 
-    public class robot_transform : MonoBehaviour, IRobotComponent {
+    public class robot_transform : NetworkBehaviour, IRobotComponent {
         private Subject<object> RobotSubject;
+        private StateStore state_store;
         private CharacterController characterController;
-        private GameObject main_camera;
         private float smooth_velocity;
         private ground_check groundCheck;
         private Vector3 velo;  
@@ -29,7 +30,8 @@ namespace Robots {
             characterController = GetComponent<CharacterController>();
             groundCheck = GetComponentInChildren<ground_check>();
             velo = Vector3.zero;
-            main_camera = GameObject.FindWithTag("MainCamera");
+            input = new Robots.InputNetworkStruct();
+            state_store = GetComponent<StateStore>();
         }
         void Start() {
             robot_x.Init();
@@ -42,9 +44,26 @@ namespace Robots {
             RobotSubject.Where(x => x is Robots.InputNetworkStruct)
                         .Subscribe(x => input_process((Robots.InputNetworkStruct)x)).AddTo(this);
         }
+        void third_person_process(ref Vector3 direction) {
+            if (direction.magnitude > 0.1f) {
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + input.camera_rotate_y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smooth_velocity, 0.1f);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
+                Vector3 move_dir = Quaternion.Euler(0f, angle, 0f) * robot_x.dirction();
+                characterController.Move(move_dir * Time.deltaTime * 5);
+            }
+
+        }
+
+        void first_person_process(ref Vector3 direction) {
+            if (direction.magnitude > 0.1f) {
+                characterController.Move(transform.TransformDirection(direction) * Time.deltaTime * 5);
+            }
+        }
         void Update() {
-            if (input == null) return;
+            // if (input == null) return;
+            if (!IsServer) return;
             if (groundCheck == null) {
                 Debug.Log("ground check is null");
                 return;
@@ -67,16 +86,25 @@ namespace Robots {
                 direction -= robot_y.dirction();
             }
             direction.Normalize();
-            if (direction.magnitude > 0.1f) {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + main_camera.transform.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smooth_velocity, 0.1f);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if (!IsOwner)
+            Debug.Log("input mouse_x:" + input.mouse_x);
+            if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.first_person) {
+                // Cursor.lockState = CursorLockMode.Locked;
+                // Debug.Log(input.mouse_x);
+                // if (!IsOwner)
+                // transform.rotation = Quaternion.Euler(
+                //     0f, transform.eulerAngles.y - input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor, 0f);
+                // transform.Rotate(Vector3.up * input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor);
+                // transform.Rotate(Vector3.up, input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor);
+                // transform.rotation = Quaternion.Euler(0, 
+                //     transform.rotation.y - input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor, 0);
 
-                Vector3 move_dir = Quaternion.Euler(0f, angle, 0f) * robot_x.dirction();
-                characterController.Move(move_dir * Time.deltaTime * 5);
+                first_person_process(ref direction);
+            } else if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.third_person) {
+                third_person_process(ref direction);
+                // Cursor.lockState = CursorLockMode.Locked;
+                // Cursor.lockState = CursorLockMode.None;
             }
-            // Debug.Log(input.mouse_x);
-            // yaw.Value -= input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor;
 
 
             velo.y -= Time.deltaTime * 9.8f;
@@ -89,7 +117,7 @@ namespace Robots {
         void input_process(Robots.InputNetworkStruct _input) {
             // if (ProjectSettings.GameConfig.unity_debug)
             //     Debug.Log("input process sub");
-            input = _input;
+            input.assign(_input);
         }
     }
 

@@ -74,6 +74,7 @@
     <Compile Include="Assets/statics/interface_def/player.cs" />
     <Compile Include="Assets/statics/prefabs/robots/robot_transform.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Readme.cs" />
+    <Compile Include="Assets/statics/struct_def/game/robot_state.cs" />
     <Compile Include="Assets/statics/struct_def/team_info.cs" />
     <Compile Include="Assets/statics/project_settings/game_config.cs" />
     <Compile Include="Assets/statics/prefabs/robots/camera_manage.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Assets/statics/prefabs/robots/net_spawn.cs" />
     <Compile Include="Assets/statics/prefabs/player/head/eye/eye.cs" />
     <Compile Include="Assets/statics/struct_def/game/light_state.cs" />
+    <Compile Include="Assets/statics/prefabs/robots/state_store.cs" />
     <Compile Include="Assets/statics/interface_def/robot.cs" />
     <Compile Include="Assets/statics/struct_def/game/robot_input.cs" />
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/srv/PositionServiceRequest.cs" />
