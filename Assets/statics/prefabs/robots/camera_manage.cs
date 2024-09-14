@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Netcode;
 using Cinemachine;
 using StructDef.Game;
+using UniRx;
 
 namespace Robots {
 public class camera_manage : NetworkBehaviour
@@ -13,6 +14,7 @@ public class camera_manage : NetworkBehaviour
     private Transform third_person;
     private CinemachineVirtualCamera f_camera;
     private CinemachineFreeLook t_camera;
+    private GameObject main_camera;
     private Transform first_person;
 
     public void Awake() {
@@ -26,6 +28,17 @@ public class camera_manage : NetworkBehaviour
         }
 
         state_store = GetComponent<StateStore>();
+        main_camera = GameObject.FindWithTag("MainCamera");
+    }
+
+    void Start() {
+        // if (IsServer)
+        if (IsOwner) {
+            Observable.Interval(System.TimeSpan.FromSeconds(0.05))
+            .Subscribe(_ => {
+                state_store.camera_rotate_y = main_camera.transform.eulerAngles.y;
+            }).AddTo(this);            
+        }
     }
     public override void OnNetworkSpawn()
     {

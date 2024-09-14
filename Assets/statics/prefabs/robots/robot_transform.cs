@@ -49,7 +49,7 @@ namespace Robots {
         }
         void third_person_process(ref Vector3 direction) {
             if (direction.magnitude > 0.1f) {
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + input.camera_rotate_y;
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + state_store.camera_rotate_y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smooth_velocity, 0.1f);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 

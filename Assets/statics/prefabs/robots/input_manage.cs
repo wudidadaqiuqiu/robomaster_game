@@ -16,7 +16,6 @@ public class input_manage : NetworkBehaviour, IRobotComponent
     [SerializeField] private float delay = 0.1f;
     private InputNetworkStruct nowinput;
     private InputNetworkStruct lastinput; 
-    private GameObject main_camera;
     
     public void SetSubject(Subject<object> subject) {
         RobotSubject = subject;
@@ -26,7 +25,6 @@ public class input_manage : NetworkBehaviour, IRobotComponent
         var permission = _serverAuth ? NetworkVariableWritePermission.Server : NetworkVariableWritePermission.Owner;
         nowinput = new InputNetworkStruct();
         lastinput = new InputNetworkStruct();
-        main_camera = GameObject.FindWithTag("MainCamera");
     }
 
     public override void OnNetworkSpawn() {
@@ -63,7 +61,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
             nowinput.mouse_x = Input.GetAxis("Mouse X");
             nowinput.mouse_y = Input.GetAxis("Mouse Y");
 
-            nowinput.camera_rotate_y = main_camera.transform.eulerAngles.y;
+            // nowinput.camera_rotate_y = main_camera.transform.eulerAngles.y;
             if (nowinput != lastinput) {
                 if (IsServer) {
                     input_pub();
