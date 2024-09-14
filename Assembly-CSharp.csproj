@@ -79,6 +79,7 @@
     <Compile Include="Assets/statics/project_settings/game_config.cs" />
     <Compile Include="Assets/statics/prefabs/robots/camera_manage.cs" />
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/msg/PosRotMsg.cs" />
+    <Compile Include="Assets/statics/prefabs/robots/robot_config.cs" />
     <Compile Include="Assets/scenes/start/buttons.cs" />
     <Compile Include="Assets/statics/ros/RosMessages/UnityRoboticsDemo/msg/UnityColorMsg.cs" />
     <Compile Include="Assets/statics/prefabs/player/net_transform.cs" />

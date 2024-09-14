@@ -15,7 +15,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
     [SerializeField] private bool _serverAuth;
     [SerializeField] private float delay = 0.1f;
 
-    private NetworkVariable<InputNetworkStruct> input;
+    // private NetworkVariable<InputNetworkStruct> input;
     private InputNetworkStruct nowinput;
     private InputNetworkStruct lastinput; 
     private GameObject main_camera;
@@ -26,7 +26,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
 
     private void Awake() {
         var permission = _serverAuth ? NetworkVariableWritePermission.Server : NetworkVariableWritePermission.Owner;
-        input = new NetworkVariable<InputNetworkStruct>(writePerm: permission);
+        // input = new NetworkVariable<InputNetworkStruct>(writePerm: permission);
         nowinput = new InputNetworkStruct();
         lastinput = new InputNetworkStruct();
         main_camera = GameObject.FindWithTag("MainCamera");
@@ -73,7 +73,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
             // Debug.LogFormat("{0}, {1}", nowinput.keyboard_bits, lastinput.keyboard_bits);
             if (nowinput != lastinput) {
                 if (IsServer) {
-                    input.Value = nowinput;
+                    // input.Value = nowinput;
                     input_pub();
                 } else
                     TransmitStateServerRpc(nowinput);
@@ -84,7 +84,8 @@ public class input_manage : NetworkBehaviour, IRobotComponent
 
     [ServerRpc]
     private void TransmitStateServerRpc(InputNetworkStruct state) {
-        input.Value = state;
+        // input.Value = state;
+        nowinput = state;
         if (ProjectSettings.GameConfig.unity_debug) {
             // Debug.LogFormat("{0}, {1}, {2}", state.mouse_x, input.Value.camera_rotate_y, state.mouse_y);
 
@@ -100,7 +101,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
 
     private void input_pub() {
         // Debug.Log("server input pub");
-        RobotSubject.OnNext(input.Value);
+        RobotSubject.OnNext(nowinput);
     }
 
 

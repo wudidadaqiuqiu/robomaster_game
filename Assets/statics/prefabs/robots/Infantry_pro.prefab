@@ -1884,6 +1884,7 @@ GameObject:
   - component: {fileID: 1216516747517051918}
   - component: {fileID: 1161684674592091907}
   - component: {fileID: -7327160757361260066}
+  - component: {fileID: 107881724973232693}
   m_Layer: 6
   m_Name: Infantry_pro
   m_TagString: robot
@@ -1948,7 +1949,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2453684488
+  GlobalObjectIdHash: 3617420302
   InScenePlacedSourceGlobalObjectIdHash: 2453684488
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
@@ -2065,6 +2066,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera_: {fileID: 7903376532191864540}
+--- !u!114 &107881724973232693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5147714066339793767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33da474d8ebf821309bfdc114499964d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouse_sensitivity_hor: 30
+  mouse_sensitivity_ver: 0.5
 --- !u!1 &5448802232370305772
 GameObject:
   m_ObjectHideFlags: 0

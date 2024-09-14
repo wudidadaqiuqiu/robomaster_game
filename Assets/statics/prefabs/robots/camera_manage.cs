@@ -50,7 +50,7 @@ public class camera_manage : NetworkBehaviour
     void Update() {
         if (!IsOwner) return;
         if (Input.GetKeyDown(KeyCode.F3)) {
-            // Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = CursorLockMode.Locked;
             t_camera.enabled = !t_camera.enabled;
             f_camera.enabled = !f_camera.enabled;
             state_store.state.vision_mode = t_camera.enabled ?
