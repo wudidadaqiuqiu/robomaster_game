@@ -10,16 +10,17 @@ namespace Robots {
 public class camera_manage : NetworkBehaviour
 {
     [SerializeField] private GameObject camera_;
+    // [SerializeField] private GameObject first_person_camera;
     private StateStore state_store;
     private Transform third_person;
     private CinemachineVirtualCamera f_camera;
     private CinemachineFreeLook t_camera;
     private GameObject main_camera;
-    private Transform first_person;
+    [SerializeField] private Transform first_person;
 
     public void Awake() {
         third_person = camera_.transform.Find("thirdperson");
-        first_person = camera_.transform.Find("firstperson");
+        // first_person = transform.Find("firstperson");
         if (third_person == null || first_person == null) {
             Debug.LogError("Virtual Camera not found");
         } else {

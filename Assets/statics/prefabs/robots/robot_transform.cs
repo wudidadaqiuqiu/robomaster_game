@@ -62,6 +62,7 @@ namespace Robots {
         void first_person_process(ref Vector3 direction) {
             if (direction.magnitude > 0.1f) {
                 characterController.Move(transform.TransformDirection(direction) * Time.deltaTime * 5);
+
             }
         }
         void Update() {
@@ -89,6 +90,11 @@ namespace Robots {
             if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.first_person) {
                 transform.rotation = Quaternion.Euler(0, 
                     transform.eulerAngles.y + input.mouse_x * Time.deltaTime * config.mouse_sensitivity_hor, 0);
+                // pitch.Value += input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver;
+                pitch._transform.rotation = Quaternion.Euler(
+                    pitch._transform.eulerAngles.x - input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver,
+                    pitch._transform.eulerAngles.y,
+                    pitch._transform.eulerAngles.z);
                 first_person_process(ref direction);
             } else if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.third_person) {
                 third_person_process(ref direction);
@@ -112,7 +118,7 @@ namespace Robots {
 
     [System.Serializable]
     public class transform_property {
-        [SerializeField] private Transform _transform;
+        [SerializeField] public Transform _transform;
         [SerializeField] private string property_name;
         [SerializeField] private bool is_reverse = false;
 
@@ -154,7 +160,7 @@ namespace Robots {
                 // Debug.LogFormat("set: field is not null, {0}", property_name);
                 posrot = property.GetValue(_transform, null);
                 field_info.SetValue(posrot, value * (is_reverse ? -1 : 1));
-                // Debug.Log((Vector3)posrot);
+                // Debug.LogFormat("{0}, {1}", _transform.rotation, (Quaternion)posrot);
                 property.SetValue(_transform, posrot, null);
             }
         }
