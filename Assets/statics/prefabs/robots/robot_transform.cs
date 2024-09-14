@@ -4,10 +4,11 @@ using UnityEngine;
 using UniRx;
 using System;
 using Unity.Netcode;
+using UnityEngine.UIElements;
 
 namespace Robots {
 
-    public class robot_transform : NetworkBehaviour, IRobotComponent {
+    public class RobotTransform : NetworkBehaviour, IRobotComponent {
         private Subject<object> RobotSubject;
         private StateStore state_store;
         private CharacterController characterController;
@@ -91,10 +92,8 @@ namespace Robots {
                 transform.rotation = Quaternion.Euler(0, 
                     transform.eulerAngles.y + input.mouse_x * Time.deltaTime * config.mouse_sensitivity_hor, 0);
                 // pitch.Value += input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver;
-                pitch._transform.rotation = Quaternion.Euler(
-                    pitch._transform.eulerAngles.x - input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver,
-                    pitch._transform.eulerAngles.y,
-                    pitch._transform.eulerAngles.z);
+                pitch.rotate(input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver);
+
                 first_person_process(ref direction);
             } else if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.third_person) {
                 third_person_process(ref direction);
@@ -152,6 +151,7 @@ namespace Robots {
                 Debug.Assert(field_info != null);
                 if (field_info == null) return 0;
                 // Debug.LogFormat("get: field is not null, {0}", property_name);
+                // Debug.LogFormat("{0}", (float)field_info.GetValue(property.GetValue(_transform, null)) * (is_reverse ? -1 : 1));
                 return (float)field_info.GetValue(property.GetValue(_transform, null)) * (is_reverse ? -1 : 1);
             }
             set {
@@ -165,6 +165,40 @@ namespace Robots {
             }
         }
 
+        public void rotate(float delta) {
+            Vector3 euler = _transform.localEulerAngles;
+            if (property_name.Split('.')[1] == "x") {
+                euler.x += delta * (is_reverse ? -1 : 1);
+                euler.y = 0;
+                euler.z = 0;
+            }
+            else if (property_name.Split('.')[1] == "y") {
+                euler.y += delta * (is_reverse ? -1 : 1);
+                euler.x = 0;
+                euler.z = 0;
+            }
+            else if (property_name.Split('.')[1] == "z") {
+                euler.z += delta * (is_reverse ? -1 : 1);
+                euler.x = 0;
+                euler.y = 0;
+            }
+            _transform.localRotation = Quaternion.Euler(euler);
+        }
+        
+        public Quaternion get_target_localrotation(float ref_) {
+            Vector3 euler = _transform.localEulerAngles;
+            if (property_name.Split('.')[1] == "x") {
+                euler.x = ref_ * (is_reverse ? -1 : 1);
+            }
+            else if (property_name.Split('.')[1] == "y") {
+                euler.y = ref_ * (is_reverse ? -1 : 1);
+            }
+            else if (property_name.Split('.')[1] == "z") {
+                euler.z = ref_ * (is_reverse ? -1 : 1);
+            }
+            return Quaternion.Euler(euler);
+        }
+        
         public ref Vector3 dirction() {
             return ref direction_;
         }

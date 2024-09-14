@@ -2023,8 +2023,8 @@ MonoBehaviour:
     is_reverse: 1
   pitch:
     _transform: {fileID: 4712174874668932129}
-    property_name: eulerAngles.x
-    is_reverse: 1
+    property_name: localEulerAngles.x
+    is_reverse: 0
   chassis_yaw:
     _transform: {fileID: 769812557114100571}
     property_name: rotation.y

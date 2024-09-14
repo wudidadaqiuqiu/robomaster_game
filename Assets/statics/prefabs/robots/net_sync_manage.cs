@@ -12,9 +12,12 @@ public class net_transform : NetworkBehaviour
 
     private NetworkVariable<PlayerNetworkState> _playerState;
     private StateStore state_store;
+    private RobotTransform robot_transform;
+
     private void Awake() {
         _playerState = new NetworkVariable<PlayerNetworkState>();
         state_store = GetComponent<StateStore>();
+        robot_transform = GetComponent<RobotTransform>();
     }
 
     void Start() {
@@ -45,7 +48,8 @@ public class net_transform : NetworkBehaviour
         if (!IsServer) return;
         var state = new PlayerNetworkState {
             Position = transform.position,
-            Rotation = transform.rotation.eulerAngles
+            Rotation = transform.rotation.eulerAngles,
+            Pitch = robot_transform.pitch,
         };
 
         _playerState.Value = state;
@@ -62,6 +66,7 @@ public class net_transform : NetworkBehaviour
 
     private Vector3 _posVel;
     private float _rotVelY;
+    private float _pitchVel;
 
     private void ConsumeState() {
         // Here you'll find the cheapest, dirtiest interpolation you'll ever come across. Please do better in your game
@@ -69,6 +74,12 @@ public class net_transform : NetworkBehaviour
         
         transform.rotation = Quaternion.Euler(
             0, Mathf.SmoothDampAngle(transform.rotation.eulerAngles.y, _playerState.Value.Rotation.y, ref _rotVelY, _cheapInterpolationTime), 0);
+        // Debug.Log(_playerState.Value.pitch);
+
+        Quaternion targetrotation = robot_transform.pitch.get_target_localrotation(_playerState.Value.pitch);
+        robot_transform.pitch._transform.localRotation = Quaternion.Slerp(robot_transform.pitch._transform.localRotation, targetrotation, _cheapInterpolationTime);
+        
+        // robot_transform.pitch.Value = Mathf.SmoothDamp(robot_transform.pitch.Value, _playerState.Value.pitch, ref _pitchVel, _cheapInterpolationTime);
     }
     #endregion
 }
@@ -77,6 +88,7 @@ public class net_transform : NetworkBehaviour
 struct PlayerNetworkState : INetworkSerializable {
     private float _posX, _posY,_posZ;
     private float _rotY;
+    private float _pitch;
     // public StateStore.store_struct state_store_struct;
 
 
@@ -94,6 +106,16 @@ struct PlayerNetworkState : INetworkSerializable {
         set => _rotY = value.y;
     }
 
+    internal transform_property Pitch {
+        // get => new(0, _rotY, 0);
+        set => _pitch = value.Value;
+    }
+
+    internal float pitch {
+        get => _pitch;
+    }
+
+    
     // internal StateStore.store_struct StateStore {
     //     set => state_store_struct = value;
     // }
@@ -104,6 +126,7 @@ struct PlayerNetworkState : INetworkSerializable {
         serializer.SerializeValue(ref _posZ);
 
         serializer.SerializeValue(ref _rotY);
+        serializer.SerializeValue(ref _pitch);
         // serializer.SerializeValue(ref state_store_struct.state.vision_mode);
     }
 }
