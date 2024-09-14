@@ -64,7 +64,11 @@
     <Analyzer Include="/home/xy/Unity/Hub/Editor/2022.3.41f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/myresources/ui/Editor/Scripts/ExtendedColorPicker.cs" />
+    <Compile Include="Assets/myresources/ui/Editor/Scripts/InitShiftUI.cs" />
     <Compile Include="Assets/TutorialInfo/Scripts/Editor/ReadmeEditor.cs" />
+    <Compile Include="Assets/myresources/ui/Editor/Scripts/UIManagerEditor.cs" />
+    <Compile Include="Assets/myresources/ui/Editor/Scripts/ToolsMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
