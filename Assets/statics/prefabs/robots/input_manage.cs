@@ -14,8 +14,6 @@ public class input_manage : NetworkBehaviour, IRobotComponent
 
     [SerializeField] private bool _serverAuth;
     [SerializeField] private float delay = 0.1f;
-
-    // private NetworkVariable<InputNetworkStruct> input;
     private InputNetworkStruct nowinput;
     private InputNetworkStruct lastinput; 
     private GameObject main_camera;
@@ -26,7 +24,6 @@ public class input_manage : NetworkBehaviour, IRobotComponent
 
     private void Awake() {
         var permission = _serverAuth ? NetworkVariableWritePermission.Server : NetworkVariableWritePermission.Owner;
-        // input = new NetworkVariable<InputNetworkStruct>(writePerm: permission);
         nowinput = new InputNetworkStruct();
         lastinput = new InputNetworkStruct();
         main_camera = GameObject.FindWithTag("MainCamera");
@@ -66,14 +63,9 @@ public class input_manage : NetworkBehaviour, IRobotComponent
             nowinput.mouse_x = Input.GetAxis("Mouse X");
             nowinput.mouse_y = Input.GetAxis("Mouse Y");
 
-
-            // Debug.LogFormat("{0}, {1}", nowinput.mouse_x, nowinput.mouse_y);
             nowinput.camera_rotate_y = main_camera.transform.eulerAngles.y;
-
-            // Debug.LogFormat("{0}, {1}", nowinput.keyboard_bits, lastinput.keyboard_bits);
             if (nowinput != lastinput) {
                 if (IsServer) {
-                    // input.Value = nowinput;
                     input_pub();
                 } else
                     TransmitStateServerRpc(nowinput);
@@ -84,7 +76,6 @@ public class input_manage : NetworkBehaviour, IRobotComponent
 
     [ServerRpc]
     private void TransmitStateServerRpc(InputNetworkStruct state) {
-        // input.Value = state;
         nowinput = state;
         if (ProjectSettings.GameConfig.unity_debug) {
             // Debug.LogFormat("{0}, {1}, {2}", state.mouse_x, input.Value.camera_rotate_y, state.mouse_y);

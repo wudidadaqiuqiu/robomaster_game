@@ -73,41 +73,25 @@ namespace Robots {
             }
             Vector3 direction = Vector3.zero;
             if (input.keyboard_bits_get(keyboard_bits_order.W)) {
-                // characterController.Move(robot_x.dirction() * Time.deltaTime * 5);
                 direction += robot_x.dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.S)) {
-                // characterController.Move(-robot_x.dirction() * Time.deltaTime * 5);
                 direction -= robot_x.dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.A)) {
-                // characterController.Move(robot_y.dirction() * Time.deltaTime * 5);
                 direction += robot_y.dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.D)) {
-                // characterController.Move(-robot_y.dirction() * Time.deltaTime * 5);
                 direction -= robot_y.dirction();
             }
             direction.Normalize();
-            // if (!IsOwner)
             // Debug.Log("input mouse_x:" + input.mouse_x);
             if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.first_person) {
-                // Cursor.lockState = CursorLockMode.Locked;
-                // Debug.Log(input.mouse_x);
-                // if (!IsOwner)
-                // transform.rotation = Quaternion.Euler(
-                //     0f, transform.eulerAngles.y - input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor, 0f);
-                // transform.Rotate(Vector3.up * input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor);
-                // transform.Rotate(Vector3.up, input.mouse_x * Time.deltaTime * ProjectSettings.Params.mouse_sensitivity_hor);
-                // Debug.LogFormat("{0}, {1}",transform.eulerAngles.y, input.mouse_x);
                 transform.rotation = Quaternion.Euler(0, 
                     transform.eulerAngles.y + input.mouse_x * Time.deltaTime * config.mouse_sensitivity_hor, 0);
-                // transform.rotation = Quaternion.Euler(50, 0, 0);
                 first_person_process(ref direction);
             } else if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.third_person) {
                 third_person_process(ref direction);
-                // Cursor.lockState = CursorLockMode.Locked;
-                // Cursor.lockState = CursorLockMode.None;
             }
 
 
@@ -121,7 +105,7 @@ namespace Robots {
         void input_process(Robots.InputNetworkStruct _input) {
             // if (ProjectSettings.GameConfig.unity_debug)
             // Debug.Log("input process sub");
-            Debug.Log(_input.keyboard_bits);
+            // Debug.Log(_input.keyboard_bits);
             input.assign(_input);
         }
     }

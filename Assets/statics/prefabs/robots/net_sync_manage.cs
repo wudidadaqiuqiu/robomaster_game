@@ -8,7 +8,7 @@ namespace Robots
 
 public class net_transform : NetworkBehaviour
 {
-    [SerializeField] private float _cheapInterpolationTime = 0.1f;
+    [SerializeField] private float _cheapInterpolationTime = 0.01f;
 
     private NetworkVariable<PlayerNetworkState> _playerState;
     private StateStore state_store;
@@ -76,7 +76,7 @@ public class net_transform : NetworkBehaviour
 
 struct PlayerNetworkState : INetworkSerializable {
     private float _posX, _posY,_posZ;
-    private short _rotY;
+    private float _rotY;
     // public StateStore.store_struct state_store_struct;
 
 
@@ -91,7 +91,7 @@ struct PlayerNetworkState : INetworkSerializable {
 
     internal Vector3 Rotation {
         get => new(0, _rotY, 0);
-        set => _rotY = (short)value.y;
+        set => _rotY = value.y;
     }
 
     // internal StateStore.store_struct StateStore {
