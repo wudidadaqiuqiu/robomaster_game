@@ -43,21 +43,14 @@ public class camera_manage : NetworkBehaviour
     }
     public override void OnNetworkSpawn()
     {
-        if (camera_ != null)
-        {
-            // Debug.Log("Player camera found: " + fpcamera.name);
-            if (IsOwner) 
-            {
-                camera_.SetActive(true);
-                t_camera.enabled = true;
-                f_camera.enabled = false;
-                state_store.state.vision_mode = t_camera.enabled ?
-                    RobotVisionMode.third_person : RobotVisionMode.first_person;
-            }
-            else
-            {
-                camera_.SetActive(false);
-            }
+        if (IsOwner) {
+            t_camera.enabled = true;
+            f_camera.enabled = false;
+            state_store.state.vision_mode = t_camera.enabled ?
+                RobotVisionMode.third_person : RobotVisionMode.first_person;
+        } else {
+            t_camera.enabled = false;
+            f_camera.enabled = false;
         }
     }
 
