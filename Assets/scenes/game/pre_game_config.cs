@@ -20,7 +20,7 @@ public class pre_game_config : MonoBehaviour
     public Camera pregamecamera;
     public Camera ingamecamera;
     public Canvas pregamecanvas;
-    private ProjectSettings.ClientConfig clientConfig;
+    public ProjectSettings.InGameConfig config;
 
     void Start()
     {
@@ -51,7 +51,10 @@ public class pre_game_config : MonoBehaviour
 
     public void OnHostButtonClick()
     {
-        // 在这里添加你想要执行的逻辑
+        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "yaml", false)[0];
+        client_change_config(path);
+
+
         Debug.Log("Starting Host...");
         NetworkManager.Singleton.StartHost();
         pregamecanvas.enabled = false;
@@ -84,11 +87,11 @@ public class pre_game_config : MonoBehaviour
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)  // see height_in_inches in sample yml 
             .Build();
-        clientConfig = deserializer.Deserialize<ProjectSettings.ClientConfig>(content);
-        Debug.Log(clientConfig.ip + clientConfig.port);
+        config = deserializer.Deserialize<ProjectSettings.InGameConfig>(content);
+        Debug.Log(config.ip + config.port);
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        transport.ConnectionData.Address = clientConfig.ip;
-        transport.ConnectionData.Port = clientConfig.port;
+        transport.ConnectionData.Address = config.ip;
+        transport.ConnectionData.Port = config.port;
     }
 }
 

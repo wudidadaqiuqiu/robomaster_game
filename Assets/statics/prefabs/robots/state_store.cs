@@ -9,6 +9,8 @@ namespace Robots {
         public RobotState state;
         public float camera_rotate_y;
 
+        public ProjectSettings.InGameConfig config;
+
         // [System.Serializable]
         public struct store_struct : INetworkSerializable{
             public RobotState state;
