@@ -1,9 +1,0 @@
-*.vscode
-*Logs
-Assets/Plugins/*
-*meta
-Build
-Library/*
-*.log
-Temp
-Assets/Packages
