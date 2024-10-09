@@ -12,4 +12,9 @@ namespace ProjectSettings {
         public readonly static int ros_port = 10000;
         public readonly static string input_keyboard_bits_topic = "unity/input/keyboard_bits";
     }
+
+    public class ClientConfig {
+        public string ip;
+        public ushort port;
+    }
 }
