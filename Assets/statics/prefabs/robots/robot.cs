@@ -24,7 +24,7 @@ public class Robot : MonoBehaviour
 
     private void Start()
     {
-        RobotSubject.OnNext(new team_info());
+        // RobotSubject.OnNext(new team_info());
     }
 
     private void OnDestroy()

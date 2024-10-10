@@ -27,7 +27,23 @@ public class net_transform : NetworkBehaviour
                         .Subscribe(_ => {
                             TransmitStateServerRpc(state_store.get_struct());
                         }).AddTo(this);
+
+                Observable.Interval(System.TimeSpan.FromSeconds(0.5))
+                        .Where(_ => state_store.config.has_init)
+                        .First() // 执行一次
+                        .Subscribe(_ => {
+                            TransmitInGameConfigServerRpc(state_store.get_ingame_config());
+                            // Debug.Log("TransmitInGameConfigServerRpc");
+                        }).AddTo(this);
             }
+        }
+
+        if (!IsServer && !IsOwner) {
+            Observable.Interval(System.TimeSpan.FromSeconds(0.5))
+                .Where(_ => !state_store.config.has_init)
+                .Subscribe(_ => {
+                    RequestInGameConfigServerRpc();
+                }).AddTo(this);
         }
     }
         private void Update() {
@@ -40,6 +56,25 @@ public class net_transform : NetworkBehaviour
     [ServerRpc]
     private void TransmitStateServerRpc(StateStore.store_struct state) {
         state_store.my_struct_change(ref state);
+    }
+
+
+    [ServerRpc]
+    private void TransmitInGameConfigServerRpc(StateStore.ingame_config config) {
+        state_store.my_ingame_coonfig_change(ref config);
+    }
+
+    // 非owner 客户端发出请求
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestInGameConfigServerRpc() {
+        if (state_store.config.has_init)
+            TransmitInGameConfigClientRpc(state_store.get_ingame_config());
+    }
+
+    [ClientRpc]
+    private void TransmitInGameConfigClientRpc(StateStore.ingame_config config) {
+        state_store.my_ingame_coonfig_change(ref config);
+        // Debug.Log(config.team_Info.camp);
     }
 
     #region Transmit State

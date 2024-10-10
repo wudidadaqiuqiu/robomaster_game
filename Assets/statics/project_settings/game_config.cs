@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 
 namespace ProjectSettings {
@@ -24,5 +25,7 @@ namespace ProjectSettings {
         public ushort port;
         public string team;
         public ushort id;
+
+        public bool has_init = false;
     }
 }

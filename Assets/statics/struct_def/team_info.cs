@@ -10,7 +10,7 @@ public enum camp_info {
 
 public struct team_info {
     public camp_info camp;
-    public int id;
+    public ushort id;
 }
 
 }

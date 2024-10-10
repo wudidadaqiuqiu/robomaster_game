@@ -2,6 +2,17 @@ namespace StructDef.Game {
     /// <summary>
     /// 灯光状态。
     /// </summary>
+    public struct LightData {
+        public LightColor color;
+        public LightState state;
+    }
+
+    public enum LightColor {
+        red,
+        blue
+    }
+
+
     public enum LightState
     {
         /// <summary>

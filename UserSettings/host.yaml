@@ -2,3 +2,4 @@ ip: "127.0.0.1"
 port: 7777
 team: "red"
 id: 1
+has_init: true
