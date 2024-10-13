@@ -1116,6 +1116,12 @@ MonoBehaviour:
   pregamecamera: {fileID: 1719868177}
   ingamecamera: {fileID: 1537970909}
   pregamecanvas: {fileID: 698272835}
+  config:
+    ip: 
+    port: 0
+    team: 
+    id: 0
+    has_init: 0
 --- !u!1 &1124082176
 GameObject:
   m_ObjectHideFlags: 0
@@ -1820,6 +1826,7 @@ GameObject:
   - component: {fileID: 2044335470}
   - component: {fileID: 2044335469}
   - component: {fileID: 2044335468}
+  - component: {fileID: 2044335471}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -1836,7 +1843,7 @@ Transform:
   m_GameObject: {fileID: 2044335466}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.23, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1913,6 +1920,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044335466}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &2044335471
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044335466}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
