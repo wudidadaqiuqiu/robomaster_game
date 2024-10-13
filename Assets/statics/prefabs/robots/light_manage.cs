@@ -19,19 +19,18 @@ namespace Robots {
         }
         
         public void Start() {
-            // if (IsServer) {
-                Observable.Interval(System.TimeSpan.FromSeconds(0.04))
-                .Where(_ => state_store.config.has_init)
-                .First()
-                .Subscribe(_ => {
-                    var s = new LightData {
-                        color = state_store.config.team == "red" ? LightColor.red : LightColor.blue,
-                        state = LightState.on 
-                    };
-                    _subject.OnNext(s);
-                    // Debug.Log(state_store.config);
-                }).AddTo(this);
-            // }
+            // 执行一次
+            Observable.Interval(System.TimeSpan.FromSeconds(0.5))
+            .Where(_ => state_store.config.has_init)
+            .First()
+            .Subscribe(_ => {
+                var s = new LightData {
+                    color = state_store.config.team == "red" ? LightColor.red : LightColor.blue,
+                    state = LightState.bright
+                };
+                _subject.OnNext(s);
+                // Debug.Log(state_store.config);
+            }).AddTo(this);
         }
     }
 }

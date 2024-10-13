@@ -16,14 +16,16 @@ namespace Robots {
 
         public void SetSubject(Subject<object> subject) {
             _subject = subject;
-            _subject.Where(x => x is LightState).Subscribe(x => {
-                on_light_state_change((LightState)x);
+            _subject.Where(x => x is LightData).Subscribe(x => {
+                on_light_state_change((LightData)x);
+                // Debug.Log("light data subscribe");
             }).AddTo(this);
         }
         
         private void Awake() {
             light_material = GetComponent<Renderer>().material;
             normal_color = light_material.color;
+            // Debug.LogFormat("normal color: {0}", normal_color);
         }
 
         private void Start() {
@@ -35,14 +37,14 @@ namespace Robots {
         }
         private void material_light(bool on) {
             light_material.SetColor("_EmissionColor", 
-                on ? normal_color * 1.5f : normal_color * 0.0f);
+                on ? normal_color * 10.0f : normal_color * 0.0f);
         }
 
-        private void on_light_state_change(LightState state) {
-            if (state != LightState.twink) {
+        private void on_light_state_change(LightData data) {
+            if (data.state != LightState.twink) {
                 stop_twink();
             }
-            switch (state) {
+            switch (data.state) {
                 case LightState.bright:
                     material_light(true);
                     break;

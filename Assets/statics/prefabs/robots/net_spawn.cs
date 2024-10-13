@@ -15,7 +15,8 @@ namespace Robots
                 transform.position = new Vector3(Random.Range(-10, 10), 1, Random.Range(-10, 10));
             }
 
-            if (IsOwner) {
+            if (IsOwner)
+            {
                 var state_store = GetComponent<StateStore>();
                 GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(ProjectSettings.GameConfig.game_config_tag);
                 Debug.Assert(gameObjects.Length == 1);

@@ -28,9 +28,9 @@ public class input_manage : NetworkBehaviour, IRobotComponent
     }
 
     public override void OnNetworkSpawn() {
-        if (IsServer && ProjectSettings.GameConfig.ros_debug) {
-            ROSConnector.register_publisher<InputKeyboardBitsMsg>(ProjectSettings.RosConfig.input_keyboard_bits_topic);
-        }
+        // if (IsServer && ProjectSettings.GameConfig.ros_debug) {
+        //     ROSConnector.register_publisher<InputKeyboardBitsMsg>(ProjectSettings.RosConfig.input_keyboard_bits_topic);
+        // }
     }
 
     private void Update()
@@ -80,10 +80,10 @@ public class input_manage : NetworkBehaviour, IRobotComponent
 
             // Debug.Log("server receive input");
         }
-        if (ProjectSettings.GameConfig.ros_debug)
-        ROSConnector.publish(
-            ProjectSettings.RosConfig.input_keyboard_bits_topic, 
-            new InputKeyboardBitsMsg(state.keyboard_bits));
+        // if (ProjectSettings.GameConfig.ros_debug)
+        // ROSConnector.publish(
+        //     ProjectSettings.RosConfig.input_keyboard_bits_topic, 
+        //     new InputKeyboardBitsMsg(state.keyboard_bits));
 
         input_pub();
     }
