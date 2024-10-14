@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace Robots {
 
-public class ground_check : MonoBehaviour {
+public class GroundCheck : MonoBehaviour {
     private bool isGrounded = false;
     public LayerMask groundLayer;
     [SerializeField] private float groundCheckRadius = 0.2f;

@@ -6,7 +6,7 @@ using Game;
 namespace Robots
 {
 
-    public class net_spawn : NetworkBehaviour
+    public class NetSpawn : NetworkBehaviour
     {
         public override void OnNetworkSpawn()
         {

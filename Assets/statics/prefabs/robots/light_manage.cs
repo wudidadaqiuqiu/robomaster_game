@@ -5,7 +5,7 @@ using UniRx;
 using StructDef.Game;
 
 namespace Robots {
-    class light_manage : NetworkBehaviour, IRobotComponent {
+    class LightManage : NetworkBehaviour, IRobotComponent {
         private Subject<object> _subject;
         private StateStore state_store;
 

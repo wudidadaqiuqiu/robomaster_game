@@ -4,9 +4,9 @@ using UnityEngine;
 using InterfaceDef;
 using StructDef.Game;
 
-namespace Robots {
+namespace RoboticItems {
 
-    public class lignt_control : MonoBehaviour, IRobotComponent {
+    public class LigntControl : MonoBehaviour, IRobotComponent {
         private Subject<object> _subject;
 
         Material light_material;

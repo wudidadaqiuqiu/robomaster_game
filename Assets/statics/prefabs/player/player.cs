@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        PlayerSubject.OnNext(new team_info());
+        PlayerSubject.OnNext(new TeamInfo());
     }
 
     private void OnDestroy()

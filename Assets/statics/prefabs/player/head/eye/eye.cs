@@ -10,7 +10,7 @@ public class Eye : MonoBehaviour, IPlayerComponent {
     {
         playerSubject = subject;
 
-        playerSubject.Where(x => x is StructDef.TeamInfo.team_info).Subscribe(_ => {
+        playerSubject.Where(x => x is StructDef.TeamInfo.TeamInfo).Subscribe(_ => {
             Debug.Log("eye Rceeived TeamInfo message");
             // 在这里处理接收到的 TeamInfo 消息
         }

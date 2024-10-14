@@ -6,7 +6,7 @@ namespace Robots
 {
 
 
-public class net_transform : NetworkBehaviour
+public class NetTransform : NetworkBehaviour
 {
     [SerializeField] private float _cheapInterpolationTime = 0.01f;
 
@@ -25,14 +25,14 @@ public class net_transform : NetworkBehaviour
             if (!IsServer) {
                 Observable.Interval(System.TimeSpan.FromSeconds(0.05))
                         .Subscribe(_ => {
-                            TransmitStateServerRpc(state_store.get_struct());
+                            TransmitStateServerRpc(state_store.GetStruct());
                         }).AddTo(this);
 
                 Observable.Interval(System.TimeSpan.FromSeconds(0.5))
                         .Where(_ => state_store.config.has_init)
                         .First() // 执行一次
                         .Subscribe(_ => {
-                            TransmitInGameConfigServerRpc(state_store.get_ingame_config());
+                            TransmitInGameConfigServerRpc(state_store.GetIngameConfig());
                             // Debug.Log("TransmitInGameConfigServerRpc");
                         }).AddTo(this);
             }
@@ -54,26 +54,26 @@ public class net_transform : NetworkBehaviour
     }
     
     [ServerRpc]
-    private void TransmitStateServerRpc(StateStore.store_struct state) {
-        state_store.my_struct_change(ref state);
+    private void TransmitStateServerRpc(StateStore.StoreStruct state) {
+        state_store.ChangeMyStruct(ref state);
     }
 
 
     [ServerRpc]
     private void TransmitInGameConfigServerRpc(StateStore.ingame_config config) {
-        state_store.my_ingame_coonfig_change(ref config);
+        state_store.ChangeMyIngameConfig(ref config);
     }
 
     // 非owner 客户端发出请求
     [ServerRpc(RequireOwnership = false)]
     private void RequestInGameConfigServerRpc() {
         if (state_store.config.has_init)
-            TransmitInGameConfigClientRpc(state_store.get_ingame_config());
+            TransmitInGameConfigClientRpc(state_store.GetIngameConfig());
     }
 
     [ClientRpc]
     private void TransmitInGameConfigClientRpc(StateStore.ingame_config config) {
-        state_store.my_ingame_coonfig_change(ref config);
+        state_store.ChangeMyIngameConfig(ref config);
         // Debug.Log(config.team_Info.camp);
     }
 
@@ -111,7 +111,7 @@ public class net_transform : NetworkBehaviour
             0, Mathf.SmoothDampAngle(transform.rotation.eulerAngles.y, _playerState.Value.Rotation.y, ref _rotVelY, _cheapInterpolationTime), 0);
         // Debug.Log(_playerState.Value.pitch);
 
-        Quaternion targetrotation = robot_transform.pitch.get_target_localrotation(_playerState.Value.pitch);
+        Quaternion targetrotation = robot_transform.pitch.GetTargetLocalRotation(_playerState.Value.pitch);
         robot_transform.pitch._transform.localRotation = Quaternion.Slerp(robot_transform.pitch._transform.localRotation, targetrotation, _cheapInterpolationTime);
         
         // robot_transform.pitch.Value = Mathf.SmoothDamp(robot_transform.pitch.Value, _playerState.Value.pitch, ref _pitchVel, _cheapInterpolationTime);
@@ -141,7 +141,7 @@ struct PlayerNetworkState : INetworkSerializable {
         set => _rotY = value.y;
     }
 
-    internal transform_property Pitch {
+    internal TransformProperty Pitch {
         // get => new(0, _rotY, 0);
         set => _pitch = value.Value;
     }

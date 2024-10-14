@@ -5,6 +5,7 @@ using UniRx;
 using System;
 using Unity.Netcode;
 using UnityEngine.UIElements;
+using StructDef.Game;
 
 namespace Robots {
 
@@ -13,16 +14,16 @@ namespace Robots {
         private StateStore state_store;
         private CharacterController characterController;
         private float smooth_velocity;
-        private ground_check groundCheck;
+        private GroundCheck groundCheck;
         private Vector3 velo;  
-        public transform_property robot_x;
-        public transform_property robot_y;
+        public TransformProperty robot_x;
+        public TransformProperty robot_y;
 
-        public transform_property yaw;
-        public transform_property pitch;
-        public transform_property chassis_yaw;
+        public TransformProperty yaw;
+        public TransformProperty pitch;
+        public TransformProperty chassis_yaw;
         
-        private Robots.InputNetworkStruct input;
+        private StructDef.Game.InputNetworkData input;
         private RobotConfig config;
 
         public void SetSubject(Subject<object> subject) {
@@ -31,9 +32,9 @@ namespace Robots {
 
         void Awake() {
             characterController = GetComponent<CharacterController>();
-            groundCheck = GetComponentInChildren<ground_check>();
+            groundCheck = GetComponentInChildren<GroundCheck>();
             velo = Vector3.zero;
-            input = new Robots.InputNetworkStruct();
+            input = new StructDef.Game.InputNetworkData();
             state_store = GetComponent<StateStore>();
             config = GetComponent<RobotConfig>();
         }
@@ -45,8 +46,8 @@ namespace Robots {
             chassis_yaw.Init();
 
             // server inner subscribe
-            RobotSubject.Where(x => x is Robots.InputNetworkStruct)
-                        .Subscribe(x => input_process((Robots.InputNetworkStruct)x)).AddTo(this);
+            RobotSubject.Where(x => x is StructDef.Game.InputNetworkData)
+                        .Subscribe(x => input_process((StructDef.Game.InputNetworkData)x)).AddTo(this);
         }
         void third_person_process(ref Vector3 direction) {
             if (direction.magnitude > 0.1f) {
@@ -54,7 +55,7 @@ namespace Robots {
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref smooth_velocity, 0.1f);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-                Vector3 move_dir = Quaternion.Euler(0f, angle, 0f) * robot_x.dirction();
+                Vector3 move_dir = Quaternion.Euler(0f, angle, 0f) * robot_x.Dirction();
                 characterController.Move(move_dir * Time.deltaTime * 5);
             }
 
@@ -75,16 +76,16 @@ namespace Robots {
             }
             Vector3 direction = Vector3.zero;
             if (input.keyboard_bits_get(keyboard_bits_order.W)) {
-                direction += robot_x.dirction();
+                direction += robot_x.Dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.S)) {
-                direction -= robot_x.dirction();
+                direction -= robot_x.Dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.A)) {
-                direction += robot_y.dirction();
+                direction += robot_y.Dirction();
             }
             if (input.keyboard_bits_get(keyboard_bits_order.D)) {
-                direction -= robot_y.dirction();
+                direction -= robot_y.Dirction();
             }
             direction.Normalize();
             // Debug.Log("input mouse_x:" + input.mouse_x);
@@ -92,7 +93,7 @@ namespace Robots {
                 transform.rotation = Quaternion.Euler(0, 
                     transform.eulerAngles.y + input.mouse_x * Time.deltaTime * config.mouse_sensitivity_hor, 0);
                 // pitch.Value += input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver;
-                pitch.rotate(input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver);
+                pitch.Rotate(input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver);
 
                 first_person_process(ref direction);
             } else if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.third_person) {
@@ -107,7 +108,7 @@ namespace Robots {
             characterController.Move(velo * Time.deltaTime);
             
         }
-        void input_process(Robots.InputNetworkStruct _input) {
+        void input_process(StructDef.Game.InputNetworkData _input) {
             // if (ProjectSettings.GameConfig.unity_debug)
             // Debug.Log("input process sub");
             // Debug.Log(_input.keyboard_bits);
@@ -116,7 +117,7 @@ namespace Robots {
     }
 
     [System.Serializable]
-    public class transform_property {
+    public class TransformProperty {
         [SerializeField] public Transform _transform;
         [SerializeField] private string property_name;
         [SerializeField] private bool is_reverse = false;
@@ -165,7 +166,7 @@ namespace Robots {
             }
         }
 
-        public void rotate(float delta) {
+        public void Rotate(float delta) {
             Vector3 euler = _transform.localEulerAngles;
             if (property_name.Split('.')[1] == "x") {
                 euler.x += delta * (is_reverse ? -1 : 1);
@@ -185,7 +186,7 @@ namespace Robots {
             _transform.localRotation = Quaternion.Euler(euler);
         }
         
-        public Quaternion get_target_localrotation(float ref_) {
+        public Quaternion GetTargetLocalRotation(float ref_) {
             Vector3 euler = _transform.localEulerAngles;
             if (property_name.Split('.')[1] == "x") {
                 euler.x = ref_ * (is_reverse ? -1 : 1);
@@ -199,7 +200,7 @@ namespace Robots {
             return Quaternion.Euler(euler);
         }
         
-        public ref Vector3 dirction() {
+        public ref Vector3 Dirction() {
             return ref direction_;
         }
 

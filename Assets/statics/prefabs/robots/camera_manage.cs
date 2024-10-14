@@ -7,7 +7,7 @@ using StructDef.Game;
 using UniRx;
 
 namespace Robots {
-public class camera_manage : NetworkBehaviour
+public class CameraManage : NetworkBehaviour
 {
     [SerializeField] private GameObject camera_;
     // [SerializeField] private GameObject first_person_camera;

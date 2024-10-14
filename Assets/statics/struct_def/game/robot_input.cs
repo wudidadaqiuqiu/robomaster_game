@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using System;
 
-namespace Robots {
+namespace StructDef.Game {
     public enum keyboard_bits_order : int {
         W = 0,
         S = 1,
@@ -21,7 +21,7 @@ namespace Robots {
         B = 15
     }
     // class 不是struct
-    public class InputNetworkStruct : INetworkSerializable, IEquatable<InputNetworkStruct>
+    public class InputNetworkData : INetworkSerializable, IEquatable<InputNetworkData>
     {
         
         private ushort _keyboard_bits;
@@ -61,12 +61,12 @@ namespace Robots {
             return (_keyboard_bits & (ushort)(1 << (int)bit)) != 0;
         }
 
-        public bool Equals(InputNetworkStruct o) {
+        public bool Equals(InputNetworkData o) {
             return _keyboard_bits == o._keyboard_bits && _mouse_x == o.mouse_x && 
                         _mouse_y == o.mouse_y;
         }
 
-        public void assign(InputNetworkStruct o) {
+        public void assign(InputNetworkData o) {
             _keyboard_bits = o.keyboard_bits;
             _mouse_x = o.mouse_x;
             _mouse_y = o.mouse_y;
@@ -75,12 +75,12 @@ namespace Robots {
         // 重写 Equals 方法
         public override bool Equals(object obj)
         {
-            if (obj is InputNetworkStruct)
+            if (obj is InputNetworkData)
             {
                 // InputNetworkStruct p = (InputNetworkStruct)obj;
                 // return _keyboard_bits == p._keyboard_bits && _mouse_x == p.mouse_x && 
                 //         _mouse_y == p.mouse_y && _camera_rotate_y == p.camera_rotate_y;
-                return Equals((InputNetworkStruct)obj);
+                return Equals((InputNetworkData)obj);
             }
             return false;
         }
@@ -93,7 +93,7 @@ namespace Robots {
         }
 
 
-        public static bool operator ==(InputNetworkStruct p1, InputNetworkStruct p2)
+        public static bool operator ==(InputNetworkData p1, InputNetworkData p2)
         {
             if (p1 is null && p2 is null) return true;
             if (p1 is null || p2 is null) return false;
@@ -101,7 +101,7 @@ namespace Robots {
         }
 
         
-        public static bool operator !=( InputNetworkStruct p1,  InputNetworkStruct p2)
+        public static bool operator !=( InputNetworkData p1,  InputNetworkData p2)
         {
             if (p1 is null && p2 is null) return false;
             if (p1 is null || p2 is null) return true;

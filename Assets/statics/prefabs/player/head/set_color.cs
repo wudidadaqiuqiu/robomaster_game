@@ -10,7 +10,7 @@ public class setColor : MonoBehaviour, IPlayerComponent {
     {
         playerSubject = subject;
 
-        playerSubject.Where(x => x is StructDef.TeamInfo.team_info).Subscribe(_ => {
+        playerSubject.Where(x => x is StructDef.TeamInfo.TeamInfo).Subscribe(_ => {
             Debug.Log("haed Rceeived TeamInfo message");
             // 在这里处理接收到的 TeamInfo 消息
         }

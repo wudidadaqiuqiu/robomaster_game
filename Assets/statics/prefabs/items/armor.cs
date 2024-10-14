@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Robots {
+namespace RoboticItems {
     class Armor : MonoBehaviour
     {
         void OnTriggerEnter(Collider other) {

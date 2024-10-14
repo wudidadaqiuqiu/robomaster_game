@@ -13,7 +13,7 @@ namespace Robots {
         public ProjectSettings.InGameConfig config;
 
         // [System.Serializable]
-        public struct store_struct : INetworkSerializable{
+        public struct StoreStruct : INetworkSerializable{
             public RobotState state;
             public float camera_rotate_y;
             public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
@@ -24,7 +24,7 @@ namespace Robots {
         }
 
         public struct ingame_config : INetworkSerializable {
-            public team_info team_Info;
+            public TeamInfo team_Info;
             
             public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
                 serializer.SerializeValue(ref team_Info.camp);
@@ -32,37 +32,37 @@ namespace Robots {
             }
         }
 
-        public void struct_change(ref store_struct s) {
+        public void ChangeStoreStruct(ref StoreStruct s) {
             s.state = state;
             s.camera_rotate_y = camera_rotate_y;
         }
 
-        public void my_struct_change(ref store_struct s) {
+        public void ChangeMyStruct(ref StoreStruct s) {
             state = s.state;
             camera_rotate_y = s.camera_rotate_y;
         }
 
-        public store_struct get_struct() {
-            store_struct s = new store_struct();
-            struct_change(ref s);
+        public StoreStruct GetStruct() {
+            StoreStruct s = new StoreStruct();
+            ChangeStoreStruct(ref s);
             return s;
         }
 
-        public void ingame_config_change(ref ingame_config s) {
-            s.team_Info.camp = config.team == "red" ? camp_info.camp_red : camp_info.camp_blue;
+        public void ChangeIngameConfig(ref ingame_config s) {
+            s.team_Info.camp = config.team == "red" ? CampInfo.camp_red : CampInfo.camp_blue;
             s.team_Info.id = config.id;
         }
 
-        public void my_ingame_coonfig_change(ref ingame_config s) {
+        public void ChangeMyIngameConfig(ref ingame_config s) {
             config.id = s.team_Info.id;
-            config.team = s.team_Info.camp == camp_info.camp_red ? "red" : "blue";
+            config.team = s.team_Info.camp == CampInfo.camp_red ? "red" : "blue";
             config.has_init = true;
             // Debug.Log("my_ingame_coonfig_change");
         }
 
-        public ingame_config get_ingame_config() {
+        public ingame_config GetIngameConfig() {
             ingame_config s = new ingame_config();
-            ingame_config_change(ref s);
+            ChangeIngameConfig(ref s);
             return s;
         }
     }

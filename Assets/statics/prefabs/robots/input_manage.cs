@@ -6,16 +6,17 @@ using InterfaceDef;
 
 using UniRx;
 using UnityEditor;
+using StructDef.Game;
 
 namespace Robots {
-public class input_manage : NetworkBehaviour, IRobotComponent
+public class InputManage : NetworkBehaviour, IRobotComponent
 {
     private Subject<object> RobotSubject;
 
     [SerializeField] private bool _serverAuth;
     [SerializeField] private float delay = 0.1f;
-    private InputNetworkStruct nowinput;
-    private InputNetworkStruct lastinput; 
+    private InputNetworkData nowinput;
+    private InputNetworkData lastinput; 
     
     public void SetSubject(Subject<object> subject) {
         RobotSubject = subject;
@@ -23,8 +24,8 @@ public class input_manage : NetworkBehaviour, IRobotComponent
 
     private void Awake() {
         var permission = _serverAuth ? NetworkVariableWritePermission.Server : NetworkVariableWritePermission.Owner;
-        nowinput = new InputNetworkStruct();
-        lastinput = new InputNetworkStruct();
+        nowinput = new InputNetworkData();
+        lastinput = new InputNetworkData();
     }
 
     public override void OnNetworkSpawn() {
@@ -73,7 +74,7 @@ public class input_manage : NetworkBehaviour, IRobotComponent
     }
 
     [ServerRpc]
-    private void TransmitStateServerRpc(InputNetworkStruct state) {
+    private void TransmitStateServerRpc(InputNetworkData state) {
         nowinput = state;
         if (ProjectSettings.GameConfig.unity_debug) {
             // Debug.LogFormat("{0}, {1}, {2}", state.mouse_x, input.Value.camera_rotate_y, state.mouse_y);
