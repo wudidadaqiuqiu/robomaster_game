@@ -23,7 +23,7 @@ namespace Robots {
 
         }
 
-        public struct ingame_config : INetworkSerializable {
+        public struct IngameConfig : INetworkSerializable {
             public TeamInfo team_Info;
             
             public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
@@ -48,20 +48,20 @@ namespace Robots {
             return s;
         }
 
-        public void ChangeIngameConfig(ref ingame_config s) {
+        public void ChangeIngameConfig(ref IngameConfig s) {
             s.team_Info.camp = config.team == "red" ? CampInfo.camp_red : CampInfo.camp_blue;
             s.team_Info.id = config.id;
         }
 
-        public void ChangeMyIngameConfig(ref ingame_config s) {
+        public void ChangeMyIngameConfig(ref IngameConfig s) {
             config.id = s.team_Info.id;
             config.team = s.team_Info.camp == CampInfo.camp_red ? "red" : "blue";
             config.has_init = true;
             // Debug.Log("my_ingame_coonfig_change");
         }
 
-        public ingame_config GetIngameConfig() {
-            ingame_config s = new ingame_config();
+        public IngameConfig GetIngameConfig() {
+            IngameConfig s = new IngameConfig();
             ChangeIngameConfig(ref s);
             return s;
         }

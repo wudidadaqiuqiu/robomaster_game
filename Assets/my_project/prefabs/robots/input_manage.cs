@@ -23,7 +23,6 @@ public class InputManage : NetworkBehaviour, IRobotComponent
     }
 
     private void Awake() {
-        var permission = _serverAuth ? NetworkVariableWritePermission.Server : NetworkVariableWritePermission.Owner;
         nowinput = new InputNetworkData();
         lastinput = new InputNetworkData();
     }
@@ -65,7 +64,7 @@ public class InputManage : NetworkBehaviour, IRobotComponent
             // nowinput.camera_rotate_y = main_camera.transform.eulerAngles.y;
             if (nowinput != lastinput) {
                 if (IsServer) {
-                    input_pub();
+                    InputPub();
                 } else
                     TransmitStateServerRpc(nowinput);
             }
@@ -86,10 +85,10 @@ public class InputManage : NetworkBehaviour, IRobotComponent
         //     ProjectSettings.RosConfig.input_keyboard_bits_topic, 
         //     new InputKeyboardBitsMsg(state.keyboard_bits));
 
-        input_pub();
+        InputPub();
     }
 
-    private void input_pub() {
+    private void InputPub() {
         // Debug.Log("server input pub");
         RobotSubject.OnNext(nowinput);
     }

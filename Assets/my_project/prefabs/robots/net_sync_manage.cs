@@ -60,7 +60,7 @@ public class NetTransform : NetworkBehaviour
 
 
     [ServerRpc]
-    private void TransmitInGameConfigServerRpc(StateStore.ingame_config config) {
+    private void TransmitInGameConfigServerRpc(StateStore.IngameConfig config) {
         state_store.ChangeMyIngameConfig(ref config);
     }
 
@@ -72,7 +72,7 @@ public class NetTransform : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void TransmitInGameConfigClientRpc(StateStore.ingame_config config) {
+    private void TransmitInGameConfigClientRpc(StateStore.IngameConfig config) {
         state_store.ChangeMyIngameConfig(ref config);
         // Debug.Log(config.team_Info.camp);
     }
