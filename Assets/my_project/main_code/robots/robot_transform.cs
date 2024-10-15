@@ -46,8 +46,11 @@ namespace Robots {
             chassis_yaw.Init();
 
             // server inner subscribe
-            RobotSubject.Where(x => x is StructDef.Game.InputNetworkData)
+            if (IsServer) {
+                RobotSubject.Where(x => x is StructDef.Game.InputNetworkData)
                         .Subscribe(x => input_process((StructDef.Game.InputNetworkData)x)).AddTo(this);
+            
+            }
         }
         void third_person_process(ref Vector3 direction) {
             if (direction.magnitude > 0.1f) {

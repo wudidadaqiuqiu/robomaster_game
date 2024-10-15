@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
+using Unity.Entities;
 using ROS.ROSConnect;
 using RosMessageTypes.Unity;
 using InterfaceDef;
@@ -17,7 +18,7 @@ public class InputManage : NetworkBehaviour, IRobotComponent
     [SerializeField] private float delay = 0.1f;
     private InputNetworkData nowinput;
     private InputNetworkData lastinput; 
-    
+
     public void SetSubject(Subject<object> subject) {
         RobotSubject = subject;
     }
@@ -58,15 +59,20 @@ public class InputManage : NetworkBehaviour, IRobotComponent
             nowinput.keyboard_bits_set(keyboard_bits_order.C, Input.GetKey(KeyCode.C));
             nowinput.keyboard_bits_set(keyboard_bits_order.V, Input.GetKey(KeyCode.V));
             nowinput.keyboard_bits_set(keyboard_bits_order.B, Input.GetKey(KeyCode.B));
+            
+            nowinput.SetMouseButtonBits(mouse_button_order.Left, Input.GetMouseButton(0));
+            nowinput.SetMouseButtonBits(mouse_button_order.Right, Input.GetMouseButton(1));
+            nowinput.SetMouseButtonBits(mouse_button_order.Middle, Input.GetMouseButton(2));
+
             nowinput.mouse_x = Input.GetAxis("Mouse X");
             nowinput.mouse_y = Input.GetAxis("Mouse Y");
 
             // nowinput.camera_rotate_y = main_camera.transform.eulerAngles.y;
             if (nowinput != lastinput) {
-                if (IsServer) {
-                    InputPub();
-                } else
+                InputPub();
+                if (!IsServer) {
                     TransmitStateServerRpc(nowinput);
+                }
             }
             lastinput.assign(nowinput);
         }

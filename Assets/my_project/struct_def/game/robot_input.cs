@@ -20,11 +20,21 @@ namespace StructDef.Game {
         V = 14,
         B = 15
     }
+
+
+    public enum mouse_button_order : int {
+        Left = 0,
+        Right = 1,
+        Middle = 2,
+        X1 = 3,
+        X2 = 4
+    }
     // class 不是struct
     public class InputNetworkData : INetworkSerializable, IEquatable<InputNetworkData>
     {
         
         private ushort _keyboard_bits;
+        public byte _mouse_button_bits;
         private float _mouse_x;
         private float _mouse_y;
         // private float _camera_rotate_y;
@@ -57,19 +67,33 @@ namespace StructDef.Game {
             }
         }
 
+        public void SetMouseButtonBits(mouse_button_order bit, bool value) {
+            if (value) {
+                _mouse_button_bits |= (byte)(1 << (int)bit);
+            }
+            else {
+                _mouse_button_bits &= (byte)~(1 << (int)bit);
+            }
+        }
+
         public bool keyboard_bits_get(keyboard_bits_order bit) {
             return (_keyboard_bits & (ushort)(1 << (int)bit)) != 0;
         }
 
+        public bool GetMouseButtonBits(mouse_button_order bit) {
+            return (_mouse_button_bits & (byte)(1 << (int)bit)) != 0;
+        }
+
         public bool Equals(InputNetworkData o) {
             return _keyboard_bits == o._keyboard_bits && _mouse_x == o.mouse_x && 
-                        _mouse_y == o.mouse_y;
+                        _mouse_y == o.mouse_y && _mouse_button_bits == o._mouse_button_bits;
         }
 
         public void assign(InputNetworkData o) {
             _keyboard_bits = o.keyboard_bits;
             _mouse_x = o.mouse_x;
             _mouse_y = o.mouse_y;
+            _mouse_button_bits = o._mouse_button_bits;
         }
 
         // 重写 Equals 方法
@@ -89,7 +113,7 @@ namespace StructDef.Game {
         public override int GetHashCode()
         {
             return (_keyboard_bits.ToString() + '_' + _mouse_x.ToString() + '_' +
-                    _mouse_y.ToString()).GetHashCode();
+                    _mouse_y.ToString() + '_' + _mouse_button_bits.ToString()).GetHashCode();
         }
 
 
@@ -110,6 +134,7 @@ namespace StructDef.Game {
 
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter {
             serializer.SerializeValue(ref _keyboard_bits);
+            serializer.SerializeValue(ref _mouse_button_bits);
             serializer.SerializeValue(ref _mouse_x);
             serializer.SerializeValue(ref _mouse_y);
         }
