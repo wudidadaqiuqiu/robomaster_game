@@ -15,7 +15,7 @@ namespace Robots {
         private CharacterController characterController;
         private float smooth_velocity;
         private GroundCheck groundCheck;
-        private Vector3 velo;  
+        [SerializeField] private Vector3 velo;  
         public TransformProperty robot_x;
         public TransformProperty robot_y;
 
