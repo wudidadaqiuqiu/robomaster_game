@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
+using StructDef.TeamInfo;
 
 namespace ProjectSettings {
     public struct GameConfig {
@@ -27,5 +28,27 @@ namespace ProjectSettings {
         public ushort id;
 
         public bool has_init = false;
+
+        public CampInfo ToCampInfo() {
+            CampInfo campinfo;
+            if (team == "red") {
+                campinfo = CampInfo.camp_red;
+            } else if (team == "blue") {
+                campinfo = CampInfo.camp_blue;
+            } else {
+                campinfo = CampInfo.camp_none;
+            }
+            return campinfo;
+        }
+
+        public int ToIntId() {
+            CampInfo campInfo = ToCampInfo();
+            return (int)campInfo * 100 + id;
+        }
+
+        public IdentityId ToIdentityId() {
+            return new IdentityId(ToIntId());
+        }
+        
     }
 }

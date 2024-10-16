@@ -7,12 +7,15 @@ using InterfaceDef;
 using UniRx;
 using StructDef.Game;
 using Unity.Entities;
+using StructDef.TeamInfo;
+using RefereeRelated;
 
 namespace RoboticItems
 {
     class ShootControl : MonoBehaviour, IRobotComponent
     {
         private Subject<object> _subject;
+        IdentityId id;
         [SerializeField] private Entity shooter_entity;
         private EntityManager entity_manager;
         private ShooterComponentData _data;
@@ -39,6 +42,9 @@ namespace RoboticItems
         public void SetSubject(Subject<object> subject)
         {
             _subject = subject;
+            _subject.Where(x => x is IdentityId)
+            .Subscribe(x => id = (IdentityId)x)
+            .AddTo(this);
 
             _subject.Where(x => x is InputNetworkData)
             .Subscribe(x =>
@@ -62,7 +68,7 @@ namespace RoboticItems
 
         private bool RefereeAllowed()
         {
-            return true;
+            return Referee.Singleton.AllowToShoot(id);
         }
     }
 }

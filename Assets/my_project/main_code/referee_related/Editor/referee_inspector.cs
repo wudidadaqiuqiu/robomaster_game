@@ -16,7 +16,7 @@ namespace RefereeRelated
             {
                 foreach (var entry in referee.Robots)
                 {
-                    EditorGUILayout.LabelField($"ID: {entry.Key} Count: {entry.Value.Count}");
+                    EditorGUILayout.LabelField($"ID: {entry.Key.ToString()} Count: {entry.Value.Count}");
                 }
             }
         }

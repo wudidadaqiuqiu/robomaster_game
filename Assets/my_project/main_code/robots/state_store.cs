@@ -5,21 +5,17 @@ using StructDef.Game;
 using UniRx;
 using StructDef.TeamInfo;
 using RefereeRelated;
+using InterfaceDef;
 
 namespace Robots {
-    public class StateStore: MonoBehaviour {
+    public class StateStore: MonoBehaviour, IRobotComponent {
         public RobotState state;
         public float camera_rotate_y;
 
         public ProjectSettings.InGameConfig config;
+        private Subject<object> _subject;
 
         void Start() {
-            Observable.Interval(System.TimeSpan.FromSeconds(0.1))
-            .Where(_ => config.has_init)
-            .First()
-            .Subscribe(_ => {
-                Referee.Singleton.AddRobot(this, config.id);
-            }).AddTo(this);
         }
 
         // [System.Serializable]
@@ -74,6 +70,18 @@ namespace Robots {
             IngameConfig s = new IngameConfig();
             ChangeIngameConfig(ref s);
             return s;
+        }
+
+        public void SetSubject(Subject<object> subject)
+        {
+            _subject = subject;
+            Observable.Interval(System.TimeSpan.FromSeconds(0.1))
+            .Where(_ => config.has_init)
+            .First()
+            .Subscribe(_ => {
+                _subject.OnNext(config.ToIdentityId());
+                Referee.Singleton.AddRobot(this, config.ToIdentityId());
+            }).AddTo(this);
         }
     }
 }

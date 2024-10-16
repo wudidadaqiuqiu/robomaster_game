@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Robots;
+using StructDef.TeamInfo;
 using UnityEngine;
 
 namespace RefereeRelated
@@ -8,8 +9,8 @@ namespace RefereeRelated
     public class Referee : MonoBehaviour
     {
         private static Referee _instance;
-        private static Dictionary<int, List<StateStore>> robots = new();
-        public Dictionary<int, List<StateStore>> Robots => robots; // 添加此属性以访问机器人的字典
+        private static Dictionary<IdentityId, List<StateStore>> robots = new();
+        public Dictionary<IdentityId, List<StateStore>> Robots => robots; // 添加此属性以访问机器人的字典
         private static readonly object _lock = new object();
 
         private Referee() { }
@@ -35,7 +36,7 @@ namespace RefereeRelated
             }
         }
 
-        public void AddRobot(StateStore robot, int id)
+        public void AddRobot(StateStore robot, IdentityId id)
         {
             lock (_lock)     // 确保线程安全
             {
@@ -48,7 +49,7 @@ namespace RefereeRelated
             }
         }
 
-        public List<StateStore> GetRobots(int id)
+        public List<StateStore> GetRobots(IdentityId id)
         {
             lock (_lock) // 确保线程安全
             {
@@ -58,6 +59,18 @@ namespace RefereeRelated
                 }
                 return new List<StateStore>(); // 返回空列表，如果没有找到
             }
+        }
+
+        public bool AllowToShoot(IdentityId id) {
+            // return true;
+            if (robots.TryGetValue(id, out var robotList)) {
+                if (robotList.Count == 1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
         }
     }
 
