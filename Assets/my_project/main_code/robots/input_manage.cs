@@ -1,12 +1,8 @@
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Entities;
-using ROS.ROSConnect;
-using RosMessageTypes.Unity;
 using InterfaceDef;
 
 using UniRx;
-using UnityEditor;
 using StructDef.Game;
 
 namespace Robots {
@@ -40,9 +36,6 @@ public class InputManage : NetworkBehaviour, IRobotComponent
         // Debug.Log("input manage update");
         if (IsOwner)
         {
-            // Debug.Log("owner update input");
-
-
             nowinput.keyboard_bits_set(keyboard_bits_order.W, Input.GetKey(KeyCode.W));
             nowinput.keyboard_bits_set(keyboard_bits_order.S, Input.GetKey(KeyCode.S));
             nowinput.keyboard_bits_set(keyboard_bits_order.A, Input.GetKey(KeyCode.A));
@@ -70,9 +63,6 @@ public class InputManage : NetworkBehaviour, IRobotComponent
             // nowinput.camera_rotate_y = main_camera.transform.eulerAngles.y;
             if (nowinput != lastinput) {
                 InputPub();
-                // if (!IsServer) {
-                //     TransmitStateServerRpc(nowinput);
-                // }
             }
             lastinput.assign(nowinput);
         }

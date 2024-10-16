@@ -3,7 +3,6 @@ using Unity.Netcode;
 using UniRx;
 using InterfaceDef;
 using StructDef.Game;
-using Unity.VisualScripting;
 
 namespace Robots
 {
@@ -27,23 +26,6 @@ public class NetTransform : NetworkBehaviour, IRobotComponent
     }
 
     void Start() {
-        if (IsOwner) {
-            if (!IsServer) {
-                Observable.Interval(System.TimeSpan.FromSeconds(0.05))
-                        .Subscribe(_ => {
-                            TransmitStateServerRpc(state_store.GetStruct());
-                        }).AddTo(this);
-
-                Observable.Interval(System.TimeSpan.FromSeconds(0.5))
-                        .Where(_ => state_store.config.has_init)
-                        .First() // 执行一次
-                        .Subscribe(_ => {
-                            TransmitInGameConfigServerRpc(state_store.GetIngameConfig());
-                            // Debug.Log("TransmitInGameConfigServerRpc");
-                        }).AddTo(this);
-            }
-        }
-
         if (!IsServer && !IsOwner) {
             Observable.Interval(System.TimeSpan.FromSeconds(0.5))
                 .Where(_ => !state_store.config.has_init)
@@ -53,6 +35,18 @@ public class NetTransform : NetworkBehaviour, IRobotComponent
         }
 
         if (IsOwner && !IsServer) {
+            Observable.Interval(System.TimeSpan.FromSeconds(0.05))
+                    .Subscribe(_ => {
+                        TransmitStateServerRpc(state_store.GetStruct());
+                    }).AddTo(this);
+
+            Observable.Interval(System.TimeSpan.FromSeconds(0.5))
+                    .Where(_ => state_store.config.has_init)
+                    .First() // 执行一次
+                    .Subscribe(_ => {
+                        TransmitInGameConfigServerRpc(state_store.GetIngameConfig());
+                        // Debug.Log("TransmitInGameConfigServerRpc");
+                    }).AddTo(this);
             // Debug.Log("subscribing to subject");
             _subject.Where(x => x is InputNetworkData)
             .Subscribe(x => {
@@ -128,12 +122,7 @@ public class NetTransform : NetworkBehaviour, IRobotComponent
 
         _playerState.Value = state;
     }
-
-    private void update_player_state(ref PlayerNetworkState state) {
-        state.Position = transform.position;
-        state.Rotation = transform.rotation.eulerAngles;
-        // state_store.struct_change(ref state.state_store_struct);
-    }
+    
     #endregion
 
     #region Interpolate State

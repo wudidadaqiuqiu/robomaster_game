@@ -9,8 +9,6 @@ using StructDef.Game;
 using Unity.Entities;
 using StructDef.TeamInfo;
 using RefereeRelated;
-using Unity.VisualScripting;
-using Cinemachine.Utility;
 
 namespace RoboticItems
 {
