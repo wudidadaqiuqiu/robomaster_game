@@ -1,12 +1,12 @@
 
 
 using UnityEngine;
-
+using Unity.Entities;
 using InterfaceDef;
 
 using UniRx;
 using StructDef.Game;
-using Unity.Entities;
+
 using StructDef.TeamInfo;
 using RefereeRelated;
 
@@ -16,21 +16,25 @@ namespace RoboticItems
     {
         private Subject<object> _subject;
         IdentityId id;
-        [SerializeField] private Entity shooter_entity;
+        private Entity shooter_entity;
         private EntityManager entity_manager;
-        private ShooterComponentData _data;
+        public ShooterComponentData _data;
 
+        public GameObject bullet_prefab;
         void Start()
         {
             entity_manager = World.DefaultGameObjectInjectionWorld.EntityManager;
             shooter_entity = entity_manager.CreateEntity(typeof(ShooterComponentData));
             _data.type = ShooterType.None;
+            // GetEntity
+            // _data.bullet_prefab = Get(bullet_prefab, TransformUsageFlags.Dynamic);
             entity_manager.SetComponentData(shooter_entity, _data);
         }
 
         public virtual void SetParams()
         {
             _data.type = ShooterType.Small;
+            _data.delta_time = 0.1f;
         }
 
         private void SetData()
