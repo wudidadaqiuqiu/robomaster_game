@@ -23,6 +23,8 @@ namespace Robots
                 state_store.config = gameObjects[0].GetComponent<pre_game_config>().config;
                 // Debug.Log("config to state store success");
             }
+
+            if (!IsOwner) Destroy(GetComponent<InputManage>());
         }
     }
 }
