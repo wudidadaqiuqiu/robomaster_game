@@ -9,6 +9,8 @@ using StructDef.Game;
 using Unity.Entities;
 using StructDef.TeamInfo;
 using RefereeRelated;
+using Unity.VisualScripting;
+using Cinemachine.Utility;
 
 namespace RoboticItems
 {
@@ -39,6 +41,13 @@ namespace RoboticItems
             _data.direction = -transform.forward;
         }
 
+        private bool IsPosDirChange() {
+            if ((transform.position - _data.position).magnitude > 0.001 || (-transform.forward - _data.direction).magnitude > 0.001)
+            {
+                return true;
+            }
+            return false;
+        }
         public void SetSubject(Subject<object> subject)
         {
             _subject = subject;
@@ -46,15 +55,28 @@ namespace RoboticItems
             .Subscribe(x => id = (IdentityId)x)
             .AddTo(this);
 
-            _subject.Where(x => x is InputNetworkData)
+            _subject.Where(x => x is InputSyncData)
             .Subscribe(x =>
             {
-                if (((InputNetworkData)x).GetMouseButtonBits(mouse_button_order.Left) && RefereeAllowed())
+                // Debug.Log($"Input in {id}");
+                ShooterType last_type = _data.type;
+                if (((InputSyncData)x).shoot_mode == RobotShootMode.Normal && RefereeAllowed())
                 {
                     SetParams();
-                    SetData();
+                    
                 } else {
                     _data.type = ShooterType.None;
+                }
+                
+                if (last_type == ShooterType.None && _data.type == ShooterType.None) {
+                    return;
+                }
+                if (last_type != ShooterType.None && _data.type != ShooterType.None && !IsPosDirChange()) {
+                    return;
+                }
+                Debug.Log($"Shoot by: {id}");
+                if (_data.type != ShooterType.None) {
+                    SetData();
                 }
 
                 if (entity_manager != null && shooter_entity != Entity.Null) {

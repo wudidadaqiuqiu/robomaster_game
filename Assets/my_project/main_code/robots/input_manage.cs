@@ -12,7 +12,7 @@ using StructDef.Game;
 namespace Robots {
 public class InputManage : NetworkBehaviour, IRobotComponent
 {
-    private Subject<object> RobotSubject;
+    private Subject<object> _subject;
 
     [SerializeField] private bool _serverAuth;
     [SerializeField] private float delay = 0.1f;
@@ -20,7 +20,7 @@ public class InputManage : NetworkBehaviour, IRobotComponent
     private InputNetworkData lastinput; 
 
     public void SetSubject(Subject<object> subject) {
-        RobotSubject = subject;
+        _subject = subject;
     }
 
     private void Awake() {
@@ -70,33 +70,19 @@ public class InputManage : NetworkBehaviour, IRobotComponent
             // nowinput.camera_rotate_y = main_camera.transform.eulerAngles.y;
             if (nowinput != lastinput) {
                 InputPub();
-                if (!IsServer) {
-                    TransmitStateServerRpc(nowinput);
-                }
+                // if (!IsServer) {
+                //     TransmitStateServerRpc(nowinput);
+                // }
             }
             lastinput.assign(nowinput);
         }
     }
 
-    [ServerRpc]
-    private void TransmitStateServerRpc(InputNetworkData state) {
-        nowinput = state;
-        if (ProjectSettings.GameConfig.unity_debug) {
-            // Debug.LogFormat("{0}, {1}, {2}", state.mouse_x, input.Value.camera_rotate_y, state.mouse_y);
-
-            // Debug.Log("server receive input");
-        }
-        // if (ProjectSettings.GameConfig.ros_debug)
-        // ROSConnector.publish(
-        //     ProjectSettings.RosConfig.input_keyboard_bits_topic, 
-        //     new InputKeyboardBitsMsg(state.keyboard_bits));
-
-        InputPub();
-    }
 
     private void InputPub() {
         // Debug.Log("server input pub");
-        RobotSubject.OnNext(nowinput);
+        _subject.OnNext(nowinput);
+        _subject.OnNext(nowinput.ConvertToSyncData());
     }
 
 

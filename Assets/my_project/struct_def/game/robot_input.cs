@@ -1,5 +1,7 @@
 using Unity.Netcode;
 using System;
+using UniRx;
+using Unity.VisualScripting;
 
 namespace StructDef.Game {
     public enum keyboard_bits_order : int {
@@ -28,6 +30,32 @@ namespace StructDef.Game {
         Middle = 2,
         X1 = 3,
         X2 = 4
+    }
+
+    public class InputSyncData : INetworkSerializable
+    {
+        public RobotShootMode shoot_mode;
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            serializer.SerializeValue(ref shoot_mode);
+        }
+        // 无参构造函数
+        public InputSyncData() 
+        {
+            shoot_mode = RobotShootMode.None; // 默认值
+        }
+
+        public InputSyncData(RobotShootMode shoot_mode) { 
+            this.shoot_mode = shoot_mode;
+        }
+        
+        public bool Equal(ref InputSyncData other) {
+            if (other == null) {
+                return false;
+            }
+            return shoot_mode == other.shoot_mode;
+        }
+
     }
     // class 不是struct
     public class InputNetworkData : INetworkSerializable, IEquatable<InputNetworkData>
@@ -137,6 +165,13 @@ namespace StructDef.Game {
             serializer.SerializeValue(ref _mouse_button_bits);
             serializer.SerializeValue(ref _mouse_x);
             serializer.SerializeValue(ref _mouse_y);
+        }
+
+        public InputSyncData ConvertToSyncData() {
+            if (GetMouseButtonBits(mouse_button_order.Left))
+                return new InputSyncData(RobotShootMode.Normal);
+            else 
+                return new InputSyncData(RobotShootMode.None);
         }
     }
 }

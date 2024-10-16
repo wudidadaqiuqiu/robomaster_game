@@ -1,18 +1,24 @@
 using UnityEngine;
 using Unity.Netcode;
 using UniRx;
+using InterfaceDef;
+using StructDef.Game;
+using Unity.VisualScripting;
 
 namespace Robots
 {
 
 
-public class NetTransform : NetworkBehaviour
+public class NetTransform : NetworkBehaviour, IRobotComponent
 {
+    private Subject<object> _subject;
     [SerializeField] private float _cheapInterpolationTime = 0.01f;
 
     private NetworkVariable<PlayerNetworkState> _playerState;
     private StateStore state_store;
     private RobotTransform robot_transform;
+
+    private InputSyncData last_sync_data;
 
     private void Awake() {
         _playerState = new NetworkVariable<PlayerNetworkState>();
@@ -45,6 +51,26 @@ public class NetTransform : NetworkBehaviour
                     RequestInGameConfigServerRpc();
                 }).AddTo(this);
         }
+
+        if (IsOwner && !IsServer) {
+            // Debug.Log("subscribing to subject");
+            _subject.Where(x => x is InputNetworkData)
+            .Subscribe(x => {
+                // Debug.Log("sending input");
+                TransmitInputServerRpc((InputNetworkData)x);
+            }).AddTo(this);
+        }
+
+        if (IsServer) {
+            _subject.Where(x => x is InputNetworkData)
+            .Subscribe(x => {
+                if (!((InputNetworkData)x).ConvertToSyncData().Equal(ref last_sync_data)) {
+                    last_sync_data = ((InputNetworkData)x).ConvertToSyncData();
+                    TransmitInputSyncClientRpc(last_sync_data);
+                }
+            }).AddTo(this);
+        }
+
     }
         private void Update() {
         if (!IsServer)
@@ -71,10 +97,23 @@ public class NetTransform : NetworkBehaviour
             TransmitInGameConfigClientRpc(state_store.GetIngameConfig());
     }
 
+    [ServerRpc]
+    private void TransmitInputServerRpc(InputNetworkData input) {
+        _subject.OnNext(input);
+        // Debug.Log("TransmitInputServerRpc");
+        // TransmitInputSyncClientRpc(input.ConvertToSyncData());
+    }
+    // 会向所有客户端发出
     [ClientRpc]
     private void TransmitInGameConfigClientRpc(StateStore.IngameConfig config) {
         state_store.ChangeMyIngameConfig(ref config);
         // Debug.Log(config.team_Info.camp);
+    }
+
+    [ClientRpc]
+    private void TransmitInputSyncClientRpc(InputSyncData data) {
+        // Debug.Log("TransmitInputSyncClientRpc");
+        _subject.OnNext(data);
     }
 
     #region Transmit State
@@ -115,6 +154,14 @@ public class NetTransform : NetworkBehaviour
         robot_transform.pitch._transform.localRotation = Quaternion.Slerp(robot_transform.pitch._transform.localRotation, targetrotation, _cheapInterpolationTime);
         
         // robot_transform.pitch.Value = Mathf.SmoothDamp(robot_transform.pitch.Value, _playerState.Value.pitch, ref _pitchVel, _cheapInterpolationTime);
+    }
+
+    public void SetSubject(Subject<object> subject)
+    {
+        _subject = subject;
+        // Debug.Log("set subject");
+        // 双false 未初始化,别用
+        // Debug.Log($"IsOwner: {IsOwner}, IsServer: {IsServer}");
     }
     #endregion
 }

@@ -1,0 +1,5 @@
+ip: "127.0.0.1"
+port: 7777
+team: "blue"
+id: 2
+has_init: true

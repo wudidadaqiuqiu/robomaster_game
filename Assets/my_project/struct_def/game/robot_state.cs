@@ -5,7 +5,7 @@ public enum RobotVisionMode {
     third_person = 1,
 }
 
-public enum RobotShootMode {
+public enum RobotShootMode : byte {
     None,
     Normal,
 }
