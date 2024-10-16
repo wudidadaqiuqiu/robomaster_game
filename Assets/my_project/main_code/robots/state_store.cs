@@ -4,6 +4,7 @@ using Unity.Netcode;
 using StructDef.Game;
 using UniRx;
 using StructDef.TeamInfo;
+using RefereeRelated;
 
 namespace Robots {
     public class StateStore: MonoBehaviour {
@@ -11,6 +12,15 @@ namespace Robots {
         public float camera_rotate_y;
 
         public ProjectSettings.InGameConfig config;
+
+        void Start() {
+            Observable.Interval(System.TimeSpan.FromSeconds(0.1))
+            .Where(_ => config.has_init)
+            .First()
+            .Subscribe(_ => {
+                Referee.Singleton.AddRobot(this, config.id);
+            }).AddTo(this);
+        }
 
         // [System.Serializable]
         public struct StoreStruct : INetworkSerializable{

@@ -21,14 +21,13 @@ namespace RoboticItems
         {
             entity_manager = World.DefaultGameObjectInjectionWorld.EntityManager;
             shooter_entity = entity_manager.CreateEntity(typeof(ShooterComponentData));
-            _data.shoot_delta_time = -1;
+            _data.type = ShooterType.None;
             entity_manager.SetComponentData(shooter_entity, _data);
         }
 
         public virtual void SetParams()
         {
-            _data.speed = ProjectSettings.Params.bullet17mm_speed;
-            _data.shoot_delta_time = ProjectSettings.Params.bullet17mm_delta_time;
+            _data.type = ShooterType.Small;
         }
 
         private void SetData()
@@ -49,7 +48,7 @@ namespace RoboticItems
                     SetParams();
                     SetData();
                 } else {
-                    _data.shoot_delta_time = -1;
+                    _data.type = ShooterType.None;
                 }
 
                 if (entity_manager != null && shooter_entity != Entity.Null) {
