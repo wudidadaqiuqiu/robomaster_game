@@ -11,7 +11,7 @@ namespace RoboticItems
     }
 
 
-    public class ShooterBaker : Baker<BulletAuthoring>
+    public class BulletBaker : Baker<BulletAuthoring>
     {
         public override void Bake(BulletAuthoring authoring)
         {
@@ -21,6 +21,8 @@ namespace RoboticItems
             {
                 small_bullet = GetEntity(authoring.small_bullet_prefab, TransformUsageFlags.Dynamic),
                 big_bullet = GetEntity(authoring.big_bullet_prefab, TransformUsageFlags.Dynamic),
+                small_scale = 0.017f,
+                big_scale = 0.042f,
             });
             // Debug.Log("ShooterBaker");
             // GetComponent<ShootControl>().SetEntity(entity);

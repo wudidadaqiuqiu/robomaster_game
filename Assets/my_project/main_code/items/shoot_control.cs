@@ -9,6 +9,9 @@ using StructDef.Game;
 
 using StructDef.TeamInfo;
 using RefereeRelated;
+using UnityEngine.SocialPlatforms;
+using Unity.Transforms;
+using TreeEditor;
 
 namespace RoboticItems
 {
@@ -20,28 +23,34 @@ namespace RoboticItems
         private EntityManager entity_manager;
         public ShooterComponentData _data;
 
+        public GameObject position;
+
         void Start()
         {
             entity_manager = World.DefaultGameObjectInjectionWorld.EntityManager;
             shooter_entity = entity_manager.CreateEntity(typeof(ShooterComponentData));
-            _data.type = ShooterType.None;
+            _data.type = BulletType.None;
             entity_manager.SetComponentData(shooter_entity, _data);
+            position = transform.Find("position").gameObject;
         }
 
         public virtual void SetParams()
         {
-            _data.type = ShooterType.Small;
+            _data.type = BulletType.Small;
             _data.delta_time = 0.1f;
         }
 
         private void SetData()
         {
-            _data.position = transform.position;
-            _data.direction = -transform.forward;
+            
+            _data.position = position.transform.position;
+            _data.direction = position.transform.forward;
+            // Debug.Log(transform.localPosition);
         }
 
         private bool IsPosDirChange() {
-            if ((transform.position - _data.position).magnitude > 0.001 || (-transform.forward - _data.direction).magnitude > 0.001)
+            if ((position.transform.position - _data.position).magnitude > 0.001 ||
+                (position.transform.forward - _data.direction).magnitude > 0.001)
             {
                 return true;
             }
@@ -58,23 +67,23 @@ namespace RoboticItems
             .Subscribe(x =>
             {
                 // Debug.Log($"Input in {id}");
-                ShooterType last_type = _data.type;
+                BulletType last_type = _data.type;
                 if (((InputSyncData)x).shoot_mode == RobotShootMode.Normal && RefereeAllowed())
                 {
                     SetParams();
                     
                 } else {
-                    _data.type = ShooterType.None;
+                    _data.type = BulletType.None;
                 }
                 
-                if (last_type == ShooterType.None && _data.type == ShooterType.None) {
+                if (last_type == BulletType.None && _data.type == BulletType.None) {
                     return;
                 }
-                if (last_type != ShooterType.None && _data.type != ShooterType.None && !IsPosDirChange()) {
+                if (last_type != BulletType.None && _data.type != BulletType.None && !IsPosDirChange()) {
                     return;
                 }
                 Debug.Log($"Shoot by: {id}");
-                if (_data.type != ShooterType.None) {
+                if (_data.type != BulletType.None) {
                     SetData();
                 }
 
