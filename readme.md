@@ -30,3 +30,5 @@ Robomaster 模拟器是一个基于 Unity 的 Robomaster 比赛模拟器，用�
 - 具体导航及决策算法实现与升级
 ## 扩展资料
 - [UniRx入门](https://lianbai.github.io/2019/09/23/Unity/UniRx%E5%85%A5%E9%97%A8/)
+
+- [Entity工作流程](https://discussions.unity.com/t/convert-to-entity-script-is-not-there/257976/3)

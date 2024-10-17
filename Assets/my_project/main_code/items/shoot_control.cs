@@ -20,14 +20,11 @@ namespace RoboticItems
         private EntityManager entity_manager;
         public ShooterComponentData _data;
 
-        public GameObject bullet_prefab;
         void Start()
         {
             entity_manager = World.DefaultGameObjectInjectionWorld.EntityManager;
             shooter_entity = entity_manager.CreateEntity(typeof(ShooterComponentData));
             _data.type = ShooterType.None;
-            // GetEntity
-            // _data.bullet_prefab = Get(bullet_prefab, TransformUsageFlags.Dynamic);
             entity_manager.SetComponentData(shooter_entity, _data);
         }
 

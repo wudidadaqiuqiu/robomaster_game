@@ -96,3 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afdab872211b18d8a341cc8f11961e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _data:
+    type: 0
+    position: {x: 0, y: 0, z: 0}
+    direction: {x: 0, y: 0, z: 0}
+    delta_time: 0
