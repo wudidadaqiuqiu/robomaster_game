@@ -6,7 +6,7 @@ namespace RoboticItems
 {
     public class BulletDataAuthoring : MonoBehaviour
     {
-        public BulletComponentData data;
+        public BulletData data;
     }
 
 

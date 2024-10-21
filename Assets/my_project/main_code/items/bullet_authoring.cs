@@ -17,7 +17,7 @@ namespace RoboticItems
         {
             var entity = GetEntity(TransformUsageFlags.None);
             
-            AddComponent(entity, new BulletEntityData
+            AddComponent(entity, new BulletGlobalData
             {
                 small_bullet = GetEntity(authoring.small_bullet_prefab, TransformUsageFlags.Dynamic),
                 big_bullet = GetEntity(authoring.big_bullet_prefab, TransformUsageFlags.Dynamic),
