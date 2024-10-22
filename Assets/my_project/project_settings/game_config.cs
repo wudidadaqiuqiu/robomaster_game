@@ -31,6 +31,7 @@ namespace ProjectSettings {
 
         public float mouse_sensitivity_hor;
         public float mouse_sensitivity_ver;
+        public bool debug_mode;
 
         public CampInfo ToCampInfo() {
             CampInfo campinfo;

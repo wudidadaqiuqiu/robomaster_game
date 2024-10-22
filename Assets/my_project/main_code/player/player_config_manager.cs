@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Player
 {
@@ -10,6 +11,8 @@ namespace Player
         private static PlayerConfigManager _instance;
         public ProjectSettings.InGameConfig game_config;
         public GameObject config_panel;
+
+        public Toggle debug_toogle;
         private bool is_config_panel_open = false;
 
 
@@ -57,7 +60,15 @@ namespace Player
                                 Cursor.lockState = CursorLockMode.Locked;
                             }
                         }).AddTo(this);
-            
+            if (debug_toogle != null) {
+                debug_toogle.onValueChanged.AddListener(OnDebugToogle);
+                debug_toogle.isOn = game_config.debug_mode;
+            }
+        }
+
+        void OnDebugToogle(bool is_on) {
+            //Debug.Log("debug toogle is on: " + is_on);
+            game_config.debug_mode = is_on;
         }
     }
 
