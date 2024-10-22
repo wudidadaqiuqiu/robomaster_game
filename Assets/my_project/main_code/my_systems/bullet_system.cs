@@ -6,6 +6,10 @@ using Unity.Burst;
 using UnityEngine;
 using Player;
 using System.Reflection.Emit;
+using Unity.Jobs;
+using Unity.Physics;
+using Unity.Physics.Systems;
+
 
 namespace MySystems {
     public readonly partial struct BulletAspect : IAspect
@@ -48,52 +52,30 @@ namespace MySystems {
                 // 如果没有找到 BulletGlobalData，则不执行任何操作
                 return;
             }
+
+            // Get the SystemState of the physics system using the SystemHandle
+            var physicsSystemState = state.World.Unmanaged.GetExistingSystemState<ExportPhysicsWorld>();
+
+            // 获取 ExportPhysicsWorld 系统中的 JobHandle
+            JobHandle checkDynamicBodyIntegrityHandle = physicsSystemState.Dependency;
+
             var ecb = new EntityCommandBuffer(Allocator.TempJob);
 
-            new ProcessBulletJob { 
+            // 不同job不能同时访问LocalTransform 
+            var processBulletJobHandle = new ProcessBulletJob { 
                 ecb = ecb, 
                 deltaTime = SystemAPI.Time.DeltaTime,
-            }.Run();
+            }.Schedule(checkDynamicBodyIntegrityHandle);
+            
+            state.Dependency = JobHandle.CombineDependencies(processBulletJobHandle, state.Dependency);
+            processBulletJobHandle.Complete();
+            
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
+            
         }
     }
 
-    // public partial struct BulletSystem : ISystem
-    // {
-    //     private void OnUpdate(ref SystemState state)
-    //     {
-    //         if (!SystemAPI.TryGetSingleton<BulletGlobalData>(out var bulletGlobalData)) {
-    //             // 如果没有找到 BulletGlobalData，则不执行任何操作
-    //             return;
-    //         }
-    //         // 获取当前时间
-    //         float deltaTime = SystemAPI.Time.DeltaTime;
-
-    //         // 获取所有带有 BulletComponentData 和 Translation 的实体
-    //         var entityQuery = SystemAPI.QueryBuilder()
-    //             .WithAll<BulletData>()
-    //             .WithAll<LocalTransform>()
-    //             .Build();
-            
-    //         foreach (var entity in entityQuery.ToEntityArray(AllocatorManager.Temp)) {
-    //             var transform = state.EntityManager.GetComponentData<LocalTransform>(entity);
-    //             var bulletData = state.EntityManager.GetComponentData<BulletData>(entity);
-
-    //             transform.Position += deltaTime * bulletData.velocity;
-    //             bulletData.remain_life_time -= deltaTime;
-
-    //             if (bulletData.remain_life_time <= 0f)
-    //             {
-    //                 state.EntityManager.DestroyEntity(entity);
-    //                 continue;
-    //             }
-
-    //             state.EntityManager.SetComponentData(entity, transform);
-    //             state.EntityManager.SetComponentData(entity, bulletData);
-    //         }
-    //     }
-    // }
 
     public readonly partial struct ShooterAspect : IAspect
     {
