@@ -5,43 +5,95 @@ using Unity.Transforms;
 using Unity.Burst;
 using UnityEngine;
 using Player;
+using System.Reflection.Emit;
 
 namespace MySystems {
-    public partial struct BulletSystem : ISystem
+    public readonly partial struct BulletAspect : IAspect
     {
-        private void OnUpdate(ref SystemState state)
+        public readonly Entity entity;
+        public readonly RefRW<BulletData> bullet_data;
+        public readonly RefRW<LocalTransform> local_transform;
+
+        public void ProcessBulllet(EntityCommandBuffer ecb, float deltaTime) {
+            local_transform.ValueRW.Position += deltaTime * bullet_data.ValueRO.velocity;
+            bullet_data.ValueRW.remain_life_time -= deltaTime;
+
+            if (bullet_data.ValueRO.remain_life_time <= 0f)
+            {
+                ecb.DestroyEntity(entity);
+            }
+        }
+    }
+
+    [BurstCompile]
+    public partial struct ProcessBulletJob : IJobEntity
+    {
+        public EntityCommandBuffer ecb;
+        public float deltaTime;
+        
+        [BurstCompile]
+        public void Execute(BulletAspect aspect)
+        {
+            aspect.ProcessBulllet(ecb, deltaTime);
+        }
+    }
+
+    [BurstCompile]
+    public partial struct ProcessBulletSystem : ISystem
+    {
+        [BurstCompile]
+        public void OnUpdate(ref SystemState state)
         {
             if (!SystemAPI.TryGetSingleton<BulletGlobalData>(out var bulletGlobalData)) {
                 // 如果没有找到 BulletGlobalData，则不执行任何操作
                 return;
             }
-            // 获取当前时间
-            float deltaTime = SystemAPI.Time.DeltaTime;
+            var ecb = new EntityCommandBuffer(Allocator.TempJob);
 
-            // 获取所有带有 BulletComponentData 和 Translation 的实体
-            var entityQuery = SystemAPI.QueryBuilder()
-                .WithAll<BulletData>()
-                .WithAll<LocalTransform>()
-                .Build();
-            
-            foreach (var entity in entityQuery.ToEntityArray(AllocatorManager.Temp)) {
-                var transform = state.EntityManager.GetComponentData<LocalTransform>(entity);
-                var bulletData = state.EntityManager.GetComponentData<BulletData>(entity);
-
-                transform.Position += deltaTime * bulletData.velocity;
-                bulletData.remain_life_time -= deltaTime;
-
-                if (bulletData.remain_life_time <= 0f)
-                {
-                    state.EntityManager.DestroyEntity(entity);
-                    continue;
-                }
-
-                state.EntityManager.SetComponentData(entity, transform);
-                state.EntityManager.SetComponentData(entity, bulletData);
-            }
+            new ProcessBulletJob { 
+                ecb = ecb, 
+                deltaTime = SystemAPI.Time.DeltaTime,
+            }.Run();
+            ecb.Playback(state.EntityManager);
+            ecb.Dispose();
         }
     }
+
+    // public partial struct BulletSystem : ISystem
+    // {
+    //     private void OnUpdate(ref SystemState state)
+    //     {
+    //         if (!SystemAPI.TryGetSingleton<BulletGlobalData>(out var bulletGlobalData)) {
+    //             // 如果没有找到 BulletGlobalData，则不执行任何操作
+    //             return;
+    //         }
+    //         // 获取当前时间
+    //         float deltaTime = SystemAPI.Time.DeltaTime;
+
+    //         // 获取所有带有 BulletComponentData 和 Translation 的实体
+    //         var entityQuery = SystemAPI.QueryBuilder()
+    //             .WithAll<BulletData>()
+    //             .WithAll<LocalTransform>()
+    //             .Build();
+            
+    //         foreach (var entity in entityQuery.ToEntityArray(AllocatorManager.Temp)) {
+    //             var transform = state.EntityManager.GetComponentData<LocalTransform>(entity);
+    //             var bulletData = state.EntityManager.GetComponentData<BulletData>(entity);
+
+    //             transform.Position += deltaTime * bulletData.velocity;
+    //             bulletData.remain_life_time -= deltaTime;
+
+    //             if (bulletData.remain_life_time <= 0f)
+    //             {
+    //                 state.EntityManager.DestroyEntity(entity);
+    //                 continue;
+    //             }
+
+    //             state.EntityManager.SetComponentData(entity, transform);
+    //             state.EntityManager.SetComponentData(entity, bulletData);
+    //         }
+    //     }
+    // }
 
     public readonly partial struct ShooterAspect : IAspect
     {
@@ -59,35 +111,14 @@ namespace MySystems {
             }
             return false;
         }
-    }
 
-
-[BurstCompile]
-public partial struct BulletShootingSystem : ISystem
-{
-    [BurstCompile]
-    public void OnUpdate(ref SystemState state)
-    {
-        if (!SystemAPI.TryGetSingleton<BulletGlobalData>(out var bulletGlobalData)) {
-            // 如果没有找到 BulletGlobalData，则不执行任何操作
-            return;
-        }
-        
-        float deltaTime = SystemAPI.Time.DeltaTime;
-
-        // 创建一个 EntityCommandBuffer
-        var ecb = new EntityCommandBuffer(Allocator.Temp);
-
-        // 遍历所有 ShooterComponentData 实体，使用 ShooterAspect
-        foreach (var (shooter, entity) in SystemAPI.Query<ShooterAspect>().WithEntityAccess())
-        {
-            // 判断是否可以发射子弹
-            if (shooter.ShootIntervalProcess(deltaTime))
+        public void ShootBullet(EntityCommandBuffer ecb, float deltaTime, ref BulletGlobalData bulletGlobalData) {
+            if (ShootIntervalProcess(deltaTime))
             {
-                Entity bulletPrefab = shooter.ShooterData.ValueRO.type == BulletType.Small
+                Entity bulletPrefab = ShooterData.ValueRO.type == BulletType.Small
                     ? bulletGlobalData.small_bullet
                     : bulletGlobalData.big_bullet;
-                float scale = shooter.ShooterData.ValueRO.type == BulletType.Small
+                float scale = ShooterData.ValueRO.type == BulletType.Small
                     ? bulletGlobalData.small_scale
                     : bulletGlobalData.big_scale;
                 
@@ -100,13 +131,13 @@ public partial struct BulletShootingSystem : ISystem
                     {
                         // 不能使用Singleton 运行时改变，只能是编译时设置
                         remain_life_time = ProjectSettings.GameConfig.bullet_life_time,
-                        velocity = shooter.ShooterData.ValueRO.direction * shooter.ShooterData.ValueRO.speed,
+                        velocity = ShooterData.ValueRO.direction * ShooterData.ValueRO.speed,
                     });
 
                     // 设置子弹的初始位置和方向
                     ecb.SetComponent(bulletInstance, new LocalTransform
                     {
-                        Position = shooter.ShooterData.ValueRO.position,
+                        Position = ShooterData.ValueRO.position,
                         Scale = scale,
                     });
 
@@ -114,10 +145,41 @@ public partial struct BulletShootingSystem : ISystem
                 }
             }
         }
-
-        // 播放缓冲区命令
-        ecb.Playback(state.EntityManager);
-        ecb.Dispose();
     }
-}
+
+    [BurstCompile]
+    public partial struct ShootBulletJob : IJobEntity
+    {
+        public EntityCommandBuffer ecb;
+        public float deltaTime;
+        public BulletGlobalData bulletGlobalData;
+        
+        [BurstCompile]
+        public void Execute(ShooterAspect aspect)
+        {
+            aspect.ShootBullet(ecb, deltaTime, ref bulletGlobalData);
+        }
+    }
+    
+    [BurstCompile]
+    public partial struct ShootBulletSystem : ISystem
+    {
+        [BurstCompile]
+        public void OnUpdate(ref SystemState state)
+        {
+            if (!SystemAPI.TryGetSingleton<BulletGlobalData>(out var bulletGlobalData)) {
+                // 如果没有找到 BulletGlobalData，则不执行任何操作
+                return;
+            }
+            var ecb = new EntityCommandBuffer(Allocator.TempJob);
+
+            new ShootBulletJob { 
+                ecb = ecb, 
+                deltaTime = SystemAPI.Time.DeltaTime, 
+                bulletGlobalData = bulletGlobalData 
+            }.Run();
+            ecb.Playback(state.EntityManager);
+            ecb.Dispose();
+        }
+    }
 }
