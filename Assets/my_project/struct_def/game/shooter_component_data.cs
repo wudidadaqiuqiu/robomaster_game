@@ -10,6 +10,7 @@ namespace StructDef.Game {
         public Vector3 direction;
         // 子弹间隔发射计时
         public float delta_time;
+        public float speed;
     }
     public enum BulletType : byte {
         None,

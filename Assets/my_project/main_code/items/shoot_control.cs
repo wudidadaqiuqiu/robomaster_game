@@ -36,7 +36,7 @@ namespace RoboticItems
         public virtual void SetParams()
         {
             _data.type = BulletType.Small;
-            _data.delta_time = 0.1f;
+            _data.speed = 30f;
         }
 
         private void SetData()

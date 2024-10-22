@@ -4,7 +4,7 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Burst;
 using UnityEngine;
-// using System.Diagnostics;
+using Player;
 
 namespace MySystems {
     public partial struct BulletSystem : ISystem
@@ -54,7 +54,7 @@ namespace MySystems {
             ShooterData.ValueRW.delta_time -= deltaTime;
             if (ShooterData.ValueRO.delta_time <= 0 && ShooterData.ValueRO.type != BulletType.None)
             {
-                ShooterData.ValueRW.delta_time = 1.0f; // 重置发射间隔
+                ShooterData.ValueRW.delta_time = ProjectSettings.GameConfig.shoot_delay_time; // 重置发射间隔
                 return true;
             }
             return false;
@@ -74,6 +74,7 @@ public partial struct BulletShootingSystem : ISystem
         }
         
         float deltaTime = SystemAPI.Time.DeltaTime;
+
         // 创建一个 EntityCommandBuffer
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
@@ -97,8 +98,9 @@ public partial struct BulletShootingSystem : ISystem
                     
                     ecb.SetComponent(bulletInstance, new BulletData
                     {
-                        remain_life_time = 5,
-                        velocity = shooter.ShooterData.ValueRO.direction * 30,
+                        // 不能使用Singleton 运行时改变，只能是编译时设置
+                        remain_life_time = ProjectSettings.GameConfig.bullet_life_time,
+                        velocity = shooter.ShooterData.ValueRO.direction * shooter.ShooterData.ValueRO.speed,
                     });
 
                     // 设置子弹的初始位置和方向

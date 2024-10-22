@@ -1,9 +1,8 @@
 using System;
-using System.Runtime.CompilerServices;
-using Newtonsoft.Json;
 using StructDef.TeamInfo;
 
 namespace ProjectSettings {
+    [Serializable]
     public struct GameConfig {
         public readonly static string main_scene_path = "scenes/game/game";
 
@@ -12,6 +11,8 @@ namespace ProjectSettings {
         public readonly static bool unity_debug = true;
 
         public readonly static string game_config_tag = "config";
+        public readonly static float shoot_delay_time = 0.05f;
+        public readonly static float bullet_life_time = 3.0f;
     }
 
     public struct RosConfig {
