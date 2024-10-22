@@ -74,8 +74,6 @@ public partial struct BulletShootingSystem : ISystem
         }
         
         float deltaTime = SystemAPI.Time.DeltaTime;
-        // var bulletGlobalData = SystemAPI.GetSingleton<BulletGlobalData>();
-
         // 创建一个 EntityCommandBuffer
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 

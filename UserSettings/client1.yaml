@@ -3,3 +3,5 @@ port: 7777
 team: "blue"
 id: 1
 has_init: true
+mouse_sensitivity_hor: 30.0
+mouse_sensitivity_ver: 15.0

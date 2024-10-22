@@ -1916,7 +1916,6 @@ GameObject:
   - component: {fileID: 1161684674592091907}
   - component: {fileID: 3353410317367644429}
   - component: {fileID: -7327160757361260066}
-  - component: {fileID: 107881724973232693}
   m_Layer: 6
   m_Name: Infantry_pro
   m_TagString: robot
@@ -2025,6 +2024,8 @@ MonoBehaviour:
     team: 
     id: 0
     has_init: 0
+    mouse_sensitivity_hor: 0
+    mouse_sensitivity_ver: 0
 --- !u!114 &7299883925230521383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2123,20 +2124,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera_: {fileID: 7903376532191864540}
   first_person: {fileID: 5644744896843670051}
---- !u!114 &107881724973232693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5147714066339793767}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33da474d8ebf821309bfdc114499964d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouse_sensitivity_hor: 30
-  mouse_sensitivity_ver: 15
 --- !u!1 &5448802232370305772
 GameObject:
   m_ObjectHideFlags: 0

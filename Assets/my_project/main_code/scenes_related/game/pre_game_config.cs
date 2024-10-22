@@ -85,6 +85,9 @@ public class pre_game_config : MonoBehaviour
             .WithNamingConvention(UnderscoredNamingConvention.Instance)  // see height_in_inches in sample yml 
             .Build();
         config = deserializer.Deserialize<ProjectSettings.InGameConfig>(content);
+        
+        Player.PlayerConfigManager.Singleton.LoadConfig(config);
+
         Debug.Log(config.ip + config.port);
         UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
         transport.ConnectionData.Address = config.ip;

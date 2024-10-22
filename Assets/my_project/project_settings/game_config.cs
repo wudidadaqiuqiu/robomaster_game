@@ -29,6 +29,9 @@ namespace ProjectSettings {
 
         public bool has_init = false;
 
+        public float mouse_sensitivity_hor;
+        public float mouse_sensitivity_ver;
+
         public CampInfo ToCampInfo() {
             CampInfo campinfo;
             if (team == "red") {

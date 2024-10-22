@@ -6,6 +6,7 @@ using System;
 using Unity.Netcode;
 using UnityEngine.UIElements;
 using StructDef.Game;
+using Player;
 
 namespace Robots {
 
@@ -24,7 +25,7 @@ namespace Robots {
         public TransformProperty chassis_yaw;
         
         private StructDef.Game.InputNetworkData input;
-        private RobotConfig config;
+        // private RobotConfig config;
 
         public void SetSubject(Subject<object> subject) {
             RobotSubject = subject;
@@ -36,7 +37,7 @@ namespace Robots {
             velo = Vector3.zero;
             input = new StructDef.Game.InputNetworkData();
             state_store = GetComponent<StateStore>();
-            config = GetComponent<RobotConfig>();
+            // config = GetComponent<RobotConfig>();
         }
         void Start() {
             robot_x.Init();
@@ -94,9 +95,11 @@ namespace Robots {
             // Debug.Log("input mouse_x:" + input.mouse_x);
             if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.first_person) {
                 transform.rotation = Quaternion.Euler(0, 
-                    transform.eulerAngles.y + input.mouse_x * Time.deltaTime * config.mouse_sensitivity_hor, 0);
+                    transform.eulerAngles.y + input.mouse_x * Time.deltaTime * 
+                    PlayerConfigManager.Singleton.game_config.mouse_sensitivity_hor, 0);
                 // pitch.Value += input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver;
-                pitch.Rotate(input.mouse_y * Time.deltaTime * config.mouse_sensitivity_ver);
+                pitch.Rotate(input.mouse_y * Time.deltaTime * 
+                    PlayerConfigManager.Singleton.game_config.mouse_sensitivity_ver);
 
                 first_person_process(ref direction);
             } else if (state_store.state.vision_mode == StructDef.Game.RobotVisionMode.third_person) {
