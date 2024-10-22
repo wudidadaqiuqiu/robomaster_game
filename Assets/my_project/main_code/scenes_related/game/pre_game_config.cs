@@ -19,14 +19,15 @@ public class pre_game_config : MonoBehaviour
     [SerializeField] private Button clientbutton;
     public Camera pregamecamera;
     public Camera ingamecamera;
-    public Canvas pregamecanvas;
+    public GameObject net_start_ui;
     public ProjectSettings.InGameConfig config;
 
     void Start()
     {
         // Debug.Log("buttons start");
         pregamecamera.enabled = true;
-        pregamecanvas.enabled = true;
+        net_start_ui.SetActive(true);
+        // pregamecanvas.enabled = true;
 
         ingamecamera.enabled = false;
         ingamecamera.GetComponent<AudioListener>().enabled = false;
@@ -49,40 +50,36 @@ public class pre_game_config : MonoBehaviour
         }
     }
 
+    void DisableAfterNetStart() {
+        net_start_ui.SetActive(false);
+        // pregamecanvas.enabled = false;
+        pregamecamera.enabled = false;
+        pregamecamera.GetComponent<AudioListener>().enabled = false;
+
+        ingamecamera.enabled = true;
+        ingamecamera.GetComponent<AudioListener>().enabled = true;
+    }
     public void OnHostButtonClick()
     {
         var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "yaml", false)[0];
-        client_change_config(path);
-
+        ClientChangeConfig(path);
 
         Debug.Log("Starting Host...");
         NetworkManager.Singleton.StartHost();
-        pregamecanvas.enabled = false;
-        pregamecamera.enabled = false;
-        pregamecamera.GetComponent<AudioListener>().enabled = false;
-        
-        ingamecamera.enabled = true;
-        ingamecamera.GetComponent<AudioListener>().enabled = true;
+        DisableAfterNetStart();
     }
 
     public void OnClientButtonClick()
     {
-        // 在这里添加你想要执行的逻辑
-        Debug.Log("Starting Client...");
         var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "yaml", false)[0];
-        client_change_config(path);
+        ClientChangeConfig(path);
 
+        Debug.Log("Starting Client...");
         NetworkManager.Singleton.StartClient();
-        pregamecanvas.enabled = false;
-        pregamecamera.enabled = false;
-        pregamecamera.GetComponent<AudioListener>().enabled = false;
-
-        ingamecamera.enabled = true;
-        ingamecamera.GetComponent<AudioListener>().enabled = true;
-        // ingamecamera.enabled = true;
+        DisableAfterNetStart();
     }
 
-    void client_change_config(string path) {
+    void ClientChangeConfig(string path) {
         string content = File.ReadAllText(path);
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)  // see height_in_inches in sample yml 

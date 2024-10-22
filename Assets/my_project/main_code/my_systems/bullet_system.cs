@@ -3,12 +3,18 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Burst;
+using UnityEngine;
+// using System.Diagnostics;
 
 namespace MySystems {
     public partial struct BulletSystem : ISystem
     {
         private void OnUpdate(ref SystemState state)
         {
+            if (!SystemAPI.TryGetSingleton<BulletGlobalData>(out var bulletGlobalData)) {
+                // 如果没有找到 BulletGlobalData，则不执行任何操作
+                return;
+            }
             // 获取当前时间
             float deltaTime = SystemAPI.Time.DeltaTime;
 
@@ -62,8 +68,13 @@ public partial struct BulletShootingSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
+        if (!SystemAPI.TryGetSingleton<BulletGlobalData>(out var bulletGlobalData)) {
+            // 如果没有找到 BulletGlobalData，则不执行任何操作
+            return;
+        }
+        
         float deltaTime = SystemAPI.Time.DeltaTime;
-        var bulletEntityData = SystemAPI.GetSingleton<BulletGlobalData>();
+        // var bulletGlobalData = SystemAPI.GetSingleton<BulletGlobalData>();
 
         // 创建一个 EntityCommandBuffer
         var ecb = new EntityCommandBuffer(Allocator.Temp);
@@ -75,11 +86,11 @@ public partial struct BulletShootingSystem : ISystem
             if (shooter.ShootIntervalProcess(deltaTime))
             {
                 Entity bulletPrefab = shooter.ShooterData.ValueRO.type == BulletType.Small
-                    ? bulletEntityData.small_bullet
-                    : bulletEntityData.big_bullet;
+                    ? bulletGlobalData.small_bullet
+                    : bulletGlobalData.big_bullet;
                 float scale = shooter.ShooterData.ValueRO.type == BulletType.Small
-                    ? bulletEntityData.small_scale
-                    : bulletEntityData.big_scale;
+                    ? bulletGlobalData.small_scale
+                    : bulletGlobalData.big_scale;
                 
                 if (bulletPrefab != Entity.Null)
                 {
