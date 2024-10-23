@@ -24,6 +24,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 17mm_bullet Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3077292867315656718, guid: ae9295661dccf8a438c9e5b4284df2f5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3515631815005692578, guid: ae9295661dccf8a438c9e5b4284df2f5,
         type: 3}
       propertyPath: m_LocalPosition.x

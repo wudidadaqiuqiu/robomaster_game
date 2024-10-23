@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 432812436584439030}
   - component: {fileID: 432812436584439028}
   - component: {fileID: 432812436584439029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 1080042381337374324}
   - component: {fileID: 5490429884030359767}
   - component: {fileID: 6588938101377991258}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u87BA\u6813"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 2763333604978114375}
   - component: {fileID: 8849699547668744611}
   - component: {fileID: 1394988756810823077}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SmallArmor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,9 +281,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2763333604978114369}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.37330288, y: 0.54400384, z: 0.6996872, w: 0.27412167}
-  m_LocalPosition: {x: -2.0879998, y: -0.37700176, z: 1.316999}
-  m_LocalScale: {x: 0.83701897, y: 0.837019, z: 0.8370189}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.09985342, y: 0.09985342, z: 0.09985342}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8713101921074317956}
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 1202788732462843180}
   - component: {fileID: 437738741125835926}
   - component: {fileID: 6360882298015527434}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u706F\u6761"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -529,7 +529,7 @@ GameObject:
   - component: {fileID: 8713101921074317956}
   - component: {fileID: 8665335112390819328}
   - component: {fileID: 941285585194595345}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5E95\u677F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -612,7 +612,7 @@ GameObject:
   - component: {fileID: 3224246387665208025}
   - component: {fileID: 7805398454108798163}
   - component: {fileID: 693649062995978349}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u9762\u677F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
