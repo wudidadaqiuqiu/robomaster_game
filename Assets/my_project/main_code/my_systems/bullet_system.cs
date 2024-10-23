@@ -23,7 +23,7 @@ namespace MySystems {
             // local_transform.ValueRW.Position += deltaTime * bullet_data.ValueRO.velocity;
             bullet_data.ValueRW.remain_life_time -= deltaTime;
 
-            if (bullet_data.ValueRO.remain_life_time <= 0f)
+            if (bullet_data.ValueRW.remain_life_time <= 0f)
             {
                 ecb.DestroyEntity(entity);
             }
@@ -81,15 +81,18 @@ namespace MySystems {
     public readonly partial struct ShooterAspect : IAspect
     {
         // 组件数据
-        public readonly RefRW<ShooterComponentData> ShooterData;
+        public readonly RefRW<ShooterCmdData> ShooterData;
+        public readonly RefRW<ShooterSystemData> ShooterProcessingData;
 
         // 用于检测子弹发射的逻辑
         public bool ShootIntervalProcess(float deltaTime)
         {
-            ShooterData.ValueRW.delta_time -= deltaTime;
-            if (ShooterData.ValueRO.delta_time <= 0 && ShooterData.ValueRO.type != BulletType.None)
+            ShooterProcessingData.ValueRW.delta_time -= deltaTime;
+            // 在同一帧内对数据的访问要保证一致性，所以需要使用RW
+            if (ShooterProcessingData.ValueRW.delta_time <= 0 && ShooterData.ValueRO.type != BulletType.None)
             {
-                ShooterData.ValueRW.delta_time = ProjectSettings.GameConfig.shoot_delay_time; // 重置发射间隔
+                ShooterProcessingData.ValueRW.delta_time = ProjectSettings.GameConfig.shoot_delay_time; // 重置发射间隔
+                // Debug.Log("发射子弹");
                 return true;
             }
             return false;
@@ -114,7 +117,6 @@ namespace MySystems {
                     {
                         // 不能使用Singleton 运行时改变，只能是编译时设置
                         remain_life_time = ProjectSettings.GameConfig.bullet_life_time,
-                        velocity = ShooterData.ValueRO.velocity * ShooterData.ValueRO.speed,
                     });
 
                     ecb.SetComponent(bulletInstance, new PhysicsVelocity 

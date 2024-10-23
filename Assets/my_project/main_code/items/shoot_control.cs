@@ -9,8 +9,6 @@ using StructDef.Game;
 
 using StructDef.TeamInfo;
 using RefereeRelated;
-using UnityEngine.SocialPlatforms;
-using Unity.Transforms;
 
 namespace RoboticItems
 {
@@ -20,23 +18,28 @@ namespace RoboticItems
         IdentityId id;
         private Entity shooter_entity;
         private EntityManager entity_manager;
-        public ShooterComponentData _data;
+        public ShooterCmdData _data;
 
         public GameObject position;
+        private SpeedCaculator speedCaculator;
 
         void Start()
         {
             entity_manager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            shooter_entity = entity_manager.CreateEntity(typeof(ShooterComponentData));
+            shooter_entity = entity_manager.CreateEntity();
+            entity_manager.AddComponentData(shooter_entity, _data);
+            entity_manager.AddComponentData(shooter_entity, new ShooterSystemData());
+
             _data.type = BulletType.None;
             entity_manager.SetComponentData(shooter_entity, _data);
             position = transform.Find("position").gameObject;
+            speedCaculator = position.GetComponent<SpeedCaculator>();
         }
 
         public virtual void SetParams()
         {
             _data.type = BulletType.Small;
-            _data.speed = ProjectSettings.GameConfig.bullet_speed;
+            // _data.speed = ProjectSettings.GameConfig.bullet_speed;
         }
 
         private void SetData()
@@ -44,7 +47,7 @@ namespace RoboticItems
             // Debug.Log(position.GetComponent<SpeedCaculator>().smoothedVelocity);   
             _data.position = position.transform.position;
             _data.velocity = position.transform.forward * ProjectSettings.GameConfig.bullet_speed + 
-                position.GetComponent<SpeedCaculator>().smoothedVelocity;
+                speedCaculator.smoothedVelocity;
             // Debug.Log(transform.localPosition);
         }
 
