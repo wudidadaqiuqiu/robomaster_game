@@ -36,20 +36,21 @@ namespace RoboticItems
         public virtual void SetParams()
         {
             _data.type = BulletType.Small;
-            _data.speed = 30f;
+            _data.speed = ProjectSettings.GameConfig.bullet_speed;
         }
 
         private void SetData()
         {
-            
+            // Debug.Log(position.GetComponent<SpeedCaculator>().smoothedVelocity);   
             _data.position = position.transform.position;
-            _data.direction = position.transform.forward;
+            _data.velocity = position.transform.forward * ProjectSettings.GameConfig.bullet_speed + 
+                position.GetComponent<SpeedCaculator>().smoothedVelocity;
             // Debug.Log(transform.localPosition);
         }
 
         private bool IsPosDirChange() {
             if ((position.transform.position - _data.position).magnitude > 0.001 ||
-                (position.transform.forward - _data.direction).magnitude > 0.001)
+                (position.transform.forward - _data.velocity).magnitude > 0.001)
             {
                 return true;
             }
@@ -81,7 +82,7 @@ namespace RoboticItems
                 if (last_type != BulletType.None && _data.type != BulletType.None && !IsPosDirChange()) {
                     return;
                 }
-                Debug.Log($"Shoot by: {id}");
+                // Debug.Log($"Shoot by: {id}");
                 if (_data.type != BulletType.None) {
                     SetData();
                 }
@@ -93,6 +94,15 @@ namespace RoboticItems
                 }
 
             }).AddTo(this);
+        }
+
+        void Update() {
+            if (_data.type != BulletType.None) {
+                SetData();
+                if (entity_manager != null && shooter_entity != Entity.Null) {
+                    entity_manager.SetComponentData(shooter_entity, _data);
+                }
+            }
         }
 
         private bool RefereeAllowed()

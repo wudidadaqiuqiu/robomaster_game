@@ -13,6 +13,7 @@ namespace ProjectSettings {
         public readonly static string game_config_tag = "config";
         public readonly static float shoot_delay_time = 0.05f;
         public readonly static float bullet_life_time = 30.0f;
+        public readonly static float bullet_speed = 5;
     }
 
     public struct RosConfig {

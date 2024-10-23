@@ -10,8 +10,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 279465691754403151, guid: ae9295661dccf8a438c9e5b4284df2f5,
         type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: a7175f07b6707fd629c2a88fdb2e4c28,
+        type: 2}
+    - target: {fileID: 279465691754403151, guid: ae9295661dccf8a438c9e5b4284df2f5,
+        type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3077292867315656718, guid: ae9295661dccf8a438c9e5b4284df2f5,
         type: 3}
@@ -71,7 +77,7 @@ PrefabInstance:
     - target: {fileID: 7298778662935631661, guid: ae9295661dccf8a438c9e5b4284df2f5,
         type: 3}
       propertyPath: m_UseGravity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7298778662935631661, guid: ae9295661dccf8a438c9e5b4284df2f5,
         type: 3}
@@ -80,8 +86,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7298778662935631661, guid: ae9295661dccf8a438c9e5b4284df2f5,
         type: 3}
-      propertyPath: m_IsKinematic
+      propertyPath: m_Interpolate
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7298778662935631661, guid: ae9295661dccf8a438c9e5b4284df2f5,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7298778662935631661, guid: ae9295661dccf8a438c9e5b4284df2f5,
         type: 3}

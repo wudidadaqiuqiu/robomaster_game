@@ -9,6 +9,7 @@ using System.Reflection.Emit;
 using Unity.Jobs;
 using Unity.Physics;
 using Unity.Physics.Systems;
+using Unity.Mathematics;
 
 
 namespace MySystems {
@@ -16,10 +17,10 @@ namespace MySystems {
     {
         public readonly Entity entity;
         public readonly RefRW<BulletData> bullet_data;
-        public readonly RefRW<LocalTransform> local_transform;
+        // public readonly RefRO<LocalTransform> local_transform;
 
         public void ProcessBulllet(EntityCommandBuffer ecb, float deltaTime) {
-            local_transform.ValueRW.Position += deltaTime * bullet_data.ValueRO.velocity;
+            // local_transform.ValueRW.Position += deltaTime * bullet_data.ValueRO.velocity;
             bullet_data.ValueRW.remain_life_time -= deltaTime;
 
             if (bullet_data.ValueRO.remain_life_time <= 0f)
@@ -54,21 +55,21 @@ namespace MySystems {
             }
 
             // Get the SystemState of the physics system using the SystemHandle
-            var physicsSystemState = state.World.Unmanaged.GetExistingSystemState<ExportPhysicsWorld>();
+            // var physicsSystemState = state.World.Unmanaged.GetExistingSystemState<ExportPhysicsWorld>();
 
             // 获取 ExportPhysicsWorld 系统中的 JobHandle
-            JobHandle checkDynamicBodyIntegrityHandle = physicsSystemState.Dependency;
+            // JobHandle checkDynamicBodyIntegrityHandle = physicsSystemState.Dependency;
 
             var ecb = new EntityCommandBuffer(Allocator.TempJob);
 
             // 不同job不能同时访问LocalTransform 
-            var processBulletJobHandle = new ProcessBulletJob { 
+            new ProcessBulletJob { 
                 ecb = ecb, 
                 deltaTime = SystemAPI.Time.DeltaTime,
-            }.Schedule(checkDynamicBodyIntegrityHandle);
+            }.Run();
             
-            state.Dependency = JobHandle.CombineDependencies(processBulletJobHandle, state.Dependency);
-            processBulletJobHandle.Complete();
+            // state.Dependency = JobHandle.CombineDependencies(processBulletJobHandle, state.Dependency);
+            // processBulletJobHandle.Complete();
             
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
@@ -113,16 +114,24 @@ namespace MySystems {
                     {
                         // 不能使用Singleton 运行时改变，只能是编译时设置
                         remain_life_time = ProjectSettings.GameConfig.bullet_life_time,
-                        velocity = ShooterData.ValueRO.direction * ShooterData.ValueRO.speed,
+                        velocity = ShooterData.ValueRO.velocity * ShooterData.ValueRO.speed,
+                    });
+
+                    ecb.SetComponent(bulletInstance, new PhysicsVelocity 
+                    {
+                        Linear = ShooterData.ValueRO.velocity,
+                        Angular = float3.zero,
                     });
 
                     // 设置子弹的初始位置和方向
                     ecb.SetComponent(bulletInstance, new LocalTransform
                     {
                         Position = ShooterData.ValueRO.position,
-                        Scale = scale,
-                    });
+                        Scale = scale, // 设置为一个有效的比例
+                        Rotation = quaternion.identity,
 
+                    });
+                    // Debug.Log("Bullet fired!");
                     // Debug.Log("Bullet fired!");
                 }
             }

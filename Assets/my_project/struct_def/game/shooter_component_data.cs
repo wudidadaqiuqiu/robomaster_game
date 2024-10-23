@@ -7,7 +7,7 @@ namespace StructDef.Game {
     public struct ShooterComponentData : IComponentData {
         public BulletType type;
         public Vector3 position;
-        public Vector3 direction;
+        public Vector3 velocity;
         // 子弹间隔发射计时
         public float delta_time;
         public float speed;
