@@ -32,3 +32,8 @@ Robomaster 模拟器是一个基于 Unity 的 Robomaster 比赛模拟器，用�
 - [UniRx入门](https://lianbai.github.io/2019/09/23/Unity/UniRx%E5%85%A5%E9%97%A8/)
 
 - [Entity工作流程](https://discussions.unity.com/t/convert-to-entity-script-is-not-there/257976/3)
+
+## 问题
+- [Loading Entity Scene failed because the entity header file couldn’t be resolved.](https://discussions.unity.com/t/solved-loading-entity-scene-failed-because-the-entity-header-file-couldnt-be-resolved/819677/9)
+- [What is the proper way of instantiating an entity prefab with child physics bodies?](https://discussions.unity.com/t/what-is-the-proper-way-of-instantiating-an-entity-prefab-with-child-physics-bodies/910049)
+- [](https://discussions.unity.com/t/how-do-i-detect-collisions/875868/3)

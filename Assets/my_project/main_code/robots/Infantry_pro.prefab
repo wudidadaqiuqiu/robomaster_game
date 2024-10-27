@@ -1885,6 +1885,7 @@ GameObject:
   - component: {fileID: 1161684674592091907}
   - component: {fileID: 3353410317367644429}
   - component: {fileID: -7327160757361260066}
+  - component: {fileID: 5765388003739452467}
   m_Layer: 6
   m_Name: Infantry_pro
   m_TagString: robot
@@ -2094,6 +2095,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera_: {fileID: 7903376532191864540}
   first_person: {fileID: 5644744896843670051}
+--- !u!114 &5765388003739452467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5147714066339793767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1efd7661402cf617e990eccd803dd1d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotType: 0
 --- !u!1 &5448802232370305772
 GameObject:
   m_ObjectHideFlags: 0
@@ -4071,6 +4085,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2763333604978114369, guid: 78f2e7e58728967ee96ecb40fbc34d5a,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763333604978114369, guid: 78f2e7e58728967ee96ecb40fbc34d5a,
+        type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -4195,6 +4214,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2763333604978114369, guid: 78f2e7e58728967ee96ecb40fbc34d5a,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763333604978114369, guid: 78f2e7e58728967ee96ecb40fbc34d5a,
+        type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -4286,6 +4310,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallArmor
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763333604978114369, guid: 78f2e7e58728967ee96ecb40fbc34d5a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4390,6 +4419,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763333604978114369, guid: 78f2e7e58728967ee96ecb40fbc34d5a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2763333604978114369, guid: 78f2e7e58728967ee96ecb40fbc34d5a,
         type: 3}
