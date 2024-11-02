@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec277f6370f24507a8221072da3b0deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  small_bullet_prefab: {fileID: 384742398521579618, guid: 22b486f7593658c85aef428b50099e2d,
+  small_bullet_prefab: {fileID: 3077292867315656718, guid: f09466a0ac369cf45b711039c0bc845c,
     type: 3}
   big_bullet_prefab: {fileID: 3077292867315656718, guid: d8270e01c5540354c9473a87a20a73d5,
     type: 3}
@@ -368,8 +368,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   infantry1_prefab: {fileID: 4438442608949981370, guid: be246df01ecc6f46aabbd6f02ae669a2,
-    type: 3}
-  infantry1_ghost: {fileID: 5564278432159819495, guid: 215d5aa1f62bae08d8bcca2a1cb8b550,
     type: 3}
 --- !u!4 &1066497052
 Transform:

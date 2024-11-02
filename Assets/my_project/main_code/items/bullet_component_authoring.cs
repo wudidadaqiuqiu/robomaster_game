@@ -17,6 +17,7 @@ namespace RoboticItems
             var entity = GetEntity(TransformUsageFlags.None);
             
             AddComponent(entity, authoring.data);
+            AddComponent<BulletTag>(entity);
         }
     }
 }

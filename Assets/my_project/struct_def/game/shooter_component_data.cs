@@ -35,4 +35,12 @@ namespace StructDef.Game {
         // public float3 velocity;
         public float remain_life_time;
     }
+
+    public struct ArmorData : IComponentData {
+        public int collision_count;
+    }
+
+    public struct BulletTag : IComponentData {
+        
+    }
 }
