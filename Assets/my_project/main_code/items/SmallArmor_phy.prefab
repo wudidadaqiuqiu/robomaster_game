@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 1497915271590993394}
   - component: {fileID: 8849699547668744611}
   - component: {fileID: 7673154631166381556}
-  - component: {fileID: -3279183991232021839}
   m_Layer: 7
   m_Name: SmallArmor_phy
   m_TagString: Untagged
@@ -360,18 +359,6 @@ MonoBehaviour:
         Tag07: 0
     m_SerializedVersion: 1
   m_SerializedVersion: 1
---- !u!114 &-3279183991232021839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2763333604978114369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72fd1a825169e18e5a0ef9a03a041d3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6360882298015527435
 GameObject:
   m_ObjectHideFlags: 0

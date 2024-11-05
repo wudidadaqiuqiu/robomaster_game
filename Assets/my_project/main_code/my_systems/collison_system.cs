@@ -4,113 +4,55 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Physics;
 using Unity.Physics.Systems;
-using Unity.Physics.Extensions;
 using StructDef.Game;
-using UnityEngine;
 using RoboticItems;
 // using System.Diagnostics;
 
 namespace MySystems
 {
-    // [BurstCompile]
+    [BurstCompile]
     public struct ArmorCollisionEventJob : ICollisionEventsJob
     {
-        [ReadOnly] public ComponentLookup<RobotGhostTag> robotGhostGroup;
+        public ComponentLookup<RobotGhostComponent> robotGhostGroup;
         [ReadOnly] public ComponentLookup<BulletTag> BulletGroup;
+        [BurstCompile]
         public void Execute(CollisionEvent collisionEvent)
         {
             var entityA = collisionEvent.EntityA;
             var entityB = collisionEvent.EntityB;
-            Debug.Log("in job");
-            // Debug.Log("Collision detected between ");
-            // Debug.Log(entityA.ToFixedString());
-            // Debug.Log(entityB.);
-            // if 
-            // DebugComponents(entityA);
-            // Debug.Log(ArmorGroup.)
-            if (BulletGroup.HasComponent(entityA)) {
-                // Debug.Log("Bullet collision detected");
-                if (robotGhostGroup.HasComponent(entityB))
-                {
-                    Debug.Log("Armor and Bullet collision detected");
-                    // var armor_data = ArmorGroup[entityB];
-                    // armor_data.collision_count++;
-                    // ArmorGroup[entityB] = armor_data;
-                }
-            }
-
-            if (BulletGroup.HasComponent(entityB)) {
-                // Debug.Log("Bullet collision detected");
-                if (robotGhostGroup.HasComponent(entityA))
-                {
-                    Debug.Log("Armor and Bullet collision detected");
-                    // var armor_data = ArmorGroup[entityB];
-                    // armor_data.collision_count++;
-                    // ArmorGroup[entityB] = armor_data;
-                }
-            }
-
-            // if (ArmorGroup.HasComponent(entityA)) {
-            //     Debug.Log("Armor collision detected");
-            // }
-
             
-            // if (ArmorGroup.HasComponent(entityA) && BulletGroup.HasComponent(entityB))
-            // {
-            //     var armor_data = ArmorGroup[entityA];
-            //     armor_data.collision_count++;
-            //     ArmorGroup[entityA] = armor_data;
-            //     Debug.Log("Armor collided with bullet");
-            // }
-
-            // if (ArmorGroup.HasComponent(entityB) && BulletGroup.HasComponent(entityA))
-            // {
-            //     var armor_data = ArmorGroup[entityB];
-            //     armor_data.collision_count++;
-            //     ArmorGroup[entityB] = armor_data;
-            //     Debug.Log("Armor collided with bullet");
-            // }
-        }
-
-        void DebugComponents(Entity entity)
-        {
-            var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
-            if (entityManager.HasComponent<BulletTag>(entity))
+            if (robotGhostGroup.HasComponent(entityA) && BulletGroup.HasComponent(entityB))
             {
-                // var component = entityManager.GetComponentData<BulletTag>(entity);
-                Debug.Log($"Entity has YourComponentType: BulletTag");
-                if (!BulletGroup.HasComponent(entity))
-                {
-                    Debug.LogWarning("Entity has component: BulletTag but not BulletGroup");
-                    // Debug.Log($"Entity has component: BulletGroup");
-                } else {
-                    Debug.Log($"BulletGroup has component: BulletTag");
-                }
+                var robot_ghost = robotGhostGroup[entityA];
+                robot_ghost.collision_cnt++;
+                robotGhostGroup[entityA] = robot_ghost;
+                // Debug.Log("Armor collided with bullet");
             }
 
-            // 获取所有组件类型
-            var componentTypes = entityManager.GetComponentTypes(entity);
-            foreach (var componentType in componentTypes)
+            if (robotGhostGroup.HasComponent(entityB) && BulletGroup.HasComponent(entityA))
             {
-                Debug.Log($"Entity has component: {componentType}");
+                var robot_ghost = robotGhostGroup[entityB];
+                robot_ghost.collision_cnt++;
+                robotGhostGroup[entityB] = robot_ghost;
+                // Debug.Log("Armor collided with bullet");
             }
         }
     }
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateAfter(typeof(PhysicsSystemGroup))]
+    [BurstCompile]
     public partial struct ArmorCollisionEventSystem : ISystem
     {
-        private ComponentLookup<RobotGhostTag> robotGhostGroup;
+        private ComponentLookup<RobotGhostComponent> robotGhostGroup;
         private ComponentLookup<BulletTag> bulletGroup;
 
         public void OnCreate(ref SystemState state)
         {
-            robotGhostGroup = state.GetComponentLookup<RobotGhostTag>(true);
+            robotGhostGroup = state.GetComponentLookup<RobotGhostComponent>();
             bulletGroup = state.GetComponentLookup<BulletTag>(true);
         }
-
+        [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             // 更新 ComponentLookup

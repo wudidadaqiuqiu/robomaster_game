@@ -9,8 +9,8 @@ namespace RoboticItems
         
     }
 
-    public struct RobotGhostTag : IComponentData {
-        
+    public struct RobotGhostComponent : IComponentData {
+        public uint collision_cnt;
     }
 
     public class RobotGhostBaker : Baker<RobotGhostAuthoring>
@@ -18,7 +18,7 @@ namespace RoboticItems
         public override void Bake(RobotGhostAuthoring authoring)
         {
             var entity = GetEntity(TransformUsageFlags.Dynamic);
-            AddComponent<RobotGhostTag>(entity);
+            AddComponent<RobotGhostComponent>(entity);
         }
     }
 }
