@@ -6,7 +6,6 @@ using Unity.Physics;
 using Unity.Physics.Systems;
 using StructDef.Game;
 using RoboticItems;
-// using System.Diagnostics;
 
 namespace MySystems
 {
