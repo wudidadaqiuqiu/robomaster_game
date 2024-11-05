@@ -37,3 +37,5 @@ Robomaster 模拟器是一个基于 Unity 的 Robomaster 比赛模拟器，用�
 - [Loading Entity Scene failed because the entity header file couldn’t be resolved.](https://discussions.unity.com/t/solved-loading-entity-scene-failed-because-the-entity-header-file-couldnt-be-resolved/819677/9)
 - [What is the proper way of instantiating an entity prefab with child physics bodies?](https://discussions.unity.com/t/what-is-the-proper-way-of-instantiating-an-entity-prefab-with-child-physics-bodies/910049)
 - [](https://discussions.unity.com/t/how-do-i-detect-collisions/875868/3)
+- ComponentLookup 仅能得到根上的实体(坐标系是全局坐标系)，不能获取到子树上的实体(坐标系是局部坐标系)
+- 子对象如果含有rigid body 或 physics body组件，则在转化时会将其坐标系定为全局坐标系，导致更改父实体的坐标时，子实体不受影响
