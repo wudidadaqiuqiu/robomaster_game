@@ -17,3 +17,5 @@ UnityPlayer.so
 robomaster-v0_BurstDebugInformation_DoNotShip
 # Assets/Packages
 obj
+.vs/*
+.vsconfig
