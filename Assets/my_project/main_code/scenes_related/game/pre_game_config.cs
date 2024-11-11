@@ -13,7 +13,7 @@ using Unity.Netcode.Transports.UTP;
 namespace Game {
     
 
-public class pre_game_config : MonoBehaviour
+public class PreGameConfiger : MonoBehaviour
 {
     [SerializeField] private Button hostbutton;
     [SerializeField] private Button clientbutton;

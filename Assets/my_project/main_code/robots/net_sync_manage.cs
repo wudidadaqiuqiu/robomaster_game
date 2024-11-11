@@ -8,7 +8,7 @@ namespace Robots
 {
 
 
-public class NetTransform : NetworkBehaviour, IRobotComponent
+public class NetSyncManage : NetworkBehaviour, IRobotComponent
 {
     private Subject<object> _subject;
     [SerializeField] private float _cheapInterpolationTime = 0.01f;
@@ -66,7 +66,7 @@ public class NetTransform : NetworkBehaviour, IRobotComponent
         }
 
     }
-        private void Update() {
+    private void Update() {
         if (!IsServer)
             ConsumeState();
         else
