@@ -46,9 +46,7 @@ public class CanvasSampleOpenFileImage : MonoBehaviour, IPointerDownHandler {
 #endif
 
     private IEnumerator OutputRoutine(string url) {
-#pragma warning disable CS0618 
         var loader = new WWW(url);
-#pragma warning restore CS0618
         yield return loader;
         output.texture = loader.texture;
     }
