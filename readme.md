@@ -10,7 +10,7 @@ Robomaster 模拟器是一个基于 Unity 的 Robomaster 比赛模拟器，用�
 - 使用IngameDebugConsole实现游戏内log显示
 - 使用[Netcode for GameObjects](https://docs-multiplayer.unity3d.com/netcode/current/about/)实现网络同步
 - 使用[ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector)实现与ROS的通信
-
+- 使用[UnityStandaloneFileBrowser](https://github.com/gkngkc/UnityStandaloneFileBrowser?tab=readme-ov-file)实现跨平台文件选择
 ## 习惯与规范
 - 所有自建文件夹和文件均以小写字母加下划线命名
 - 类，结构体，枚举，函数命名使用驼峰命名法，函数
@@ -20,8 +20,8 @@ Robomaster 模拟器是一个基于 Unity 的 Robomaster 比赛模拟器，用�
 
 ## TODO
 ### uinty 部分
-- [ ] 弹丸发射与碰撞检测
-- [ ] 使用Netcode for Entities实现弹丸的网络同步
+- [x] 弹丸发射与碰撞检测
+- [x] 使用Netcode for Entities实现弹丸的网络同步
 - [ ] 实现机器人全功能
 - [ ] 实现裁判与比赛逻辑
 ### ros2 部分
