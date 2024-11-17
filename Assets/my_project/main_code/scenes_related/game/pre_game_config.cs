@@ -17,20 +17,24 @@ public class pre_game_config : MonoBehaviour
 {
     [SerializeField] private Button hostbutton;
     [SerializeField] private Button clientbutton;
-    public Camera pregamecamera;
-    public Camera ingamecamera;
+    public Camera main_camera;
+    public Transform camera_pos;
+    //public Camera pregamecamera;
+    //public Camera ingamecamera;
     public GameObject net_start_ui;
     public ProjectSettings.InGameConfig config;
 
     void Start()
     {
         // Debug.Log("buttons start");
-        pregamecamera.enabled = true;
+        //pregamecamera.enabled = true;
         net_start_ui.SetActive(true);
+        main_camera.GetComponent<Transform>().transform.position = camera_pos.position;
+        main_camera.GetComponent<Transform>().rotation = camera_pos.rotation;
         // pregamecanvas.enabled = true;
 
-        ingamecamera.enabled = false;
-        ingamecamera.GetComponent<AudioListener>().enabled = false;
+        //ingamecamera.enabled = false;
+        //ingamecamera.GetComponent<AudioListener>().enabled = false;
 
         // ingamecamera.enabled = false;
 
@@ -53,11 +57,11 @@ public class pre_game_config : MonoBehaviour
     void DisableAfterNetStart() {
         net_start_ui.SetActive(false);
         // pregamecanvas.enabled = false;
-        pregamecamera.enabled = false;
-        pregamecamera.GetComponent<AudioListener>().enabled = false;
+        //pregamecamera.enabled = false;
+        //pregamecamera.GetComponent<AudioListener>().enabled = false;
 
-        ingamecamera.enabled = true;
-        ingamecamera.GetComponent<AudioListener>().enabled = true;
+        //ingamecamera.enabled = true;
+        //ingamecamera.GetComponent<AudioListener>().enabled = true;
     }
     public void OnHostButtonClick()
     {
