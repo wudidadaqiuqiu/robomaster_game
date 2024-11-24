@@ -9,20 +9,25 @@ using System.IO;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using Unity.Netcode.Transports.UTP;
+using Cinemachine;
 
-namespace Game {
-    
-
-public class PreGameConfiger : MonoBehaviour
+public class PreGameManager : MonoBehaviour
 {
+    public static PreGameManager Instance;
+
     [SerializeField] private Button hostbutton;
     [SerializeField] private Button clientbutton;
     public Camera main_camera;
     public Transform camera_pos;
-    //public Camera pregamecamera;
-    //public Camera ingamecamera;
     public GameObject net_start_ui;
     public ProjectSettings.InGameConfig config;
+
+    private bool isStart = false;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -54,7 +59,8 @@ public class PreGameConfiger : MonoBehaviour
         }
     }
 
-    void DisableAfterNetStart() {
+    void DisableAfterNetStart() 
+    {
         net_start_ui.SetActive(false);
         // pregamecanvas.enabled = false;
         //pregamecamera.enabled = false;
@@ -63,6 +69,8 @@ public class PreGameConfiger : MonoBehaviour
         //ingamecamera.enabled = true;
         //ingamecamera.GetComponent<AudioListener>().enabled = true;
     }
+
+    #region button_function
     public void OnHostButtonClick()
     {
         var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "yaml", false)[0];
@@ -70,6 +78,8 @@ public class PreGameConfiger : MonoBehaviour
 
         Debug.Log("Starting Host...");
         NetworkManager.Singleton.StartHost();
+
+        isStart = true;
         DisableAfterNetStart();
     }
 
@@ -80,10 +90,14 @@ public class PreGameConfiger : MonoBehaviour
 
         Debug.Log("Starting Client...");
         NetworkManager.Singleton.StartClient();
+
+        isStart = true;
         DisableAfterNetStart();
     }
+    #endregion
 
-    void ClientChangeConfig(string path) {
+    void ClientChangeConfig(string path) 
+    {
         string content = File.ReadAllText(path);
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(UnderscoredNamingConvention.Instance)  // see height_in_inches in sample yml 
@@ -97,6 +111,9 @@ public class PreGameConfiger : MonoBehaviour
         transport.ConnectionData.Address = config.ip;
         transport.ConnectionData.Port = config.port;
     }
-}
 
+    public bool getSartStatus()
+    {
+        return isStart;
+    }
 }
