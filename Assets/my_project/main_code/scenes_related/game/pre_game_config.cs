@@ -28,7 +28,7 @@ public class PreGameConfiger : MonoBehaviour
     {
         // Debug.Log("buttons start");
         //pregamecamera.enabled = true;
-        net_start_ui.SetActive(true);
+        //net_start_ui.SetActive(true);
         main_camera.GetComponent<Transform>().transform.position = camera_pos.position;
         main_camera.GetComponent<Transform>().rotation = camera_pos.rotation;
         // pregamecanvas.enabled = true;
