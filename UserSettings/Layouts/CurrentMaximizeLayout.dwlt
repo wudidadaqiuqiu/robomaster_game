@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 16530
+  controlID: 37
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 16531
+  controlID: 38
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 16532
+  controlID: 39
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -196,8 +196,8 @@ MonoBehaviour:
     y: 0
     width: 402.66666
     height: 514.6667
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -243,21 +243,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0a71ffff2271ffff6671ffff7471ffff24f2ffff08fbffff0afbfffffa970000
+      m_ExpandedIDs: 0afbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: CINEMA_4D_Editor
-        m_OriginalName: CINEMA_4D_Editor
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -36498
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 4
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 5}
       m_SearchString: 
@@ -638,9 +638,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.4162238, y: 1.7600824, z: -1.5318642}
+    m_Target: {x: 3.4212463, y: 1.6635598, z: -1.605516}
     speed: 2
-    m_Value: {x: 3.4162238, y: 1.7600824, z: -1.5318642}
+    m_Value: {x: 3.4212463, y: 1.6635598, z: -1.605516}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -690,9 +690,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.3108044, y: 0.1428922, z: -0.047323704, w: -0.93847907}
   m_Size:
-    m_Target: 0.20565622
+    m_Target: 0.07772696
     speed: 2
-    m_Value: 0.20565622
+    m_Value: 0.07772696
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -806,9 +806,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 119}
-    m_SelectedIDs: 88990000
-    m_LastClickedID: 39304
-    m_ExpandedIDs: 0000000066990000689900006a9900006c990000
+    m_SelectedIDs: 10990000
+    m_LastClickedID: 39184
+    m_ExpandedIDs: 00000000f0980000f2980000f4980000f6980000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -836,7 +836,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000066990000689900006a9900006c990000
+    m_ExpandedIDs: 00000000f0980000f2980000f4980000f6980000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000000000005ced000056ed000016b7000048770000b87b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
