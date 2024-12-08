@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class shift_first2start : MonoBehaviour
+public class shift_first2start: MonoBehaviour
 {
     public GameObject first_interface;
-    public GameObject start_interface;
+    public GameObject hero_selection;
 
     public Button Button_mp;
 
     void Start()
     {
-        Button_mp.onClick.AddListener(shift);
+        Button_mp.onClick.AddListener(tran);
     }
 
     void Update()
     {
         
     }
-    void shift()
+
+    void tran()
     {
         first_interface.SetActive(false);
-        start_interface.SetActive(true);
+        hero_selection.SetActive(true);
+
+        select_charge.Instance.mode = 2;
     }
 }
