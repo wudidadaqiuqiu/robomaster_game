@@ -31,17 +31,9 @@ public class PreGameManager : MonoBehaviour
 
     void Start()
     {
-        // Debug.Log("buttons start");
-        //pregamecamera.enabled = true;
         //net_start_ui.SetActive(true);
         main_camera.GetComponent<Transform>().transform.position = camera_pos.position;
         main_camera.GetComponent<Transform>().rotation = camera_pos.rotation;
-        // pregamecanvas.enabled = true;
-
-        //ingamecamera.enabled = false;
-        //ingamecamera.GetComponent<AudioListener>().enabled = false;
-
-        // ingamecamera.enabled = false;
 
         // 检查是否已分配按钮
         if (hostbutton != null)
@@ -62,18 +54,13 @@ public class PreGameManager : MonoBehaviour
     void DisableAfterNetStart() 
     {
         net_start_ui.SetActive(false);
-        // pregamecanvas.enabled = false;
-        //pregamecamera.enabled = false;
-        //pregamecamera.GetComponent<AudioListener>().enabled = false;
-
-        //ingamecamera.enabled = true;
-        //ingamecamera.GetComponent<AudioListener>().enabled = true;
     }
 
-    #region button_function
+    #region button_callback
     public void OnHostButtonClick()
     {
-        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "yaml", false)[0];
+        //var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "yaml", false)[0];
+        var path = "Assets/player_net_config/host.yaml";
         ClientChangeConfig(path);
 
         Debug.Log("Starting Host...");
@@ -85,7 +72,8 @@ public class PreGameManager : MonoBehaviour
 
     public void OnClientButtonClick()
     {
-        var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "yaml", false)[0];
+        //var path = StandaloneFileBrowser.OpenFilePanel("Open File", "", "yaml", false)[0];
+        var path = "Assets/player_net_config/client1.yaml";
         ClientChangeConfig(path);
 
         Debug.Log("Starting Client...");
