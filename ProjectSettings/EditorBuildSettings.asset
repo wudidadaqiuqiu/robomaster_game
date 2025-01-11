@@ -9,10 +9,10 @@ EditorBuildSettings:
     path: Assets/Workspace/Scenes/start/start.unity
     guid: 456c5d36f178a3717bce4ba6ee5ee4df
   - enabled: 1
-    path: Assets/Workspace/Scenes/game.unity
+    path: Assets/workspace/scenes/game.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/Workspace/Scenes/environment.unity
+    path: Assets/workspace/scenes/environment.unity
     guid: 73b07a46e4e72d30aa17d291958baf26
   - enabled: 1
     path: Assets/Workspace/Scenes/game/settings.unity

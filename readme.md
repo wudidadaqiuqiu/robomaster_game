@@ -12,11 +12,11 @@ Robomaster 模拟器是一个基于 Unity 的 Robomaster 比赛模拟器，用�
 - 使用[ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector)实现与ROS的通信
 - 使用[UnityStandaloneFileBrowser](https://github.com/gkngkc/UnityStandaloneFileBrowser?tab=readme-ov-file)实现跨平台文件选择
 ## 习惯与规范
-- 所有自建文件夹和文件均以小写字母加下划线命名
-- 类，结构体，枚举，函数命名使用驼峰命名法，函数
+- 所有自建文件夹和文件均以小写字母加下划线命名，但是自建脚本和类同名（方便查看类型）
+- 类，结构体，枚举，函数命名使用驼峰命名法
 - 变量命名使用蛇形命名法
 - 成员变量可以使用下划线开头来避免与形参的重复，如`_variable`
-- 不区分prefab与脚本放置位置，美术资源放置在`Assets/myresources`文件夹下，场景放置在`Assets/scenes`文件夹下，其他基本放在`Assets/my_project`
+- 外部下载的包放在customer_package内，所有自定义资源都在worksapce文件夹内
 
 ## TODO
 ### uinty 部分
