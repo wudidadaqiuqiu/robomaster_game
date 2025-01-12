@@ -1,10 +1,13 @@
-namespace robot
+using Unity.Netcode;
+
+namespace Robot
 {
     #region 数据结构
     public enum RobotVisionMode
     {
         first_person = 0,
         third_person = 1,
+        second_person = 114514,
     };
 
     public enum RobotShootMode : byte
@@ -30,17 +33,33 @@ namespace robot
         Sentry = 6,
     };
 
-    public struct Info
+
+    [System.Serializable]
+    public struct RobotInfoDynamic : INetworkSerializable
+    {
+        public float HP;
+        public float heat;
+        public float power;
+
+        public int grade;
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            serializer.SerializeValue(ref HP);
+            serializer.SerializeValue(ref heat);
+            serializer.SerializeValue(ref power);
+            serializer.SerializeValue(ref grade);
+        }
+    };
+
+    public struct RobotInfoFixed
     {
         int max_HP;
-        float HP;
-
         int max_heat;
-        float heat;
+        int max_power;
 
-        int grade;
-        int index;
-    };
+        int bullet_num;
+    }
     #endregion
 
     public class RobotState
@@ -49,7 +68,12 @@ namespace robot
         public RobotShootMode shoot_mode;
         public RobotGroup group;
         public RobotType type;
-        public Info info;
+
+        public RobotInfoDynamic info_dynamic;
+        public RobotInfoFixed info_fixed;
+
+        // 暂时固定，后面会和功率联合
+        public float velocity = 5.0f;
 
         public RobotState(RobotType _type, RobotGroup _group)
         {

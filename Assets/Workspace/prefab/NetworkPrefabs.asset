@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e651dbb3fbac04af2b8f5abf007ddc23, type: 3}
-  m_Name: RobotNetworkPrefabs
+  m_Name: NetworkPrefabs
   m_EditorClassIdentifier: 
-  IsDefault: 1
+  IsDefault: 0
   List:
   - Override: 0
-    Prefab: {fileID: 5147714066339793767, guid: b248a0b1e074fc139bbd7f29830aa3a5,
+    Prefab: {fileID: 5611584783740435107, guid: a56fbdf12da5c1f42a05c0e704081599,
       type: 3}
     SourcePrefabToOverride: {fileID: 0}
     SourceHashToOverride: 0

@@ -42,12 +42,12 @@ namespace setting
     {
         public GlobalSetting Instance;
 
-        Sensitivity sensitivity;
-        BulletParam bullet_param;
-        HeroParam hero_param;
-        EngineerParam engineer_param;
-        InfantryParam infantry_param;
-        SentryParam sentry_param;
+        public Sensitivity sensitivity;
+        public BulletParam bullet_param;
+        public HeroParam hero_param;
+        public EngineerParam engineer_param;
+        public InfantryParam infantry_param;
+        public SentryParam sentry_param;
 
         private void Awake()
         {
