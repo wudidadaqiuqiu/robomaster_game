@@ -20,6 +20,9 @@ public class PreGameManager : MonoBehaviour
     public Camera main_camera;
     public Transform camera_pos;
     public GameObject net_start_ui;
+
+    [SerializeField] private GameObject ingame_ui;
+
     public ProjectSettings.InGameConfig config;
 
     private bool isStart = false;
@@ -35,19 +38,10 @@ public class PreGameManager : MonoBehaviour
         main_camera.GetComponent<Transform>().transform.position = camera_pos.position;
         main_camera.GetComponent<Transform>().rotation = camera_pos.rotation;
 
-        if (hostbutton != null)
-        {
-            // Debug.Log("按钮已分配");
-            // 为按钮的 onClick 事件添加一个监听器
-            hostbutton.onClick.AddListener(OnHostButtonClick);
-        }
+        hostbutton.onClick.AddListener(OnHostButtonClick);
+        clientbutton.onClick.AddListener(OnClientButtonClick);
 
-        if (clientbutton != null)
-        {
-            // Debug.Log("按钮已分配");
-            // 为按钮的 onClick 事件添加一个监听器
-            clientbutton.onClick.AddListener(OnClientButtonClick);
-        }
+        ingame_ui.SetActive(false);
     }
 
     void DisableAfterNetStart() 
@@ -66,6 +60,7 @@ public class PreGameManager : MonoBehaviour
         NetworkManager.Singleton.StartHost();
 
         isStart = true;
+        ingame_ui.SetActive(true);
         DisableAfterNetStart();
     }
 
@@ -79,6 +74,7 @@ public class PreGameManager : MonoBehaviour
         NetworkManager.Singleton.StartClient();
 
         isStart = true;
+        ingame_ui.SetActive(true);
         DisableAfterNetStart();
     }
     #endregion
