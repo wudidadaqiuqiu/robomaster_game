@@ -4,7 +4,6 @@ using UnityEngine.Assertions;
 
 namespace Robots
 {
-
     public class NetSpawn : NetworkBehaviour
     {
         public override void OnNetworkSpawn()

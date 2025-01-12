@@ -173,6 +173,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallArmor_phy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2763333604978114369, guid: 839255deba44e613bb7175fb23cb060a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -256,6 +261,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallArmor_phy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763333604978114369, guid: 839255deba44e613bb7175fb23cb060a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -346,6 +356,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallArmor_phy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2763333604978114369, guid: 839255deba44e613bb7175fb23cb060a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -429,6 +444,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SmallArmor_phy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2763333604978114369, guid: 839255deba44e613bb7175fb23cb060a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
