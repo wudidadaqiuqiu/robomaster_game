@@ -22,8 +22,7 @@ public class RobotMove : MonoBehaviour
         Vector3 direction = new Vector3(0, 0, 0);
         direction += transform.forward * vertical;
         direction += transform.right * horizontal;
-        //core.rb.velocity = direction * 10.0f;
-        //core.rb.AddForce(direction.normalized * 200.0f, ForceMode.Force);
-        transform.position += direction.normalized * 10.0f * Time.deltaTime;
+
+        core.rb.AddForce(direction.normalized * 20.0f, ForceMode.Force);
     }
 }
