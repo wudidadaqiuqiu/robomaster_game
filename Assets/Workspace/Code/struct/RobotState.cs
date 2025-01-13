@@ -54,11 +54,11 @@ namespace Robot
 
     public struct RobotInfoFixed
     {
-        int max_HP;
-        int max_heat;
-        int max_power;
+        public int max_HP;
+        public int max_heat;
+        public int max_power;
 
-        int bullet_num;
+        public int bullet_num;
     }
     #endregion
 
@@ -101,6 +101,11 @@ namespace Robot
         public void upgrade()
         {
 
+        }
+
+        public float get_HP_pro()
+        {
+            return (float)info_dynamic.HP / (float)info_fixed.max_HP;
         }
     };
 };

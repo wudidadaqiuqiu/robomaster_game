@@ -2116,7 +2116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 504563645
+  GlobalObjectIdHash: 3975010726
   InScenePlacedSourceGlobalObjectIdHash: 2453684488
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
@@ -2188,7 +2188,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 2165871102256294898, guid: 45f8cf3898bc5ee4bbd6b589c96b19e2, type: 3}
+  shoot_mode_ui: {fileID: 0}
   shoot_pos: {fileID: 551572826795004386}
+  shoot_gap: 0.1
 --- !u!1 &5707362487673399134
 GameObject:
   m_ObjectHideFlags: 0
