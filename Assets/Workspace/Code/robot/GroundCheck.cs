@@ -1,16 +1,23 @@
 using UnityEngine;
-namespace Robots {
 
-public class GroundCheck : MonoBehaviour {
+public class GroundCheck : MonoBehaviour 
+{
     private bool isGrounded = false;
     public LayerMask groundLayer;
     [SerializeField] private float groundCheckRadius = 0.2f;
-    void Update() {
+
+    void Update() 
+    {
         isGrounded = Physics.CheckSphere(transform.position, groundCheckRadius, groundLayer);
     }
 
-    public bool IsGrounded() {
+    public bool IsGrounded() 
+    {
         return isGrounded;
     }
-}
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - groundCheckRadius, transform.position.z));       
+    }
 }
