@@ -28,8 +28,6 @@ public class RobotCore : MonoBehaviour
 
     void Update()
     {
-        state.info_dynamic.HP -= Time.deltaTime * 5f;
-
         HP_ui_update();
     }
 

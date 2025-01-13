@@ -34,7 +34,7 @@ public class EconomyManager : MonoBehaviour
 
     private void Update()
     {
-        if (!timeManager.getRaceStatus())
+        if (!timeManager.is_race())
         {
             return;
         }
@@ -46,7 +46,7 @@ public class EconomyManager : MonoBehaviour
     {
         for (int i = 0; i < time_node.Length; i++)
         {
-            if (timeManager.getTimer() < time_node[i] || isTriggers[i])
+            if (timeManager.get_timer() < time_node[i] || isTriggers[i])
             {
                 continue;
             }
@@ -54,14 +54,14 @@ public class EconomyManager : MonoBehaviour
             //第六分钟获得150经济加成
             if (i == 5)
             {
-                Debug.Log("双方经济自然增长150");
+                MessageManager.Instance.add_message("双方经济自然增长150");
                 blue_gold += 150;
                 red_gold += 150;
             }
             //前五分钟每分钟获得100经济加成
             else
             {
-                Debug.Log("双方经济自然增长50");
+                MessageManager.Instance.add_message("双方经济自然增长50");
                 blue_gold += 50;
                 red_gold += 50;
             }

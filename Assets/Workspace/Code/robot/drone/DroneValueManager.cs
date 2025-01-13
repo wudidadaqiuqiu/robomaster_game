@@ -30,21 +30,21 @@ public class DroneValueManager : MonoBehaviour
 
     private void Update()
     {
-        if (!timeManager.getRaceStatus())
+        if (!timeManager.is_race())
         {
             return;
         }
 
         for (int i = 0; i < time_node.Length; i++)
         {
-            if (timeManager.getTimer() < time_node[i] || isTriggers[i])
+            if (timeManager.get_timer() < time_node[i] || isTriggers[i])
             {
                 continue;
             }
 
             blue_aid_time += nature_increase_aid_time;
             red_aid_time += nature_increase_aid_time;
-            Debug.Log("双方各获得20s无人机支援时间");
+            MessageManager.Instance.add_message("双方各获得20s无人机支援时间");
 
             isTriggers[i] = true;
             break;

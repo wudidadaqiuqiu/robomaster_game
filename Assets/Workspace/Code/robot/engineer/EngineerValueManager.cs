@@ -25,15 +25,15 @@ public class EngineerValueManager : MonoBehaviour
 
     private void Update()
     {
-        if (!timeManager.getRaceStatus())
+        if (!timeManager.is_race())
         {
             return;
         }
 
-        if (timeManager.getTimer() > initial_defence_increase_time && isInitialDefenceIncrease)
+        if (timeManager.get_timer() > initial_defence_increase_time && isInitialDefenceIncrease)
         {
             isInitialDefenceIncrease = false;
-            Debug.Log("工程机器人初始防御增益失效");
+            MessageManager.Instance.add_message("工程机器人初始防御增益失效");
         }
     }
 }

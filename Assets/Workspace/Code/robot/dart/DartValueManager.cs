@@ -26,21 +26,21 @@ public class DartValueManager : MonoBehaviour
 
     private void Update()
     {
-        if (!timeManager.getRaceStatus())
+        if (!timeManager.is_race())
         {
             return;
         }
 
         for (int i = 0; i < time_node.Length; i++)
         {
-            if (timeManager.getTimer() < time_node[i] || isTriggers[i])
+            if (timeManager.get_timer() < time_node[i] || isTriggers[i])
             {
                 continue;
             }
 
             blue_dart_shoot_time++;
             red_dart_shoot_time++;
-            Debug.Log("双方各获得一次飞镖发射机会");
+            MessageManager.Instance.add_message("双方各获得一次飞镖发射机会");
 
             isTriggers[i] = true;
             break;

@@ -28,25 +28,25 @@ public class EnergyMachineManager : MonoBehaviour
 
     void Update()
     {
-        if (!timeManager.getRaceStatus())
+        if (!timeManager.is_race())
         {
             return;
         }
 
         for (int i = 0; i < time_node.Length; i++)
         {
-            if (timeManager.getTimer() < time_node[i] || isTriggers[i])
+            if (timeManager.get_timer() < time_node[i] || isTriggers[i])
             {
                 continue;
             }
 
             if (i == 0 || i == 1)
             {
-                Debug.Log("小能量机关开始旋转");
+                MessageManager.Instance.add_message("小能量机关开始旋转");
             }
             else
             {
-                Debug.Log("大能量机关开始旋转");
+                MessageManager.Instance.add_message("大能量机关开始旋转");
             }
 
             isRotate = true;
@@ -62,7 +62,7 @@ public class EnergyMachineManager : MonoBehaviour
             {
                 rotate_timer = 0;
                 isRotate = false;
-                Debug.Log("能量机关停止旋转");
+                MessageManager.Instance.add_message("能量机关停止旋转");
             }
         }
     }

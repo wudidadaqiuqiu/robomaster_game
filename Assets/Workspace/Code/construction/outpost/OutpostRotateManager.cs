@@ -24,15 +24,15 @@ public class OutpostRotateManager : MonoBehaviour
 
     private void Update()
     {
-        if (!timeManager.getRaceStatus())
+        if (!timeManager.is_race())
         {
             return;
         }
 
-        if (timeManager.getTimer() > rotate_stop_time && isRotate)
+        if (timeManager.get_timer() > rotate_stop_time && isRotate)
         {
             isRotate = false;
-            Debug.Log("前哨站自然停止旋转");
+            MessageManager.Instance.add_message("前哨站自然停止旋转");
         }
     }
 

@@ -38,7 +38,7 @@ public class TimeManager : MonoBehaviour
 
         if (timer > countdown_time && isCountdown)
         {
-            Debug.Log("race begin!");
+            MessageManager.Instance.add_message("比赛开始!");
 
             timer = 0;
             isCountdown = false;
@@ -47,7 +47,7 @@ public class TimeManager : MonoBehaviour
 
         if (timer > race_time && isRace)
         {
-            Debug.Log("race end!");
+            MessageManager.Instance.add_message("比赛结束!");
 
             timer = 0;
             isRace = false;
@@ -55,13 +55,36 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    public float getTimer()
+    public float get_timer()
     {
         return timer;
     }
 
-    public bool getRaceStatus()
+    public float get_time_text()
+    {
+        if (isCountdown)
+        {
+            return countdown_time - timer;
+        }
+        if (isRace)
+        {
+            return race_time - timer;
+        }
+        return 0;
+    }
+
+    public bool is_countdown()
+    {
+        return isCountdown;
+    }
+
+    public bool is_race()
     {
         return isRace;
+    }
+
+    public bool is_end()
+    {
+        return isEnd;
     }
 }
