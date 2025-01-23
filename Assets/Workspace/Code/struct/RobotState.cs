@@ -107,5 +107,10 @@ namespace Robot
         {
             return (float)info_dynamic.HP / (float)info_fixed.max_HP;
         }
+
+        public float get_heat_pro()
+        {
+            return (float)info_dynamic.heat / (float)info_fixed.max_heat;
+        }
     };
 };

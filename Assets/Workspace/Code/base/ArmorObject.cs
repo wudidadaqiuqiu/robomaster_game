@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class ArmorObject : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    protected float max_HP = 800;
+    protected float HP = 800;
+
+    virtual public void small_hit()
     {
-        
+        HP -= 5;
     }
 
-    // Update is called once per frame
-    void Update()
+    virtual public void big_hit()
     {
-        
+        HP -= 50;
     }
 }

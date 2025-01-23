@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class OutpostManager : MonoBehaviour
+public class OutpostManager : ArmorObject
 {
-    private float HP = 800;
+    [SerializeField] private Slider state_slider;
 
-    public void armor_hited()
+    public override void small_hit()
     {
-        Debug.Log("装甲板被击打");
-        HP -= 50;
+        base.small_hit();
+        update_HP();
+        Debug.Log("小弹击中前哨站装甲板");
+    }
+
+    private void update_HP()
+    {
+        state_slider.value = HP / max_HP;
     }
 }

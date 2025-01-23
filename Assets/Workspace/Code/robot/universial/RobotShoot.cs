@@ -9,6 +9,8 @@ public enum ShootMode
 
 public class RobotShoot : MonoBehaviour
 {
+    private RobotCore core;
+
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject shoot_mode_ui;
     [SerializeField] private Transform shoot_pos;
@@ -20,6 +22,8 @@ public class RobotShoot : MonoBehaviour
 
     void Start()
     {
+        core = GetComponent<RobotCore>();
+
         shoot_mode_ui = GameObject.Find("shoot_mode");
         shoot_mode_image = shoot_mode_ui.GetComponent<Image>();
 
@@ -42,16 +46,18 @@ public class RobotShoot : MonoBehaviour
         switch (shoot_mode)
         {
             case ShootMode.sigle_shoot:
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                if (Input.GetKeyDown(KeyCode.Mouse0) && core.can_shoot())
                 {
                     Instantiate(prefab, shoot_pos.position, shoot_pos.rotation);
+                    core.shoot_heat_update();
                     shoot_counter = 0;
                 }
                 break;
             case ShootMode.muti_shoot:
-                if (Input.GetKey(KeyCode.Mouse0) && shoot_counter >= shoot_gap)
+                if (Input.GetKey(KeyCode.Mouse0) && shoot_counter >= shoot_gap && core.can_shoot())
                 {
                     Instantiate(prefab, shoot_pos.position, shoot_pos.rotation);
+                    core.shoot_heat_update();
                     shoot_counter = 0;
                 }
                 break;

@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class ArmorBase : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private string owner_name;
+
+    private ArmorObject owner;
+
+    private void Start()
     {
-        
+        owner = GameObject.Find(owner_name).GetComponent<ArmorObject>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision other)
     {
-        
+        if (other.gameObject.layer == 8)
+        {
+            owner.small_hit();
+        }
     }
 }

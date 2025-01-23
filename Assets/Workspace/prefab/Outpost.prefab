@@ -648,7 +648,7 @@ GameObject:
   - component: {fileID: 3430415917434809997}
   - component: {fileID: 8739951388582822139}
   - component: {fileID: 422726858645923672}
-  - component: {fileID: 5500468990931512307}
+  - component: {fileID: 8100069430458371766}
   m_Layer: 7
   m_Name: Cube_3
   m_TagString: Untagged
@@ -743,7 +743,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4283000455385496155, guid: 4cabc262f5f0f97459431c669686e29f, type: 3}
---- !u!114 &5500468990931512307
+--- !u!114 &8100069430458371766
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -752,7 +752,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1965783455633411119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e76c6466d15752419904cb07b99725b, type: 3}
+  m_Script: {fileID: 11500000, guid: 51d0557f95a5dcd4dbc60f52a89fc0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   owner_name: outpost_manager
@@ -1014,7 +1014,7 @@ GameObject:
   - component: {fileID: 5766981640689942947}
   - component: {fileID: 1528581769291463663}
   - component: {fileID: 493997843280952041}
-  - component: {fileID: 8167464580845724869}
+  - component: {fileID: 3873017640012902713}
   m_Layer: 7
   m_Name: Cube_1
   m_TagString: Untagged
@@ -1109,7 +1109,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -387298209978578080, guid: 4cabc262f5f0f97459431c669686e29f, type: 3}
---- !u!114 &8167464580845724869
+--- !u!114 &3873017640012902713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1118,7 +1118,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4686869755239244941}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e76c6466d15752419904cb07b99725b, type: 3}
+  m_Script: {fileID: 11500000, guid: 51d0557f95a5dcd4dbc60f52a89fc0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   owner_name: outpost_manager
@@ -1240,7 +1240,7 @@ GameObject:
   - component: {fileID: 1138049869923860809}
   - component: {fileID: 6256648060782913554}
   - component: {fileID: 2640064381556624672}
-  - component: {fileID: 8590187952624682349}
+  - component: {fileID: 8193361710402687918}
   m_Layer: 7
   m_Name: Cube_2
   m_TagString: Untagged
@@ -1335,7 +1335,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7754318969949236687, guid: 4cabc262f5f0f97459431c669686e29f, type: 3}
---- !u!114 &8590187952624682349
+--- !u!114 &8193361710402687918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1344,7 +1344,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5727164955302276393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e76c6466d15752419904cb07b99725b, type: 3}
+  m_Script: {fileID: 11500000, guid: 51d0557f95a5dcd4dbc60f52a89fc0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   owner_name: outpost_manager
