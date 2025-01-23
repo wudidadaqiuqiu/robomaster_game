@@ -12,13 +12,27 @@ public class RobotRotate : MonoBehaviour
     private TextMeshProUGUI pitch_text;
     [SerializeField] private Transform pitch_trans;
 
+    private ExchangeManager exchange_manager;
+
     void Start()
     {
         pitch_text = GameObject.Find("pitch_text").GetComponent<TextMeshProUGUI>();
+
+        exchange_manager = ExchangeManager.Instance;
     }
 
     void Update()
     {
+        rotate();
+    }
+
+    private void rotate()
+    {
+        if (exchange_manager.is_exchange())
+        {
+            return;
+        }
+
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * 50.0f;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * 50.0f;
 

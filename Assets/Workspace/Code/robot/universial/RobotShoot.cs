@@ -10,6 +10,7 @@ public enum ShootMode
 public class RobotShoot : MonoBehaviour
 {
     private RobotCore core;
+    private ExchangeManager exchange_manager;
 
     [SerializeField] private GameObject prefab;
     [SerializeField] private GameObject shoot_mode_ui;
@@ -23,6 +24,7 @@ public class RobotShoot : MonoBehaviour
     void Start()
     {
         core = GetComponent<RobotCore>();
+        exchange_manager = ExchangeManager.Instance;
 
         shoot_mode_ui = GameObject.Find("shoot_mode");
         shoot_mode_image = shoot_mode_ui.GetComponent<Image>();
@@ -43,6 +45,11 @@ public class RobotShoot : MonoBehaviour
 
     private void shoot()
     {
+        if (exchange_manager.is_exchange())
+        {
+            return;
+        }
+
         switch (shoot_mode)
         {
             case ShootMode.sigle_shoot:

@@ -5,10 +5,12 @@ using UnityEngine;
 public class RobotMove : MonoBehaviour
 {
     private RobotCore core;
+    private ExchangeManager exchange_manager;
 
     void Start()
     {
         core = GetComponent<RobotCore>();
+        exchange_manager = ExchangeManager.Instance;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -16,6 +18,16 @@ public class RobotMove : MonoBehaviour
 
     void Update()
     {
+        move();
+    }
+
+    private void move()
+    {
+        if (exchange_manager.is_exchange())
+        {
+            return;
+        }
+
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
