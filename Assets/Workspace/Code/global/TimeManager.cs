@@ -8,9 +8,7 @@ public class TimeManager : MonoBehaviour
     public static TimeManager Instance;
 
     PreGameManager pregame_manager;
-
-    [SerializeField] private float countdown_time;
-    [SerializeField] private float race_time;
+    ConfigManager config_manager;
 
     private bool isCountdown = true;
     private bool isRace = false;
@@ -27,6 +25,7 @@ public class TimeManager : MonoBehaviour
     private void Start()
     {
         pregame_manager = PreGameManager.Instance;
+        config_manager = ConfigManager.Instance;
     }
 
     private void Update()
@@ -36,7 +35,7 @@ public class TimeManager : MonoBehaviour
             timer += Time.deltaTime;
         }
 
-        if (timer > countdown_time && isCountdown)
+        if (timer > config_manager.countdown_time && isCountdown)
         {
             MessageManager.Instance.add_message("比赛开始!");
 
@@ -45,7 +44,7 @@ public class TimeManager : MonoBehaviour
             isRace = true;
         }
 
-        if (timer > race_time && isRace)
+        if (timer > config_manager.race_time && isRace)
         {
             MessageManager.Instance.add_message("比赛结束!");
 
@@ -64,11 +63,11 @@ public class TimeManager : MonoBehaviour
     {
         if (isCountdown)
         {
-            return countdown_time - timer;
+            return config_manager.countdown_time - timer;
         }
         if (isRace)
         {
-            return race_time - timer;
+            return config_manager.race_time - timer;
         }
         return 0;
     }

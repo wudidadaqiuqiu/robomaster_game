@@ -2,22 +2,25 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using TMPro;
 using UnityEngine;
 
 public class EconomyManager : MonoBehaviour
 {
     public static EconomyManager Instance;
 
+    [SerializeField] private TextMeshProUGUI blue_ui;
+    [SerializeField] private TextMeshProUGUI red_ui;
+
     //debug
     public float[] time_node = new float[6];
     public bool[] isTriggers = new bool[6];
-
-    public int initial_gold = 400;
 
     public int blue_gold;
     public int red_gold;
 
     private TimeManager timeManager;
+    private ConfigManager configManager;
 
     private void Awake()
     {
@@ -27,9 +30,10 @@ public class EconomyManager : MonoBehaviour
     private void Start()
     {
         timeManager = TimeManager.Instance;
+        configManager = ConfigManager.Instance;
 
-        blue_gold = initial_gold;
-        red_gold = initial_gold;
+        blue_gold = configManager.init_blue_gold;
+        red_gold = configManager.init_red_gold;
     }
 
     private void Update()
@@ -44,6 +48,8 @@ public class EconomyManager : MonoBehaviour
 
     private void natureIncrease()
     {
+        blue_ui.text = blue_gold.ToString();
+
         for (int i = 0; i < time_node.Length; i++)
         {
             if (timeManager.get_timer() < time_node[i] || isTriggers[i])
