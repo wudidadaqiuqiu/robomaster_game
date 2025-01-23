@@ -25,9 +25,9 @@ public class RobotRotate : MonoBehaviour
         Yrotation += mouseX;
         Xrotation += mouseY;
 
-        if (Xrotation > 30)
+        if (Xrotation > 40)
         {
-            Xrotation = 30;
+            Xrotation = 40;
         }
         if (Xrotation < -30)
         {
