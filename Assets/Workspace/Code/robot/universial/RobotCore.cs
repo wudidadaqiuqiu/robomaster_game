@@ -19,6 +19,9 @@ public class RobotCore : MonoBehaviour
     private Slider heat_slider;
 
     private TextMeshProUGUI bullet_num;
+    private TextMeshProUGUI grade_num;
+    private TextMeshProUGUI group_tag;
+    private TextMeshProUGUI index_tag;
 
     void Start()
     {
@@ -26,9 +29,13 @@ public class RobotCore : MonoBehaviour
 
         HP_slider = GameObject.Find("HP").GetComponent<Slider>();
         heat_slider = GameObject.Find("heat").GetComponent <Slider>();
-        bullet_num = GameObject.Find("bullet_number").GetComponent<TextMeshProUGUI>();
 
-        state = new RobotState(RobotType.Infantry1, RobotGroup.Blue);
+        bullet_num = GameObject.Find("bullet_number").GetComponent<TextMeshProUGUI>();
+        grade_num = GameObject.Find("grade_number").GetComponent<TextMeshProUGUI>();
+        group_tag = GameObject.Find("group_tag").GetComponent<TextMeshProUGUI>();
+        index_tag = GameObject.Find("index_tag").GetComponent<TextMeshProUGUI>();
+
+        state = new RobotState(RobotType.Infantry1, RobotGroup.Red);
 
         state.info_dynamic.HP = 800;
         state.info_fixed.max_HP = 1000;
@@ -37,6 +44,10 @@ public class RobotCore : MonoBehaviour
         state.info_fixed.max_heat = 1000;
 
         state.info_fixed.bullet_num = 10;
+
+        state.info_dynamic.grade = 1;
+        grade_ui_update();
+        tag_ui_update();
     }
 
     void Update()
@@ -66,6 +77,25 @@ public class RobotCore : MonoBehaviour
     private void bullet_ui_update()
     {
         bullet_num.text = state.info_fixed.bullet_num.ToString();
+    }
+
+    private void grade_ui_update()
+    {
+        grade_num.text = state.info_dynamic.grade.ToString();
+    }
+
+    private void tag_ui_update()
+    {
+        if (state.group == RobotGroup.Blue)
+        {
+            group_tag.text = "À¶·½";
+        }
+        else if (state.group == RobotGroup.Red)
+        {
+            group_tag.text = "ºì·½";
+        }
+
+        index_tag.text = ((int)state.type).ToString();
     }
 
     public void shoot_heat_update()

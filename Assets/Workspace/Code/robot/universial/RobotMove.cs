@@ -6,11 +6,13 @@ public class RobotMove : MonoBehaviour
 {
     private RobotCore core;
     private ExchangeManager exchange_manager;
+    private TimeManager time_manager;
 
     void Start()
     {
         core = GetComponent<RobotCore>();
         exchange_manager = ExchangeManager.Instance;
+        time_manager = TimeManager.Instance;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -23,7 +25,7 @@ public class RobotMove : MonoBehaviour
 
     private void move()
     {
-        if (exchange_manager.is_exchange())
+        if (exchange_manager.is_exchange() || !time_manager.is_race())
         {
             return;
         }

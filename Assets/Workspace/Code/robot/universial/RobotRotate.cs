@@ -13,12 +13,14 @@ public class RobotRotate : MonoBehaviour
     [SerializeField] private Transform pitch_trans;
 
     private ExchangeManager exchange_manager;
+    private TimeManager time_manager;
 
     void Start()
     {
         pitch_text = GameObject.Find("pitch_text").GetComponent<TextMeshProUGUI>();
 
         exchange_manager = ExchangeManager.Instance;
+        time_manager = TimeManager.Instance;
     }
 
     void Update()
@@ -28,7 +30,7 @@ public class RobotRotate : MonoBehaviour
 
     private void rotate()
     {
-        if (exchange_manager.is_exchange())
+        if (exchange_manager.is_exchange() || !time_manager.is_race())
         {
             return;
         }
