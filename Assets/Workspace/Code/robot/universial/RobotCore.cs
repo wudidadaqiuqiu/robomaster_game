@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class RobotCore : MonoBehaviour
 {
@@ -17,12 +18,15 @@ public class RobotCore : MonoBehaviour
     private float cool_counter = 0;
     private Slider heat_slider;
 
+    private TextMeshProUGUI bullet_num;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
 
         HP_slider = GameObject.Find("HP").GetComponent<Slider>();
         heat_slider = GameObject.Find("heat").GetComponent <Slider>();
+        bullet_num = GameObject.Find("bullet_number").GetComponent<TextMeshProUGUI>();
 
         state = new RobotState(RobotType.Infantry1, RobotGroup.Blue);
 
@@ -31,12 +35,15 @@ public class RobotCore : MonoBehaviour
 
         state.info_dynamic.heat = 0;
         state.info_fixed.max_heat = 1000;
+
+        state.info_fixed.bullet_num = 10;
     }
 
     void Update()
     {
         HP_ui_update();
         heat_ui_update();
+        bullet_ui_update();
     }
 
     private void HP_ui_update()
@@ -56,11 +63,24 @@ public class RobotCore : MonoBehaviour
         heat_slider.value = state.get_heat_pro();
     }
 
+    private void bullet_ui_update()
+    {
+        bullet_num.text = state.info_fixed.bullet_num.ToString();
+    }
+
     public void shoot_heat_update()
     {
         if (state.info_dynamic.heat <= state.info_fixed.max_heat - 50)
         {
             state.info_dynamic.heat += 50;
+        }
+    }
+
+    public void shoot_bullet_update()
+    {
+        if (state.info_fixed.bullet_num > 0)
+        {
+            state.info_fixed.bullet_num--;
         }
     }
 
@@ -71,6 +91,13 @@ public class RobotCore : MonoBehaviour
             Debug.Log("超热量");
             return false;
         }
+
+        if (state.info_fixed.bullet_num == 0)
+        {
+            Debug.Log("没有子弹");
+            return false;
+        }
+
         return true;    
     }
 }

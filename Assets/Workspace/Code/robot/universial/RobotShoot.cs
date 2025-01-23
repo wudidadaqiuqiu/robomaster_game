@@ -57,6 +57,7 @@ public class RobotShoot : MonoBehaviour
                 {
                     Instantiate(prefab, shoot_pos.position, shoot_pos.rotation);
                     core.shoot_heat_update();
+                    core.shoot_bullet_update();
                     shoot_counter = 0;
                 }
                 break;
@@ -65,6 +66,7 @@ public class RobotShoot : MonoBehaviour
                 {
                     Instantiate(prefab, shoot_pos.position, shoot_pos.rotation);
                     core.shoot_heat_update();
+                    core.shoot_bullet_update();
                     shoot_counter = 0;
                 }
                 break;
