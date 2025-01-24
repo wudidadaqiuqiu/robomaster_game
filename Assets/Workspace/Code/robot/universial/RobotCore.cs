@@ -8,11 +8,13 @@ using TMPro;
 
 public class RobotCore : MonoBehaviour
 {
-    private RobotState state;
+    public RobotState state;
 
     public Rigidbody rb;
 
     private Slider HP_slider;
+    private TextMeshProUGUI HP_num;
+    private TextMeshProUGUI HP_num_max;
 
     private float heat_cool = 0.02f;
     private float cool_counter = 0;
@@ -28,6 +30,9 @@ public class RobotCore : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         HP_slider = GameObject.Find("HP").GetComponent<Slider>();
+        HP_num = GameObject.Find("HP_number").GetComponent<TextMeshProUGUI>();
+        HP_num_max = GameObject.Find("HP_number_max").GetComponent<TextMeshProUGUI>();
+
         heat_slider = GameObject.Find("heat").GetComponent <Slider>();
 
         bullet_num = GameObject.Find("bullet_number").GetComponent<TextMeshProUGUI>();
@@ -35,7 +40,7 @@ public class RobotCore : MonoBehaviour
         group_tag = GameObject.Find("group_tag").GetComponent<TextMeshProUGUI>();
         index_tag = GameObject.Find("index_tag").GetComponent<TextMeshProUGUI>();
 
-        state = new RobotState(RobotType.Infantry1, RobotGroup.Red);
+        state = new RobotState(RobotType.Infantry1, RobotGroup.Blue);
 
         state.info_dynamic.HP = 800;
         state.info_fixed.max_HP = 1000;
@@ -60,6 +65,8 @@ public class RobotCore : MonoBehaviour
     private void HP_ui_update()
     {
         HP_slider.value = state.get_HP_pro();
+        HP_num.text = state.info_dynamic.HP.ToString();
+        HP_num_max.text = "/" + state.info_fixed.max_HP.ToString();
     }
 
     private void heat_ui_update()

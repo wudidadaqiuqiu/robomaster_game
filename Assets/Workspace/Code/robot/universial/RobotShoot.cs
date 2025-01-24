@@ -44,7 +44,6 @@ public class RobotShoot : MonoBehaviour
             shoot_counter += Time.deltaTime;
         }
     }
-
     private void shoot()
     {
         if (exchange_manager.is_exchange() || !time_manager.is_race())

@@ -43,13 +43,17 @@ public class EconomyManager : MonoBehaviour
             return;
         }
 
+        ui_update();
         natureIncrease();
+    }
+
+    private void ui_update()
+    {
+        blue_ui.text = blue_gold.ToString();
     }
 
     private void natureIncrease()
     {
-        blue_ui.text = blue_gold.ToString();
-
         for (int i = 0; i < time_node.Length; i++)
         {
             if (timeManager.get_timer() < time_node[i] || isTriggers[i])
